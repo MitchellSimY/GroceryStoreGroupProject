@@ -1,6 +1,7 @@
 
 public class Interface {
 	
+	// Making static variables for user selection later.
 	public static final int EXIT = 0;
 	public static final int ENROLL_MEMBER = 1;
 	public static final int REMOVE_MEMBER = 2;
