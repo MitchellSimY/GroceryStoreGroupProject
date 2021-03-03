@@ -1,4 +1,4 @@
-
+// Test Comment
 public class Interface {
 	
 	// Making static variables for user selection later.
