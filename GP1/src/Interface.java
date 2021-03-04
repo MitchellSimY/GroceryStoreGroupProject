@@ -1,4 +1,4 @@
-// Test Comment
+
 public class Interface {
 	
 	// Making static variables for user selection later.
@@ -12,6 +12,7 @@ public class Interface {
 	public static final int RETRIEVE_PRODUCT_INFO = 7;
 	public static final int RETRIEVE_MEMBER_INFO = 8;
 	public static final int PRINT_TRANSACTIONS = 9;
+	
 	
 	/**
 	 * Displaying help screen (User Interface)
@@ -28,6 +29,9 @@ public class Interface {
 		System.out.println(RETRIEVE_PRODUCT_INFO + " to retrieve product information");
 		System.out.println(RETRIEVE_MEMBER_INFO + " to retrieve member information");
 		System.out.println(PRINT_TRANSACTIONS + " to print transactions");
+	}
+	
+	public static void main(String[] args) {
 	}
 	
 	
