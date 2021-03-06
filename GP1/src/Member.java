@@ -1,19 +1,19 @@
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Member implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	// variables to help create the member object
-	private String name; // Do we should use name for member or firstName and lastName since his Member
-							// class in Library is used only one string for name
+	private String name;
 	private String phoneNumber, address;
 	private double feePaid;
 	private String memberId;
 	private static int counter = 0;
-
-	private Calendar joinedDate;// Trung thinks we must have this variable since the first use case required to
-								// initial the date of joining.
+	private List<Transaction> transactions = new LinkedList<Transaction>();
+	private Calendar joinedDate;
 
 	// Member constructor
 	public Member(String name, String phoneNumber, String address, double feePaid, String memberId,
@@ -48,38 +48,6 @@ public class Member implements Serializable {
 		this.name = name;
 	}
 
-//	 /**
-//     * Getter for firstName
-//     * 
-//     * @return String firstName
-//     */
-//	public String getFirstName() {
-//		return firstName;
-//	}
-//	/**
-//     * Setter for firstName
-//     * 
-//     * @param a String for new fistName
-//     */
-//	public void setFirstName(String firstName) {
-//		this.firstName = firstName;
-//	}
-//	 /**
-//     * Getter for lastName
-//     * 
-//     * @return string lastName
-//     */
-//	public String getLastName() {
-//		return lastName;
-//	}
-//	/**
-//     * Setter for lastName
-//     * 
-//     * @param a string for new lastName
-//     */
-//	public void setLastName(String lastName) {
-//		this.lastName = lastName;
-//	}
 	/**
 	 * Getter for phoneNumber
 	 * 
@@ -157,9 +125,6 @@ public class Member implements Serializable {
 	 * 
 	 * @return the Calendar object joinedDate
 	 */
-	public Calendar getJoinedDate() {
-		return joinedDate;
-	}
 
 	@Override
 	public int hashCode() {
@@ -196,6 +161,22 @@ public class Member implements Serializable {
 			return false;
 		}
 		return true;
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
+	public Calendar getJoinedDate() {
+		return joinedDate;
+	}
+
+	public void setJoinedDate(Calendar joinedDate) {
+		this.joinedDate = joinedDate;
 	}
 
 }
