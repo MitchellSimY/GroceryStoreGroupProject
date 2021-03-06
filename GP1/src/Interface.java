@@ -1,5 +1,14 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 
 public class Interface {
+	
+    private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+	private static Interface interfaceVariable;
 	
 	// Making static variables for user selection later.
 	public static final int EXIT = 0;
@@ -31,7 +40,84 @@ public class Interface {
 		System.out.println(PRINT_TRANSACTIONS + " to print transactions");
 	}
 	
+	/**
+	 * Process method. A bunch of switch cases to find out what the
+	 * user/clerk wants to perform.
+	 */
+	public void process() { 
+		int command;
+		help();
+		// Making the command variable equal what the user inputs
+		while ((command = getCommand()) != EXIT) {
+			switch (command) {
+			case ENROLL_MEMBER:
+				System.out.println("TODO: ADD MEMBER METHOD HERE");
+				break;
+			case ADD_PRODUCT:
+				System.out.println("TODO: ADD PRODUCT METHOD HERE");
+				break;
+			}
+		}
+	}
+	
+    /**
+     * Prompts for a command from the keyboard
+     * 
+     * @return a valid command
+     * 
+     */
+    public int getCommand() {
+        do {
+            try {
+                int value = Integer.parseInt(getToken("Enter command: "));
+                if (value >= EXIT && value <= PRINT_TRANSACTIONS) {
+                    return value;
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Enter a number");
+            }
+        } while (true);
+    }
+    
+    /**
+     * Gets a token after prompting
+     * 
+     * @param prompt - whatever the user wants as prompt
+     * @return - the token from the keyboard
+     * 
+     */
+    public String getToken(String prompt) {
+        do {
+            try {
+                System.out.println(prompt);
+                String line = reader.readLine();
+                StringTokenizer tokenizer = new StringTokenizer(line, "\n\r\f");
+                if (tokenizer.hasMoreTokens()) {
+                    return tokenizer.nextToken();
+                }
+            } catch (IOException ioe) {
+                System.exit(0);
+            }
+        } while (true);
+    }
+    
+    /**
+     * Supports the singleton pattern
+     * 
+     * @return the singleton object
+     */
+    public static Interface instance() {
+        if (interfaceVariable == null) {
+            return interfaceVariable = new Interface();
+        } else {
+            return interfaceVariable;
+        }
+    }
+	
+	
+	
 	public static void main(String[] args) {
+		Interface.instance().process();
 	}
 	
 	

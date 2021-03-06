@@ -2,9 +2,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class Member implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	// variables to help create the member object
-	// private String firstName, lastName;
 	private String name; // Do we should use name for member or firstName and lastName since his Member
 							// class in Library is used only one string for name
 	private String phoneNumber, address;
