@@ -51,7 +51,7 @@ public class Interface {
 		while ((command = getCommand()) != EXIT) {
 			switch (command) {
 			case ENROLL_MEMBER:
-				System.out.println("TODO: ENROLL MEMBER METHOD HERE");
+				System.out.println("TODO: ADD MEMBER METHOD HERE");
 				break;
 			case ADD_PRODUCT:
 				System.out.println("TODO: ADD PRODUCT METHOD HERE");
