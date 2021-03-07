@@ -51,10 +51,10 @@ public class Interface {
 		while ((command = getCommand()) != EXIT) {
 			switch (command) {
 			case ENROLL_MEMBER:
-				System.out.println("TODO: ADD MEMBER METHOD HERE");
+				addMember();
 				break;
 			case ADD_PRODUCT:
-				System.out.println("TODO: ADD PRODUCT METHOD HERE");
+				addProduct();
 				break;
 			}
 		}
@@ -113,6 +113,24 @@ public class Interface {
             return interfaceVariable;
         }
     }
+    
+    /**
+     * Add member method. Utilized for adding a new member.
+     * 
+     * @return none. Creates a member
+     */
+    public void addMember() {
+		System.out.println("TODO: ADD MEMBER METHOD HERE");
+    }
+    
+    /**
+     * 
+     * @param args
+     */
+    public void addProduct() {
+    	System.out.println("TODO: ADD PRODUCT METHOD HERE.");
+    }
+    
 	
 	
 	
