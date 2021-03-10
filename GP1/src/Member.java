@@ -9,7 +9,7 @@ public class Member implements Serializable {
 	// variables to help create the member object
 	private String name;
 	private String phoneNumber, address;
-	private double feePaid;
+	private String feePaid;
 	private String memberId;
 	private static int counter = 0;
 	private List<Transaction> transactions = new LinkedList<Transaction>();
@@ -21,13 +21,9 @@ public class Member implements Serializable {
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		// this.feePaid = feePaid; 
-		/**
-		 * Fee paid is not working out for me at the moment when trying to request
-		 * for userinput. Will have to revisit. WIll comment out for now. 
-		 */
 		counter = counter + 1;
 		this.memberId = "" + counter;
-		this.joinedDate = joinedDate;
+		// this.joinedDate = joinedDate;
 
 	}
 
@@ -110,7 +106,7 @@ public class Member implements Serializable {
 	 * 
 	 * @return integer feePaid
 	 */
-	public double getFeePaid() {
+	public String getFeePaid() {
 		return feePaid;
 	}
 
@@ -119,10 +115,28 @@ public class Member implements Serializable {
 	 * 
 	 * @param a integer for new feePaid
 	 */
-	public void setFeePaid(double feePaid) {
+	public void setFeePaid(String feePaid) {
 		this.feePaid = feePaid;
 	}
 
+
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
+	public Calendar getJoinedDate() {
+		return joinedDate;
+	}
+
+	public void setJoinedDate(Calendar joinedDate) {
+		this.joinedDate = joinedDate;
+	}
+	
 	/**
 	 * Getter for joinedDate
 	 * 
@@ -164,22 +178,6 @@ public class Member implements Serializable {
 			return false;
 		}
 		return true;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
-	public Calendar getJoinedDate() {
-		return joinedDate;
-	}
-
-	public void setJoinedDate(Calendar joinedDate) {
-		this.joinedDate = joinedDate;
 	}
 
 }

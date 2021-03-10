@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+
 public class Interface {
 
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -49,6 +50,11 @@ public class Interface {
 		System.out.println(HELP + " for help");
 	}
 
+	private Interface() {
+		
+	}
+	
+	
 	/**
 	 * Process method. A bunch of switch cases to find out what the user/clerk wants
 	 * to perform.
@@ -147,18 +153,22 @@ public class Interface {
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		System.out.println("Test");
+//		GroceryStore groceryStore = new GroceryStore(); 
 		Request.instance().setMemberName(getName("Please enter the Member's name: "));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
-		// Request.instance().setMemberFeePaid("Please enter how much the Member paid: ");
 		
-		/**
-		 * Fee paid isn't working out for me. Will revisit.
-		 */
+		groceryStore.testMethod();
 		
-		// groceryStore.addMember(Request.instance());
-	
+        // Result result = groceryStore.addMember(Request.instance());
+        
+        
+        
+//        if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+//            System.out.println("Could not add member");
+//        } else {
+//            System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
+//        }
 	}
 
 	/**

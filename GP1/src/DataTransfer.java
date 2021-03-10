@@ -12,7 +12,7 @@ public abstract class DataTransfer {
     private String memberName;
     private String memberAddress;
     private String memberPhone;
-    private double feePaid;
+    private String feePaid;
 
     /**
      * This sets all fields to "none".
@@ -66,11 +66,11 @@ public abstract class DataTransfer {
         this.memberAddress = memberAddress;
     }
     
-    public void setMemberFeePaid(double feePaid) {
+    public void setMemberFeePaid(String feePaid) {
     	this.feePaid = feePaid;
     }
     
-    public double getMemberFeePaid() {
+    public String getMemberFeePaid() {
     	return feePaid;
     }
 
@@ -83,5 +83,6 @@ public abstract class DataTransfer {
         memberName = "none";
         memberPhone = "none";
         memberAddress = "none";
+        feePaid = "none";
     }
 }
