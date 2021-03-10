@@ -8,6 +8,7 @@ public class Interface {
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	private static Interface interfaceVariable;
+	private static GroceryStore groceryStore;
 
 	// Making static variables for user selection later.
 	public static final int EXIT = 0;
@@ -121,19 +122,49 @@ public class Interface {
 			return interfaceVariable;
 		}
 	}
+    /**
+     * Gets a name after prompting
+     * 
+     * @param prompt - whatever the user wants as prompt
+     * @return - the token from the keyboard
+     * 
+     */
+    public String getName(String prompt) {
+        do {
+            try {
+                System.out.println(prompt);
+                String line = reader.readLine();
+                return line;
+            } catch (IOException ioe) {
+                System.exit(0);
+            }
+        } while (true);
 
+    }
 	/**
 	 * Add member method. Utilized for adding a new member.
 	 * 
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		System.out.println("TODO: ADD MEMBER METHOD HERE");
+		System.out.println("Test");
+		Request.instance().setMemberName(getName("Please enter the Member's name: "));
+		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
+		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
+		// Request.instance().setMemberFeePaid("Please enter how much the Member paid: ");
+		
+		/**
+		 * Fee paid isn't working out for me. Will revisit.
+		 */
+		
+		// groceryStore.addMember(Request.instance());
+	
 	}
 
 	/**
+	 * Add product method. Utilized for adding a new product
 	 * 
-	 * @param args
+	 * @return none. Creates product object.
 	 */
 	public void addProduct() {
 		System.out.println("TODO: ADD PRODUCT METHOD HERE.");
