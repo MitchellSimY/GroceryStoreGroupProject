@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,23 +12,31 @@ public class Member implements Serializable {
 	private String phoneNumber, address;
 	private double feePaid;
 	private String memberId;
-	private static int counter = 0;
+	private static final String MEMBER_STRING = "M";
+	private static int idCounter;
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private Calendar joinedDate;
 
 	// Member constructor
-	public Member(String name, String phoneNumber, String address, double feePaid, String memberId,
-			Calendar joinedDate) {
+	public Member(String name, String phoneNumber, String address, double feePaid) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.feePaid = feePaid;
-		counter = counter + 1;
-		this.memberId = "" + counter;
-		this.joinedDate = joinedDate;
+		this.memberId = MEMBER_STRING + ++idCounter;
+		this.joinedDate = new GregorianCalendar();
 
 	}
 
+	public Member(String name, String phoneNumber, String address) {
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.feePaid = 0;
+		this.memberId = MEMBER_STRING + ++idCounter;
+		this.joinedDate = new GregorianCalendar();
+
+	}
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
 
 	/**
