@@ -1,14 +1,14 @@
 import java.util.Calendar;
 
 /**
- * This class is used for requesting many of the results of the library system's
- * business logic to user interface. It is a singleton
+ * This class is used for requesting many of the results of the GroceryStore
+ * system's business logic to user interface. It is a singleton
  * 
  * At present, the Request object returns an int code,plus values of selected
- * fields of Book and Member. They are the book title, id, borrower id, due
- * date, member name, member phone, and member id.
+ * fields of Product and Member. They are the product name, id, member id,
+ * member name, member phone, and member id.
  * 
- * @author Brahma Dathan
+ * @author Group
  *
  */
 public class Request extends DataTransfer {

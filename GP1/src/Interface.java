@@ -65,6 +65,9 @@ public class Interface {
 			case ADD_PRODUCT:
 				addProduct();
 				break;
+			case CHECKOUT_MEMBER_ITEMS:
+				checkOutProducts();
+				break;
 			}
 		}
 	}
@@ -122,25 +125,42 @@ public class Interface {
 			return interfaceVariable;
 		}
 	}
-    /**
-     * Gets a name after prompting
-     * 
-     * @param prompt - whatever the user wants as prompt
-     * @return - the token from the keyboard
-     * 
-     */
-    public String getName(String prompt) {
-        do {
-            try {
-                System.out.println(prompt);
-                String line = reader.readLine();
-                return line;
-            } catch (IOException ioe) {
-                System.exit(0);
-            }
-        } while (true);
 
-    }
+	/**
+	 * Gets a name after prompting
+	 * 
+	 * @param prompt - whatever the user wants as prompt
+	 * @return - the token from the keyboard
+	 * 
+	 */
+	public String getName(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				return line;
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+
+	}
+
+	/**
+	 * Queries for a yes or no and returns true for yes and false for no
+	 * 
+	 * @param prompt The string to be prepended to the yes/no prompt
+	 * @return true for yes and false for no
+	 * 
+	 */
+	private boolean yesOrNo(String prompt) {
+		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Add member method. Utilized for adding a new member.
 	 * 
@@ -151,14 +171,15 @@ public class Interface {
 		Request.instance().setMemberName(getName("Please enter the Member's name: "));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
-		// Request.instance().setMemberFeePaid("Please enter how much the Member paid: ");
-		
+		// Request.instance().setMemberFeePaid("Please enter how much the Member paid:
+		// ");
+
 		/**
 		 * Fee paid isn't working out for me. Will revisit.
 		 */
-		
+
 		// groceryStore.addMember(Request.instance());
-	
+
 	}
 
 	/**
@@ -168,6 +189,32 @@ public class Interface {
 	 */
 	public void addProduct() {
 		System.out.println("TODO: ADD PRODUCT METHOD HERE.");
+	}
+
+	/**
+	 * Method to be called for checkingOut. Prompts the user for the appropriate
+	 * values and uses the appropriate GroceryStore method for checking out.
+	 * 
+	 */
+	public void checkOutProducts() {
+		Request.instance().setMemberId(getToken("Enter member id"));
+		Result result = groceryStore.searchMembership(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			return;
+		}
+		do {
+			Request.instance().setProductId(getToken("Enter product id"));
+			// test. Change me. to user input.
+			int quantity = 50;
+			result = groceryStore.checkOut(Request.instance(), quantity);
+			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+				// Edit output for unit price, total price, etc.
+				System.out.println("Product " + result.getProductName() + " sold to " + result.getMemberName());
+			} else {
+				System.out.println("Product could not be sold");
+			}
+		} while (yesOrNo("Check out more products?"));
 	}
 
 	public static void main(String[] args) {
