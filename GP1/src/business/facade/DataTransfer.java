@@ -1,4 +1,8 @@
+package business.facade;
 import java.util.Calendar;
+
+import business.entities.Member;
+import business.entities.Product;
 
 /**
  * The DataTransfer class is used to facilitate data transfer between

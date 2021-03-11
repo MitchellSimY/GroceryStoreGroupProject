@@ -1,5 +1,9 @@
+package business.entities.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import business.entities.Member;
+import business.facade.Result;
 
 
 

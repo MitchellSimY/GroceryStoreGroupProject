@@ -1,10 +1,18 @@
+package business.facade;
+
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import business.entities.Member;
+import business.entities.Product;
+import business.entities.iterators.SafeIterator;
 
 /**
  * Mitch: I made memberList and productList as their own classes when this was
@@ -279,6 +287,25 @@ public class GroceryStore implements Serializable {
 		} catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 			return null;
+		}
+	}
+
+	/**
+	 * Serializes the Library object
+	 * 
+	 * @return true iff the data could be saved
+	 */
+	public static boolean save() {
+		try {
+			FileOutputStream file = new FileOutputStream("GroceryStoreData");
+			ObjectOutputStream output = new ObjectOutputStream(file);
+			output.writeObject(groceryStore);
+			Member.save(output);
+			file.close();
+			return true;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return false;
 		}
 	}
 

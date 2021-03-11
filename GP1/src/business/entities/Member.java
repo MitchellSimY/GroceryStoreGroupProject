@@ -1,5 +1,8 @@
+package business.entities;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -193,6 +196,10 @@ public class Member implements Serializable {
 
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
+	}
+
+	public static void save(ObjectOutputStream output) throws IOException {
+		output.writeObject(counter);
 	}
 
 	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
