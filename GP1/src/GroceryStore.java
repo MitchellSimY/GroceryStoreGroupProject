@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+
 /**
  * Mitch: I made memberList and productList as their own classes when this was
  * first created. I ended up understanding the basic concepts of singletons and
@@ -91,6 +92,19 @@ public class GroceryStore implements Serializable {
 			return products.toString();
 		}
 	}
+	
+	public Result addProduct(Request request) {
+		Result result = new Result();
+		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
+				request.getReorderLevel(), request.getCurrentPrice());
+		if (productList.insertProduct(product)) {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setProductFields(product);
+			return result;
+		}
+		result.setResultCode(Result.OPERATION_FAILED);
+		return result;
+	}
 
 	// ====== Start Member List Class ========
 	private class MemberList implements Iterable<Member>, Serializable {
@@ -103,16 +117,21 @@ public class GroceryStore implements Serializable {
 			return true;
 		}
 
-		// Showing members to see if it was added successfully. Can delete this method.
-		public void showMembers() {
 
-		}
 
 		@Override
 		public Iterator<Member> iterator() {
-			// TODO Auto-generated method stub
-			return null;
+			return members.iterator();
 		}
+		
+		
+
+		@Override
+		public String toString() {
+			return members.toString();
+		}
+
+
 
 		/**
 		 * Checks whether a member with a given member id exists.
@@ -154,9 +173,20 @@ public class GroceryStore implements Serializable {
 		}
 	}
 
+	/**
+	 * Add member method. 
+	 * This method adds a member utilizing the request object as parameters for the 
+	 * new member. In order the member parameters are, Name, Address
+	 * Phone, Membership Fee, and date.
+	 * @param request - This has all the user input for the member's information
+	 * @return result - The return is to determine whether the addition of the member 
+	 * was successful. If not, it returns an error code. 
+	 */
 	public Result addMember(Request request) {
 		Result result = new Result();
-		Member member = new Member(request.getMemberName(), request.getMemberAddress(), request.getMemberPhone());
+		Member member = new Member(request.getMemberName(), request.getMemberAddress(), 
+				request.getMemberPhone(), request.getMemberFeePaid(), request.getDate());
+		
 		if (members.insertMember(member)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setMemberFields(member);
@@ -165,10 +195,17 @@ public class GroceryStore implements Serializable {
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}
-
-	public void showMembers() {
-
+	
+	/**
+	 *Get members method
+	 * Showing all members that have since registerd. This was called by 
+	 * interface > listAllMembers
+	 * @return all members
+	 */
+	public Iterator<Result> getMembers() {
+		return new SafeIterator<Member>(members.iterator(), SafeIterator.MEMBER);
 	}
+
 
 	/**
 	 * Searches for a given member

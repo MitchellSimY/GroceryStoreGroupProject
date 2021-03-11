@@ -1,3 +1,4 @@
+import java.util.Calendar;
 
 /**
  * The DataTransfer class is used to facilitate data transfer between
@@ -9,13 +10,20 @@
  *
  */
 public abstract class DataTransfer {
-	private String productName;
-	private String productId;
+	
+	// Member Variables
 	private String memberId;
 	private String memberName;
 	private String memberAddress;
 	private String memberPhone;
+	private Calendar dateJoined;
 	private double feePaid;
+	
+	// Product variables
+	private String productName;
+	private String productId;
+	private int stockInhand, reorderLevel;
+	private double currentPrice;
 
 	/**
 	 * This sets all fields to "none".
@@ -23,7 +31,20 @@ public abstract class DataTransfer {
 	public DataTransfer() {
 		reset();
 	}
+	
+	/**
+	 * Sets all the product-related fields using the Product parameter. If the
+	 * product is not checked out "none" is stored in the borrower and due date
+	 * fields.
+	 * 
+	 * @param product the product whose fields should be copied.
+	 */
+	public void setProductFields(Product product) {
+		productId = product.getProductId();
+		productName = product.getProductName();
 
+	}
+	
 	public String getProductName() {
 		return productName;
 	}
@@ -40,6 +61,69 @@ public abstract class DataTransfer {
 		this.productId = productId;
 	}
 
+
+	public int getStockInhand() {
+		return stockInhand;
+	}
+
+	public void setStockInhand(int stockInhand) {
+		this.stockInhand = stockInhand;
+	}
+
+	public int getReorderLevel() {
+		return reorderLevel;
+	}
+
+	public void setReorderLevel(int reorderLevel) {
+		this.reorderLevel = reorderLevel;
+	}
+
+	public double getCurrentPrice() {
+		return currentPrice;
+	}
+
+	public void setCurrentPrice(double currentPrice) {
+		this.currentPrice = currentPrice;
+	}
+
+	/**
+	 * Sets all the member-related fields using the Member parameter.
+	 * 
+	 * @param member the member whose fields should be copied.
+	 */
+	public void setMemberFields(Member member) {
+		memberId = member.getMemberId();
+		memberName = member.getName();
+		memberPhone = member.getPhoneNumber();
+		memberAddress = member.getAddress();
+		feePaid = member.getFeePaid();
+		dateJoined = member.getJoinedDate();
+	}
+
+	public String getMemberAddress() {
+		return memberAddress;
+	}
+
+	public void setMemberAddress(String memberAddress) {
+		this.memberAddress = memberAddress;
+	}
+
+	public void setMemberFeePaid(double feePaid) {
+		this.feePaid = feePaid;
+	}
+
+	public double getMemberFeePaid() {
+		return feePaid;
+	}
+	
+
+	public Calendar getDateJoined() {
+		return dateJoined;
+	}
+
+	public void setDateJoined(Calendar dateJoined) {
+		this.dateJoined = dateJoined;
+	}
 	public String getMemberId() {
 		return memberId;
 	}
@@ -64,48 +148,8 @@ public abstract class DataTransfer {
 		this.memberPhone = memberPhone;
 	}
 
-	/**
-	 * Sets all the member-related fields using the Member parameter.
-	 * 
-	 * @param member the member whose fields should be copied.
-	 */
-	public void setMemberFields(Member member) {
-		memberId = member.getMemberId();
-		memberName = member.getName();
-		memberPhone = member.getPhoneNumber();
-		memberAddress = member.getAddress();
-		feePaid = member.getFeePaid();
-	}
 
-	public String getMemberAddress() {
-		return memberAddress;
-	}
 
-	public void setMemberAddress(String memberAddress) {
-		this.memberAddress = memberAddress;
-	}
-
-	public void setMemberFeePaid(double feePaid) {
-		this.feePaid = feePaid;
-	}
-
-	public double getMemberFeePaid() {
-		return feePaid;
-	}
-
-	/**
-	 * Sets all the product-related fields using the Product parameter. If the
-	 * product is not checked out "none" is stored in the borrower and due date
-	 * fields.
-	 * 
-	 * @param product the product whose fields should be copied.
-	 */
-	public void setProductFields(Product product) {
-
-		productId = product.getProductId();
-		productName = product.getProductName();
-
-	}
 
 	/**
 	 * Sets all String fields to "none"

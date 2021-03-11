@@ -1,7 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.Calendar; 
 
 public class Interface {
 
@@ -90,6 +96,9 @@ public class Interface {
 			case CHECKOUT_MEMBER_ITEMS:
 				checkOutProducts();
 				break;
+			case LIST_ALL_MEMBERS: 
+				listAllMembers();
+				break;
 			}
 		}
 	}
@@ -104,7 +113,8 @@ public class Interface {
 		do {
 			try {
 				int value = Integer.parseInt(getToken("Enter command: "));
-				if (value >= EXIT && value <= PRINT_TRANSACTIONS) {
+				if (value >= EXIT && value <= HELP) {
+					System.out.println(value);
 					return value;
 				}
 			} catch (NumberFormatException nfe) {
@@ -134,6 +144,26 @@ public class Interface {
 			}
 		} while (true);
 	}
+	
+    /**
+     * Prompts for a date and gets a date object
+     * 
+     * @param prompt the prompt
+     * @return the data as a Calendar object
+     */
+    public Calendar getDate(String prompt) {
+        do {
+            try {
+                Calendar date = new GregorianCalendar();
+                String item = getToken(prompt);
+                DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+                date.setTime(dateFormat.parse(item));
+                return date;
+            } catch (Exception fe) {
+                System.out.println("Please input a date as mm/dd/yy");
+            }
+        } while (true);
+    }
 
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
@@ -178,8 +208,26 @@ public class Interface {
 				System.exit(0);
 			}
 		} while (true);
-
 	}
+	
+    /**
+     * Converts the string to a number
+     * 
+     * @param prompt the string for prompting
+     * @return the integer corresponding to the string
+     * 
+     */
+    public int getNumber(String prompt) {
+        do {
+            try {
+                String item = getToken(prompt);
+                Integer number = Integer.valueOf(item);
+                return number.intValue();
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please input a number ");
+            }
+        } while (true);
+    }
 
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
@@ -196,31 +244,40 @@ public class Interface {
 		return true;
 	}
 
-	/**
+	/** Completed
 	 * Add member method. Utilized for adding a new member.
 	 * 
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		System.out.println("Test");
 		Request.instance().setMemberName(getName("Please enter the Member's name: "));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
-		// Request.instance().setMemberFeePaid("Please enter how much the Member paid:
-		// ");
-
-		/**
-		 * Fee paid isn't working out for me. Will revisit.
-		 */
-
-		// groceryStore.addMember(Request.instance());
-
+		Request.instance().setMemberFeePaid(getNumber("Please enter how much the Member paid: "));
+		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy"));
 		Result result = groceryStore.addMember(Request.instance());
+		
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("Could not add member");
 		} else {
-			System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
+			System.out.println(result.getMemberName() + "'s ID is " + result.getMemberId());
 		}
+	}
+	
+	/**
+	 * List all members will list all the members that have registered.
+	 * 
+	 * @return All members
+	 */
+	public void listAllMembers() {
+		Iterator<Result> iterator = groceryStore.getMembers();
+		System.out.println("Listing all members by Name, Date joined, address and phone number");
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			System.out.println(result.getMemberName() + " | " + result.getDateJoined() + " | "
+					+ result.getMemberAddress() + " | " + result.getMemberPhone());
+		}
+	
 	}
 
 	/**
@@ -229,7 +286,19 @@ public class Interface {
 	 * @return none. Creates product object.
 	 */
 	public void addProduct() {
-		System.out.println("TODO: ADD PRODUCT METHOD HERE.");
+		do {
+			Request.instance().setProductName(getName("Enter Product name: "));
+			Request.instance().setProductId(getToken("Enter Product ID: "));
+			Request.instance().setCurrentPrice(getNumber("Please enter current price: "));
+			Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
+			Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
+			Result result = groceryStore.addProduct(Request.instance());
+			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+				System.out.println("Product could not be added.");
+			} else {
+				System.out.println(result.getProductName() + " Has since been added.");
+			}
+		} while (yesOrNo("Add more products?"));
 	}
 
 	/**

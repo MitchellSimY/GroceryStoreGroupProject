@@ -18,15 +18,11 @@ public class Member implements Serializable {
 	private Calendar joinedDate;
 
 	// Member constructor
-	public Member(String name, String phoneNumber, String address) {
+	public Member(String name, String phoneNumber, String address, double feePaid, Calendar joinedDate) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		// this.feePaid = feePaid;
-		/**
-		 * Fee paid is not working out for me at the moment when trying to request for
-		 * userinput. Will have to revisit. WIll comment out for now.
-		 */
+		this.feePaid = feePaid;
 		counter = counter + 1;
 		this.memberId = "" + counter;
 		this.joinedDate = joinedDate;
