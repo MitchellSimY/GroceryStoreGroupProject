@@ -232,10 +232,6 @@ public class Interface {
 		System.out.println("TODO: ADD PRODUCT METHOD HERE.");
 	}
 
-	public static void main(String[] args) {
-		Interface.instance().process();
-	}
-
 	/**
 	 * Method to be called for checkingOut. Prompts the user for the appropriate
 	 * values and uses the appropriate GroceryStore method for checking out.
@@ -260,6 +256,10 @@ public class Interface {
 				System.out.println("Product could not be sold");
 			}
 		} while (yesOrNo("Check out more products?"));
+	}
+
+	public static void main(String[] args) {
+		Interface.instance().process();
 	}
 
 }
