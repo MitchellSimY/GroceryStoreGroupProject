@@ -8,6 +8,7 @@ public class Interface {
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	private static Interface interfaceVariable;
+	private static GroceryStore groceryStore;
 
 	// Making static variables for user selection later.
 	public static final int EXIT = 0;
@@ -49,6 +50,28 @@ public class Interface {
 	}
 
 	/**
+	 * Method to be called for retrieving saved data. Uses the appropriate Library
+	 * method for retrieval.
+	 * 
+	 */
+
+	private void retrieve() {
+		try {
+			if (groceryStore == null) {
+				groceryStore = GroceryStore.retrieve();
+				if (groceryStore != null) {
+					System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+				} else {
+					System.out.println("File doesnt exist; creating new library");
+					groceryStore = GroceryStore.instance();
+				}
+			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+		}
+	}
+
+	/**
 	 * Process method. A bunch of switch cases to find out what the user/clerk wants
 	 * to perform.
 	 */
@@ -63,6 +86,9 @@ public class Interface {
 				break;
 			case ADD_PRODUCT:
 				addProduct();
+				break;
+			case CHECKOUT_MEMBER_ITEMS:
+				checkOutProducts();
 				break;
 			}
 		}
@@ -110,6 +136,19 @@ public class Interface {
 	}
 
 	/**
+	 * Made private for singleton pattern. Conditionally looks for any saved data.
+	 * Otherwise, it gets a singleton GroceryStore object.
+	 */
+	private Interface() {
+		if (yesOrNo("Look for saved data and  use it?")) {
+			retrieve();
+		} else {
+			groceryStore = GroceryStore.instance();
+		}
+
+	}
+
+	/**
 	 * Supports the singleton pattern
 	 * 
 	 * @return the singleton object
@@ -123,20 +162,100 @@ public class Interface {
 	}
 
 	/**
+	 * Gets a name after prompting
+	 * 
+	 * @param prompt - whatever the user wants as prompt
+	 * @return - the token from the keyboard
+	 * 
+	 */
+	public String getName(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				return line;
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+
+	}
+
+	/**
+	 * Queries for a yes or no and returns true for yes and false for no
+	 * 
+	 * @param prompt The string to be prepended to the yes/no prompt
+	 * @return true for yes and false for no
+	 * 
+	 */
+	private boolean yesOrNo(String prompt) {
+		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Add member method. Utilized for adding a new member.
 	 * 
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		System.out.println("TODO: ADD MEMBER METHOD HERE");
+		System.out.println("Test");
+		Request.instance().setMemberName(getName("Please enter the Member's name: "));
+		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
+		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
+		// Request.instance().setMemberFeePaid("Please enter how much the Member paid:
+		// ");
+
+		/**
+		 * Fee paid isn't working out for me. Will revisit.
+		 */
+
+		// groceryStore.addMember(Request.instance());
+
+		Result result = groceryStore.addMember(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("Could not add member");
+		} else {
+			System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
+		}
 	}
 
 	/**
+	 * Add product method. Utilized for adding a new product
 	 * 
-	 * @param args
+	 * @return none. Creates product object.
 	 */
 	public void addProduct() {
 		System.out.println("TODO: ADD PRODUCT METHOD HERE.");
+	}
+
+	/**
+	 * Method to be called for checkingOut. Prompts the user for the appropriate
+	 * values and uses the appropriate GroceryStore method for checking out.
+	 * 
+	 */
+	public void checkOutProducts() {
+		Request.instance().setMemberId(getToken("Enter member id"));
+		Result result = groceryStore.searchMembership(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			return;
+		}
+		do {
+			Request.instance().setProductId(getToken("Enter product id"));
+			// test. Change me. to user input.
+			int quantity = 50;
+			result = groceryStore.checkOut(Request.instance(), quantity);
+			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+				// Edit output for unit price, total price, etc.
+				System.out.println("Product " + result.getProductName() + " sold to " + result.getMemberName());
+			} else {
+				System.out.println("Product could not be sold");
+			}
+		} while (yesOrNo("Check out more products?"));
 	}
 
 	public static void main(String[] args) {

@@ -1,6 +1,7 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,31 +13,26 @@ public class Member implements Serializable {
 	private String phoneNumber, address;
 	private double feePaid;
 	private String memberId;
-	private static final String MEMBER_STRING = "M";
-	private static int idCounter;
+	private static int counter = 0;
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private Calendar joinedDate;
 
 	// Member constructor
-	public Member(String name, String phoneNumber, String address, double feePaid) {
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.feePaid = feePaid;
-		this.memberId = MEMBER_STRING + ++idCounter;
-		this.joinedDate = new GregorianCalendar();
-
-	}
-
 	public Member(String name, String phoneNumber, String address) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		this.feePaid = 0;
-		this.memberId = MEMBER_STRING + ++idCounter;
-		this.joinedDate = new GregorianCalendar();
+		// this.feePaid = feePaid;
+		/**
+		 * Fee paid is not working out for me at the moment when trying to request for
+		 * userinput. Will have to revisit. WIll comment out for now.
+		 */
+		counter = counter + 1;
+		this.memberId = "" + counter;
+		this.joinedDate = joinedDate;
 
 	}
+
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
 
 	/**
@@ -186,6 +182,10 @@ public class Member implements Serializable {
 
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
+	}
+
+	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
+		counter = (int) input.readObject();
 	}
 
 }

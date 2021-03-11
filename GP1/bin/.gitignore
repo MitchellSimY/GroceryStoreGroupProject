@@ -5,3 +5,8 @@
 /OrderList.class
 /Product.class
 /Transaction.class
+/DataTransfer.class
+/GroceryStore$MemberList.class
+/GroceryStore$ProductList.class
+/Request.class
+/Result.class
