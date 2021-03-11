@@ -1,3 +1,6 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -131,9 +134,36 @@ public class GroceryStore implements Serializable {
 	}
 	// ====== End of Member List Class ========
 
-	public void addMember(Request request) {
+	/**
+	 * Private for the singleton pattern Creates the catalog and member collection
+	 * objects
+	 */
+	private GroceryStore() {
+	}
+
+	/**
+	 * Supports the singleton pattern
+	 * 
+	 * @return the singleton object
+	 */
+	public static GroceryStore instance() {
+		if (groceryStore == null) {
+			return groceryStore = new GroceryStore();
+		} else {
+			return groceryStore;
+		}
+	}
+
+	public Result addMember(Request request) {
+		Result result = new Result();
 		Member member = new Member(request.getMemberName(), request.getMemberAddress(), request.getMemberPhone());
-		members.insertMember(member);
+		if (members.insertMember(member)) {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setMemberFields(member);
+			return result;
+		}
+		result.setResultCode(Result.OPERATION_FAILED);
+		return result;
 	}
 
 	public void showMembers() {
@@ -199,6 +229,27 @@ public class GroceryStore implements Serializable {
 //        }
 		return result;
 
+	}
+
+	/**
+	 * Retrieves a deserialized version of the groceryStore from disk
+	 * 
+	 * @return a GroceryStore object
+	 */
+	public static GroceryStore retrieve() {
+		try {
+			FileInputStream file = new FileInputStream("GroceryStoreData");
+			ObjectInputStream input = new ObjectInputStream(file);
+			groceryStore = (GroceryStore) input.readObject();
+			Member.retrieve(input);
+			return groceryStore;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return null;
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+			return null;
+		}
 	}
 
 }

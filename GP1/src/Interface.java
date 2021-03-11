@@ -50,6 +50,28 @@ public class Interface {
 	}
 
 	/**
+	 * Method to be called for retrieving saved data. Uses the appropriate Library
+	 * method for retrieval.
+	 * 
+	 */
+
+	private void retrieve() {
+		try {
+			if (groceryStore == null) {
+				groceryStore = GroceryStore.retrieve();
+				if (groceryStore != null) {
+					System.out.println(" The library has been successfully retrieved from the file LibraryData \n");
+				} else {
+					System.out.println("File doesnt exist; creating new library");
+					groceryStore = GroceryStore.instance();
+				}
+			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+		}
+	}
+
+	/**
 	 * Process method. A bunch of switch cases to find out what the user/clerk wants
 	 * to perform.
 	 */
@@ -111,6 +133,19 @@ public class Interface {
 				System.exit(0);
 			}
 		} while (true);
+	}
+
+	/**
+	 * Made private for singleton pattern. Conditionally looks for any saved data.
+	 * Otherwise, it gets a singleton GroceryStore object.
+	 */
+	private Interface() {
+		if (yesOrNo("Look for saved data and  use it?")) {
+			retrieve();
+		} else {
+			groceryStore = GroceryStore.instance();
+		}
+
 	}
 
 	/**
@@ -180,6 +215,12 @@ public class Interface {
 
 		// groceryStore.addMember(Request.instance());
 
+		Result result = groceryStore.addMember(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("Could not add member");
+		} else {
+			System.out.println(result.getMemberName() + "'s id is " + result.getMemberId());
+		}
 	}
 
 	/**

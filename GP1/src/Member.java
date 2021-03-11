@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -20,10 +22,10 @@ public class Member implements Serializable {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		// this.feePaid = feePaid; 
+		// this.feePaid = feePaid;
 		/**
-		 * Fee paid is not working out for me at the moment when trying to request
-		 * for userinput. Will have to revisit. WIll comment out for now. 
+		 * Fee paid is not working out for me at the moment when trying to request for
+		 * userinput. Will have to revisit. WIll comment out for now.
 		 */
 		counter = counter + 1;
 		this.memberId = "" + counter;
@@ -180,6 +182,10 @@ public class Member implements Serializable {
 
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
+	}
+
+	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
+		counter = (int) input.readObject();
 	}
 
 }
