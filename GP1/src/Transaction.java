@@ -1,42 +1,66 @@
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 public class Transaction implements Serializable {
 	// Variables for Transaction
-	private Member member;
-	private List<Product> products = new LinkedList<Product>();
+	private static final long serialVersionUID = 1L;
+	private String type;
+	private String productName;
+
 	private Calendar date;
 
-	public Transaction(Member member, List<Product> products, Calendar date) {
-		this.member = member;
-		this.products = products;
-		this.date = date;
+	public Transaction(String type, String productName) {
+		this.type = type;
+		this.productName = productName;
+		date = new GregorianCalendar();
 	}
 
-	public Member getMember() {
-		return member;
+	/**
+	 * Checks whether this transaction is on the given date
+	 * 
+	 * @param date The date for which transactions are being sought
+	 * @return true iff the dates match
+	 */
+	public boolean onDate(Calendar date) {
+		return ((date.get(Calendar.YEAR) == this.date.get(Calendar.YEAR))
+				&& (date.get(Calendar.MONTH) == this.date.get(Calendar.MONTH))
+				&& (date.get(Calendar.DATE) == this.date.get(Calendar.DATE)));
 	}
 
-	public void setMember(Member member) {
-		this.member = member;
+	/**
+	 * Returns the type field
+	 * 
+	 * @return type field
+	 */
+	public String getType() {
+		return type;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	/**
+	 * Returns the title field
+	 * 
+	 * @return title field
+	 */
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	/**
+	 * Returns the date as a String
+	 * 
+	 * @return date with month, date, and year
+	 */
+	public String getDate() {
+		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
 	}
 
-	public Calendar getDate() {
-		return date;
+	/**
+	 * String form of the transaction
+	 * 
+	 */
+	@Override
+	public String toString() {
+		return (type + "   " + productName);
 	}
-
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
 }

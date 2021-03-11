@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
  * Mitch: I made memberList and productList as their own classes when this was
  * first created. I ended up understanding the basic concepts of singletons and
@@ -92,7 +91,7 @@ public class GroceryStore implements Serializable {
 			return products.toString();
 		}
 	}
-	
+
 	public Result addProduct(Request request) {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
@@ -117,21 +116,15 @@ public class GroceryStore implements Serializable {
 			return true;
 		}
 
-
-
 		@Override
 		public Iterator<Member> iterator() {
 			return members.iterator();
 		}
-		
-		
 
 		@Override
 		public String toString() {
 			return members.toString();
 		}
-
-
 
 		/**
 		 * Checks whether a member with a given member id exists.
@@ -174,19 +167,19 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Add member method. 
-	 * This method adds a member utilizing the request object as parameters for the 
-	 * new member. In order the member parameters are, Name, Address
-	 * Phone, Membership Fee, and date.
+	 * Add member method. This method adds a member utilizing the request object as
+	 * parameters for the new member. In order the member parameters are, Name,
+	 * Address Phone, Membership Fee, and date.
+	 * 
 	 * @param request - This has all the user input for the member's information
-	 * @return result - The return is to determine whether the addition of the member 
-	 * was successful. If not, it returns an error code. 
+	 * @return result - The return is to determine whether the addition of the
+	 *         member was successful. If not, it returns an error code.
 	 */
 	public Result addMember(Request request) {
 		Result result = new Result();
-		Member member = new Member(request.getMemberName(), request.getMemberAddress(), 
-				request.getMemberPhone(), request.getMemberFeePaid(), request.getDate());
-		
+		Member member = new Member(request.getMemberName(), request.getMemberAddress(), request.getMemberPhone(),
+				request.getMemberFeePaid(), request.getDate());
+
 		if (members.insertMember(member)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setMemberFields(member);
@@ -195,17 +188,16 @@ public class GroceryStore implements Serializable {
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}
-	
+
 	/**
-	 *Get members method
-	 * Showing all members that have since registerd. This was called by 
-	 * interface > listAllMembers
+	 * Get members method Showing all members that have since registerd. This was
+	 * called by interface > listAllMembers
+	 * 
 	 * @return all members
 	 */
 	public Iterator<Result> getMembers() {
 		return new SafeIterator<Member>(members.iterator(), SafeIterator.MEMBER);
 	}
-
 
 	/**
 	 * Searches for a given member
@@ -256,14 +248,15 @@ public class GroceryStore implements Serializable {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
 		}
-//		 NEED TO FINISH
-//        result.setMemberFields(member);
-//        if (!(product.issue(member) && member.issue(product))) {
-//            result.setResultCode(Result.OPERATION_FAILED);
-//        } else {
-//            result.setResultCode(Result.OPERATION_COMPLETED);
-//            result.setProductFields(product);
-//        }
+
+		result.setMemberFields(member);
+
+		if (!(product.checkOut(quantity) && member.checkOut(product))) {
+			result.setResultCode(Result.OPERATION_FAILED);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setProductFields(product);
+		}
 		return result;
 
 	}

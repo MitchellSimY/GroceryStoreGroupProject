@@ -3,11 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.StringTokenizer;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.Calendar; 
+import java.util.StringTokenizer;
 
 public class Interface {
 
@@ -96,7 +95,7 @@ public class Interface {
 			case CHECKOUT_MEMBER_ITEMS:
 				checkOutProducts();
 				break;
-			case LIST_ALL_MEMBERS: 
+			case LIST_ALL_MEMBERS:
 				listAllMembers();
 				break;
 			}
@@ -144,26 +143,26 @@ public class Interface {
 			}
 		} while (true);
 	}
-	
-    /**
-     * Prompts for a date and gets a date object
-     * 
-     * @param prompt the prompt
-     * @return the data as a Calendar object
-     */
-    public Calendar getDate(String prompt) {
-        do {
-            try {
-                Calendar date = new GregorianCalendar();
-                String item = getToken(prompt);
-                DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
-                date.setTime(dateFormat.parse(item));
-                return date;
-            } catch (Exception fe) {
-                System.out.println("Please input a date as mm/dd/yy");
-            }
-        } while (true);
-    }
+
+	/**
+	 * Prompts for a date and gets a date object
+	 * 
+	 * @param prompt the prompt
+	 * @return the data as a Calendar object
+	 */
+	public Calendar getDate(String prompt) {
+		do {
+			try {
+				Calendar date = new GregorianCalendar();
+				String item = getToken(prompt);
+				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
+				date.setTime(dateFormat.parse(item));
+				return date;
+			} catch (Exception fe) {
+				System.out.println("Please input a date as mm/dd/yy");
+			}
+		} while (true);
+	}
 
 	/**
 	 * Made private for singleton pattern. Conditionally looks for any saved data.
@@ -209,25 +208,25 @@ public class Interface {
 			}
 		} while (true);
 	}
-	
-    /**
-     * Converts the string to a number
-     * 
-     * @param prompt the string for prompting
-     * @return the integer corresponding to the string
-     * 
-     */
-    public int getNumber(String prompt) {
-        do {
-            try {
-                String item = getToken(prompt);
-                Integer number = Integer.valueOf(item);
-                return number.intValue();
-            } catch (NumberFormatException nfe) {
-                System.out.println("Please input a number ");
-            }
-        } while (true);
-    }
+
+	/**
+	 * Converts the string to a number
+	 * 
+	 * @param prompt the string for prompting
+	 * @return the integer corresponding to the string
+	 * 
+	 */
+	public int getNumber(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Integer number = Integer.valueOf(item);
+				return number.intValue();
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please input a number ");
+			}
+		} while (true);
+	}
 
 	/**
 	 * Queries for a yes or no and returns true for yes and false for no
@@ -244,8 +243,8 @@ public class Interface {
 		return true;
 	}
 
-	/** Completed
-	 * Add member method. Utilized for adding a new member.
+	/**
+	 * Completed Add member method. Utilized for adding a new member.
 	 * 
 	 * @return none. Creates a member
 	 */
@@ -256,14 +255,14 @@ public class Interface {
 		Request.instance().setMemberFeePaid(getNumber("Please enter how much the Member paid: "));
 		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy"));
 		Result result = groceryStore.addMember(Request.instance());
-		
+
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("Could not add member");
 		} else {
 			System.out.println(result.getMemberName() + "'s ID is " + result.getMemberId());
 		}
 	}
-	
+
 	/**
 	 * List all members will list all the members that have registered.
 	 * 
@@ -277,7 +276,7 @@ public class Interface {
 			System.out.println(result.getMemberName() + " | " + result.getDateJoined() + " | "
 					+ result.getMemberAddress() + " | " + result.getMemberPhone());
 		}
-	
+
 	}
 
 	/**
@@ -315,15 +314,23 @@ public class Interface {
 		}
 		do {
 			Request.instance().setProductId(getToken("Enter product id"));
-			// test. Change me. to user input.
-			int quantity = 50;
+			// test. Is there a safer way to store quantity variable?
+			int quantity;
+			quantity = (getNumber("Enter the number of units being sold: "));
 			result = groceryStore.checkOut(Request.instance(), quantity);
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				// Edit output for unit price, total price, etc.
-				System.out.println("Product " + result.getProductName() + " sold to " + result.getMemberName());
+				System.out.println("Product: " + result.getProductName() + "\nNumber of item: " + quantity
+						+ "\nUnit Price: " + result.getCurrentPrice() + "\nPrice for Item: "
+						+ (result.getCurrentPrice() * quantity));
+			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
+				System.out.println("Product not found.");
+			} else if (result.getResultCode() == Result.INSUFFICIENT_STOCK) {
+				System.out.println("Not enough stock.");
 			} else {
-				System.out.println("Product could not be sold");
+				System.out.println("Could not sell product.");
 			}
+			// TODO: Check reorder level. Reorder if necessary and display.
 		} while (yesOrNo("Check out more products?"));
 	}
 

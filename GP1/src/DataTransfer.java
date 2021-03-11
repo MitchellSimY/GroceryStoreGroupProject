@@ -10,7 +10,7 @@ import java.util.Calendar;
  *
  */
 public abstract class DataTransfer {
-	
+
 	// Member Variables
 	private String memberId;
 	private String memberName;
@@ -18,7 +18,7 @@ public abstract class DataTransfer {
 	private String memberPhone;
 	private Calendar dateJoined;
 	private double feePaid;
-	
+
 	// Product variables
 	private String productName;
 	private String productId;
@@ -31,7 +31,7 @@ public abstract class DataTransfer {
 	public DataTransfer() {
 		reset();
 	}
-	
+
 	/**
 	 * Sets all the product-related fields using the Product parameter. If the
 	 * product is not checked out "none" is stored in the borrower and due date
@@ -42,9 +42,12 @@ public abstract class DataTransfer {
 	public void setProductFields(Product product) {
 		productId = product.getProductId();
 		productName = product.getProductName();
+		stockInhand = product.getStockInHand();
+		reorderLevel = product.getReorderLevel();
+		currentPrice = product.getCurrentPrice();
 
 	}
-	
+
 	public String getProductName() {
 		return productName;
 	}
@@ -60,7 +63,6 @@ public abstract class DataTransfer {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-
 
 	public int getStockInhand() {
 		return stockInhand;
@@ -115,7 +117,6 @@ public abstract class DataTransfer {
 	public double getMemberFeePaid() {
 		return feePaid;
 	}
-	
 
 	public Calendar getDateJoined() {
 		return dateJoined;
@@ -124,6 +125,7 @@ public abstract class DataTransfer {
 	public void setDateJoined(Calendar dateJoined) {
 		this.dateJoined = dateJoined;
 	}
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -148,15 +150,15 @@ public abstract class DataTransfer {
 		this.memberPhone = memberPhone;
 	}
 
-
-
-
 	/**
 	 * Sets all String fields to "none"
 	 */
 	public void reset() {
 		productName = "none";
 		productId = "none";
+		stockInhand = 0;
+		reorderLevel = 0;
+		currentPrice = 0;
 		memberId = "none";
 		memberName = "none";
 		memberPhone = "none";

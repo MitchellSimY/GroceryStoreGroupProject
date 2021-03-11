@@ -16,6 +16,20 @@ public class Product implements Serializable {
 		this.currentPrice = currentPrice;
 	}
 
+	/**
+	 * Updates current stock based on how much the member is buying.
+	 * 
+	 * @param member the borrower
+	 * @return true iff the book could be issued. True currently
+	 */
+	public boolean checkOut(int quantity) {
+		if ((getStockInHand() - quantity) < 0) {
+			return false;
+		} else {
+			setStockInHand(stockInHand - quantity);
+			return true;
+		}
+	}
 ///// 			SETTER AND GETTER, HASHCODE AND TOSTRING SECTION	
 
 	/*

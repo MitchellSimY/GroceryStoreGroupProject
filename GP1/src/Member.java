@@ -14,6 +14,7 @@ public class Member implements Serializable {
 	private double feePaid;
 	private String memberId;
 	private static int counter = 0;
+	private List<Product> productsPurchased = new LinkedList<Product>();
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private Calendar joinedDate;
 
@@ -27,6 +28,20 @@ public class Member implements Serializable {
 		this.memberId = "" + counter;
 		this.joinedDate = joinedDate;
 
+	}
+
+	/**
+	 * Stores the product as sold to the member
+	 * 
+	 * @param product the product to be issued
+	 * @return true iff the product could be marked as sold. always true currently
+	 */
+	public boolean checkOut(Product product) {
+		if (productsPurchased.add(product)) {
+			transactions.add(new Transaction("Sold", product.getProductName()));
+			return true;
+		}
+		return false;
 	}
 
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
