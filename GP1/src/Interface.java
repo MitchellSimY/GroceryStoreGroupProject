@@ -87,6 +87,9 @@ public class Interface {
 			case ADD_PRODUCT:
 				addProduct();
 				break;
+			case CHECKOUT_MEMBER_ITEMS:
+				checkOutProducts();
+				break;
 			}
 		}
 	}
@@ -231,6 +234,32 @@ public class Interface {
 
 	public static void main(String[] args) {
 		Interface.instance().process();
+	}
+
+	/**
+	 * Method to be called for checkingOut. Prompts the user for the appropriate
+	 * values and uses the appropriate GroceryStore method for checking out.
+	 * 
+	 */
+	public void checkOutProducts() {
+		Request.instance().setMemberId(getToken("Enter member id"));
+		Result result = groceryStore.searchMembership(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			return;
+		}
+		do {
+			Request.instance().setProductId(getToken("Enter product id"));
+			// test. Change me. to user input.
+			int quantity = 50;
+			result = groceryStore.checkOut(Request.instance(), quantity);
+			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+				// Edit output for unit price, total price, etc.
+				System.out.println("Product " + result.getProductName() + " sold to " + result.getMemberName());
+			} else {
+				System.out.println("Product could not be sold");
+			}
+		} while (yesOrNo("Check out more products?"));
 	}
 
 }
