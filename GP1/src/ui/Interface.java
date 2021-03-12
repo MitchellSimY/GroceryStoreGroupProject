@@ -253,7 +253,7 @@ public class Interface {
 	 * values and uses the appropriate GroceryStore method for checking out.
 	 * 
 	 */
-	public void checkOutProducts() {
+	public void checkOutMember() {
 		Request.instance().setMemberId(getToken("Enter member id"));
 		Result result = groceryStore.searchMembership(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
@@ -389,7 +389,6 @@ public class Interface {
 			case ENROLL_MEMBER:
 				addMember();
 				break;
-//				TODO: Mitch
 			case REMOVE_MEMBER:
 				removeMember();
 				break;
@@ -397,40 +396,29 @@ public class Interface {
 				addProduct();
 				break;
 			case CHECKOUT_MEMBER_ITEMS:
-				checkOutProducts();
+				checkOutMember();
 				break;
-//				TODO: Kou
 			case PROCESS_SHIPMENT:
 				processShipment();
 				break;
-
-//				TODO: Up for grabs
 			case CHANGE_PRICE:
 				changePrice();
 				break;
-
-//				TODO: Up for grabs
 			case RETRIEVE_PRODUCT_INFO:
 				retrieveProductInfo();
 				break;
-
-//				TODO: Trung
 			case RETRIEVE_MEMBER_INFO:
 				retrieveMemberInfo();
 				break;
-
-//				TODO:Jack 
 			case PRINT_TRANSACTIONS:
 				printTransactions();
 				break;
-//				TODO: Up for grabs
 			case LIST_OUTSTANDING_ORDERS:
 				listOutstandingOrders();
 				break;
 			case LIST_ALL_MEMBERS:
 				listAllMembers();
 				break;
-//				TODO: Up for grabs
 			case LIST_ALL_PRODUCTS:
 				listAllProducts();
 				break;
