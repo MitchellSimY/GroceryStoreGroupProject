@@ -155,7 +155,7 @@ public class Interface {
 				System.out.println("Invalid input. Please enter a double.");
 			}
 		} while (true);
-	}
+	} 
 
 	/**
 	 * Prompts for a date and gets a date object
