@@ -144,7 +144,7 @@ public class Interface {
 			}
 		} while (true);
 	}
-	
+
 	public double getDouble(String prompt) {
 		do {
 			try {
@@ -155,7 +155,7 @@ public class Interface {
 				System.out.println("Invalid input. Please enter a double.");
 			}
 		} while (true);
-	} 
+	}
 
 	/**
 	 * Prompts for a date and gets a date object
@@ -314,7 +314,7 @@ public class Interface {
 
 	}
 
-//	TODO: up for grabs
+//	TODO: Trung
 	public void retrieveProductInfo() {
 		// TODO Auto-generated method stub
 
@@ -322,8 +322,25 @@ public class Interface {
 
 //	TODO: Trung
 	public void retrieveMemberInfo() {
-		// TODO Auto-generated method stub
+		Request.instance().setMemberName(getName("Please enter name of member you want to retrieved the information"));
+		Result result = groceryStore.searchName(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member found with given name " + Request.instance().getMemberName());
+			return;
+		}
+		do {
+			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
+			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
+					+ Request.instance().getMemberName());
+			while (iterator.hasNext()) {
+				result = iterator.next();
+				System.out.println(
+						"Member name " + Request.instance().getMemberName() + " has ID member" + result.getMemberId()
+								+ " | Member Address is" + result.getMemberAddress() + " | member's phone Number is "
+								+ result.getMemberPhone() + " | and paid fee is " + result.getMemberFeePaid());
+			}
 
+		} while (yesOrNo("Find information of other member ?"));
 	}
 
 //	TODO: Jack

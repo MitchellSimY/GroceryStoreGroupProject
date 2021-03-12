@@ -145,6 +145,16 @@ public class GroceryStore implements Serializable {
 			return null;
 		}
 
+		public Member searchName(String name) {
+			for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+				Member member = iterator.next();
+				if (member.getName().equals(name)) {
+					return member;
+				}
+			}
+			return null;
+		}
+
 		/**
 		 * Inserts a member into the collection
 		 * 
@@ -247,6 +257,17 @@ public class GroceryStore implements Serializable {
 		return new SafeIterator<Member>(members.iterator(), SafeIterator.MEMBER);
 	}
 
+	public Iterator<Result> retrievedMemberInfor(String name) {
+		List<Member> memberList = new LinkedList<Member>();
+		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+			Member member = iterator.next();
+			if (member.getName().equals(name)) {
+				memberList.add(member);
+			}
+		}
+		return new SafeIterator<Member>(memberList.iterator(), SafeIterator.MEMBER);
+	}
+
 	/**
 	 * Searches for a given member
 	 * 
@@ -256,6 +277,18 @@ public class GroceryStore implements Serializable {
 	public Result searchMembership(Request request) {
 		Result result = new Result();
 		Member member = members.search(request.getMemberId());
+		if (member == null) {
+			result.setResultCode(Result.NO_SUCH_MEMBER);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setMemberFields(member);
+		}
+		return result;
+	}
+
+	public Result searchName(Request request) {
+		Result result = new Result();
+		Member member = members.searchName(request.getMemberName());
 		if (member == null) {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 		} else {
@@ -373,4 +406,5 @@ public class GroceryStore implements Serializable {
 	public String toString() {
 		return productList + "\n" + members;
 	}
+
 }
