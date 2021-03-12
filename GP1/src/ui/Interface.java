@@ -316,28 +316,51 @@ public class Interface {
 
 //	TODO: Trung
 	public void retrieveProductInfo() {
-		// TODO Auto-generated method stub
 
+		do {
+			Request.instance()
+					.setProductName(getName("Please enter name of product you want to retrieved the information"));
+			Result result = groceryStore.searchProductName(Request.instance());
+			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+				System.out.println("No Product found with given name " + Request.instance().getProductName());
+				break;
+			}
+
+			Iterator<Result> iterator = groceryStore.retrievedProductInfor(Request.instance().getProductName());
+			System.out.println("Listing all ProductID, stock in hand, Current Price and Reoder Level has name is "
+					+ Request.instance().getProductName());
+			while (iterator.hasNext()) {
+				result = iterator.next();
+				System.out.println("Prodcut name " + Request.instance().getProductName() + " has ID  is "
+						+ result.getProductId() + " | stock in hand is " + result.getStockInhand()
+						+ " | product price is " + result.getCurrentPrice());
+				result.reset();
+			}
+
+		} while (yesOrNo("Find information of other product ?"));
 	}
 
 //	TODO: Trung
 	public void retrieveMemberInfo() {
-		Request.instance().setMemberName(getName("Please enter name of member you want to retrieved the information"));
-		Result result = groceryStore.searchName(Request.instance());
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("No member found with given name " + Request.instance().getMemberName());
-			return;
-		}
 		do {
+			Request.instance()
+					.setMemberName(getName("Please enter name of member you want to retrieved the information"));
+			Result result = groceryStore.searchName(Request.instance());
+			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+				System.out.println("No member found with given name " + Request.instance().getMemberName());
+				break;
+			}
+
 			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
 			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
 					+ Request.instance().getMemberName());
 			while (iterator.hasNext()) {
 				result = iterator.next();
-				System.out.println(
-						"Member name " + Request.instance().getMemberName() + " has ID member" + result.getMemberId()
-								+ " | Member Address is" + result.getMemberAddress() + " | member's phone Number is "
-								+ result.getMemberPhone() + " | and paid fee is " + result.getMemberFeePaid());
+				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
+						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
+						+ " | member's phone Number is " + result.getMemberPhone() + " | and paid fee is "
+						+ result.getMemberFeePaid());
+				result.reset();
 			}
 
 		} while (yesOrNo("Find information of other member ?"));

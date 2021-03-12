@@ -75,6 +75,17 @@ public class GroceryStore implements Serializable {
 			return null;
 		}
 
+		// trung
+		public Product searchProductName(String name) {
+			for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+				Product product = (Product) iterator.next();
+				if (product.getProductName().equals(name)) {
+					return product;
+				}
+			}
+			return null;
+		}
+
 		/**
 		 * Removes a product from the catalog
 		 * 
@@ -268,6 +279,17 @@ public class GroceryStore implements Serializable {
 		return new SafeIterator<Member>(memberList.iterator(), SafeIterator.MEMBER);
 	}
 
+	public Iterator<Result> retrievedProductInfor(String name) {
+		List<Product> tempList = new LinkedList<Product>();
+		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+			Product product = iterator.next();
+			if (product.getProductName().equals(name)) {
+				tempList.add(product);
+			}
+		}
+		return new SafeIterator<Product>(tempList.iterator(), SafeIterator.PRODUCT);
+	}
+
 	/**
 	 * Searches for a given member
 	 * 
@@ -294,6 +316,18 @@ public class GroceryStore implements Serializable {
 		} else {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setMemberFields(member);
+		}
+		return result;
+	}
+
+	public Result searchProductName(Request request) {
+		Result result = new Result();
+		Product product = productList.searchProductName(request.getProductName());
+		if (product == null) {
+			result.setResultCode(Result.NO_SUCH_MEMBER);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setProductFields(product);
 		}
 		return result;
 	}
