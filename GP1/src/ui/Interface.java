@@ -315,6 +315,13 @@ public class Interface {
 	}
 
 //	TODO: Trung
+	/**
+	 * The method take the input string which is a name of a product then searching
+	 * in the product list of GroceryStore object to find out all the products have
+	 * matching name and return in safe SafeIterator of matching product then print
+	 * out all information of each member like productID current price,stock in hand
+	 * and reorder level
+	 */
 	public void retrieveProductInfo() {
 
 		do {
@@ -331,16 +338,24 @@ public class Interface {
 					+ Request.instance().getProductName());
 			while (iterator.hasNext()) {
 				result = iterator.next();
-				System.out.println("Prodcut name " + Request.instance().getProductName() + " has ID  is "
-						+ result.getProductId() + " | stock in hand is " + result.getStockInhand()
-						+ " | product price is " + result.getCurrentPrice());
+				System.out.println(
+						"Prodcut name " + Request.instance().getProductName() + " has ID  is " + result.getProductId()
+								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
+								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
 				result.reset();
 			}
 
 		} while (yesOrNo("Find information of other product ?"));
 	}
 
-//	TODO: Trung
+	// TODO: Trung
+	/**
+	 * The method take the input string which is a name of a member then searching
+	 * in the member list of GroceryStore object to find out all the members have
+	 * matching name and return in safe SafeIterator of matching member then print
+	 * out all information of each member like memberID , address,phone number and
+	 * paid fee
+	 */
 	public void retrieveMemberInfo() {
 		do {
 			Request.instance()
