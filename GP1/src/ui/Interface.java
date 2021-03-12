@@ -230,7 +230,7 @@ public class Interface {
 		Request.instance().setMemberName(getName("Please enter the Member's name: "));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
-		Request.instance().setMemberFeePaid(getNumber("Please enter how much the Member paid: "));
+		Request.instance().setMemberFeePaid(getDouble("Please enter how much the Member paid: "));
 		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy"));
 		Result result = groceryStore.addMember(Request.instance());
 
