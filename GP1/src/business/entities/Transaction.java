@@ -8,7 +8,7 @@ public class Transaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String type;
 	private String productName;
-
+	private double totalCost;
 	private Calendar date;
 
 	public Transaction(String type, String productName) {
