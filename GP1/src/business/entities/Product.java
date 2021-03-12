@@ -5,14 +5,14 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// Product variables
 	private String productName, productId;
-	private int stockInHand, reorderLevel;
+	private int currentStock, reorderLevel;
 	private double currentPrice;
 
 	// Constructor
 	public Product(String productName, String productId, int stockInHand, int reorderLevel, double currentPrice) {
 		this.productName = productName;
 		this.productId = productId;
-		this.stockInHand = stockInHand;
+		this.currentStock = stockInHand;
 		this.reorderLevel = reorderLevel;
 		this.currentPrice = currentPrice;
 	}
@@ -27,7 +27,7 @@ public class Product implements Serializable {
 		if ((getStockInHand() - quantity) < 0) {
 			return false;
 		} else {
-			setStockInHand(stockInHand - quantity);
+			setStockInHand(currentStock - quantity);
 			return true;
 		}
 	}
@@ -75,7 +75,7 @@ public class Product implements Serializable {
 	 * @return the string stockInHand
 	 */
 	public int getStockInHand() {
-		return stockInHand;
+		return currentStock;
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Product implements Serializable {
 	 * @param a String for new stockInHand
 	 */
 	public void setStockInHand(int stockInHand) {
-		this.stockInHand = stockInHand;
+		this.currentStock = stockInHand;
 	}
 
 	/*
@@ -133,7 +133,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product Name " + productName + " Product ID " + productId + " Stock in Hand " + stockInHand
+		return "Product Name " + productName + " Product ID " + productId + " Stock in Hand " + currentStock
 				+ " Reoder Level " + reorderLevel + " Current Price" + currentPrice;
 
 	}
