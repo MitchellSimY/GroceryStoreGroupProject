@@ -10,31 +10,37 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
 
+/**
+ * 
+ * This class implements the user interface for the Library project. The
+ * commands are encoded as integers using a number of static final variables. A
+ * number of utility methods exist to make it easier to parse the input.
+ *
+ */
 public class Interface {
-
-	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
 	private static Interface interfaceVariable;
+	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static GroceryStore groceryStore;
 
 	// Making static variables for user selection later.
-	public static final int EXIT = 0;
-	public static final int ENROLL_MEMBER = 1;
-	public static final int REMOVE_MEMBER = 2;
-	public static final int ADD_PRODUCT = 3;
-	public static final int CHECKOUT_MEMBER_ITEMS = 4;
-	public static final int PROCESS_SHIPMENT = 5;
-	public static final int CHANGE_PRICE = 6;
-	public static final int RETRIEVE_PRODUCT_INFO = 7;
-	public static final int RETRIEVE_MEMBER_INFO = 8;
-	public static final int PRINT_TRANSACTIONS = 9;
-	public static final int LIST_OUTSTANDING_ORDERS = 10;
-	public static final int LIST_ALL_MEMBERS = 11;
-	public static final int LIST_ALL_PRODUCTS = 12;
+	private static final int EXIT = 0;
+	private static final int ENROLL_MEMBER = 1;
+	private static final int REMOVE_MEMBER = 2;
+	private static final int ADD_PRODUCT = 3;
+	private static final int CHECKOUT_MEMBER_ITEMS = 4;
+	private static final int PROCESS_SHIPMENT = 5;
+	private static final int CHANGE_PRICE = 6;
+	private static final int RETRIEVE_PRODUCT_INFO = 7;
+	private static final int RETRIEVE_MEMBER_INFO = 8;
+	private static final int PRINT_TRANSACTIONS = 9;
+	private static final int LIST_OUTSTANDING_ORDERS = 10;
+	private static final int LIST_ALL_MEMBERS = 11;
+	private static final int LIST_ALL_PRODUCTS = 12;
 	private static final int SAVE = 13;
 	private static final int HELP = 14;
 
@@ -190,12 +196,9 @@ public class Interface {
 		} while (true);
 	}
 
-
-	
 	/**
-	 * Help method. 
-	 * Method strictly for advising the user which menu selection 
-	 * they can select from.
+	 * Help method. Method strictly for advising the user which menu selection they
+	 * can select from.
 	 * 
 	 * @return None. Will prompt for user input.
 	 */
@@ -238,7 +241,7 @@ public class Interface {
 		}
 	}
 
-	//	TODO: Mitch
+	// TODO: Mitch
 	public void removeMember() {
 		// TODO Auto-generated method stub
 
@@ -324,8 +327,22 @@ public class Interface {
 	}
 
 //	TODO: Jack
+	/**
+	 * Method to be called for displaying transactions. Prompts the user for the
+	 * appropriate values and uses the appropriate Library method for displaying
+	 * transactions.
+	 * 
+	 */
 	public void printTransactions() {
-		// TODO Auto-generated method stub
+		Request.instance().setMemberId(getToken("Enter member id"));
+		// TODO: Needs to have a range with a start date and end date inclusive.
+		Request.instance().setDate(getDate("Please enter the date for which you want records as mm/dd/yy"));
+		Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
+		while (result.hasNext()) {
+			Transaction transaction = (Transaction) result.next();
+			System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
+		}
+		System.out.println("\nEnd of transactions \n");
 
 	}
 
