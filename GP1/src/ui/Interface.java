@@ -138,6 +138,18 @@ public class Interface {
 			}
 		} while (true);
 	}
+	
+	public double getDouble(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Double number = Double.valueOf(item);
+				return number.doubleValue();
+			} catch (Exception exception) {
+				System.out.println("Invalid input. Please enter a double.");
+			}
+		} while (true);
+	}
 
 	/**
 	 * Prompts for a date and gets a date object
@@ -170,7 +182,6 @@ public class Interface {
 			try {
 				int value = Integer.parseInt(getToken("Enter command: "));
 				if (value >= EXIT && value <= HELP) {
-					System.out.println(value);
 					return value;
 				}
 			} catch (NumberFormatException nfe) {
@@ -242,14 +253,14 @@ public class Interface {
 		do {
 			Request.instance().setProductName(getName("Enter Product name: "));
 			Request.instance().setProductId(getToken("Enter Product ID: "));
-			Request.instance().setCurrentPrice(getNumber("Please enter current price: "));
+			Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 			Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 			Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
 			Result result = groceryStore.addProduct(Request.instance());
 			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 				System.out.println("Product could not be added.");
 			} else {
-				System.out.println(result.getProductName() + " Has since been added.");
+				System.out.println(result.getProductName() + " has since been added.");
 			}
 		} while (yesOrNo("Add more products?"));
 	}
