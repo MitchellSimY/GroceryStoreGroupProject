@@ -179,8 +179,14 @@ public class Interface {
 		} while (true);
 	}
 
+
+	
 	/**
-	 * Displaying help screen (User Interface)
+	 * Help method. 
+	 * Method strictly for advising the user which menu selection 
+	 * they can select from.
+	 * 
+	 * @return None. Will prompt for user input.
 	 */
 	public void help() {
 		System.out.println("Please select an option");
@@ -221,7 +227,7 @@ public class Interface {
 		}
 	}
 
-//	TODO: Mitch
+	//	TODO: Mitch
 	public void removeMember() {
 		// TODO Auto-generated method stub
 

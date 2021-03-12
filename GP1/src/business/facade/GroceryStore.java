@@ -14,14 +14,6 @@ import business.entities.Member;
 import business.entities.Product;
 import business.entities.iterators.SafeIterator;
 
-/**
- * Mitch: I made memberList and productList as their own classes when this was
- * first created. I ended up understanding the basic concepts of singletons and
- * I've since deleted those classes.
- * 
- * If im correct they'll both go in here as Singletons.
- *
- */
 public class GroceryStore implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -100,6 +92,16 @@ public class GroceryStore implements Serializable {
 		}
 	}
 
+	/**
+	 * Add product method. 
+	 * This method will allow for the addition of new products. 
+	 * Called from addProduct method in Interface.
+	 * 
+	 * @param request - This is the product object. Contains
+	 * all the product information. 
+	 * @return Result - Which advises the user whether the
+	 * function was successful. 
+	 */
 	public Result addProduct(Request request) {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
