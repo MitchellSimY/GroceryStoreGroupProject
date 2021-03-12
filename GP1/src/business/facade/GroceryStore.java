@@ -12,14 +12,41 @@ import java.util.List;
 
 import business.entities.Member;
 import business.entities.Product;
+import business.entities.Transaction;
 import business.entities.iterators.SafeIterator;
 
+/**
+ * The facade class handling all requests from users.
+ * 
+ * @author group
+ *
+ */
 public class GroceryStore implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private ProductList productList = new ProductList();
 	private MemberList members = new MemberList();
 	private static GroceryStore groceryStore;
+
+	/**
+	 * 
+	 * @author Brahma Dathan and Sarnath Ramnath
+	 * @Copyright (c) 2010
+	 * 
+	 *            Redistribution and use with or without modification, are permitted
+	 *            provided that the following conditions are met:
+	 *
+	 *            - the use is for academic purpose only - Redistributions of source
+	 *            code must retain the above copyright notice, this list of
+	 *            conditions and the following disclaimer. - Neither the name of
+	 *            Brahma Dathan or Sarnath Ramnath may be used to endorse or promote
+	 *            products derived from this software without specific prior written
+	 *            permission.
+	 *
+	 *            The authors do not make any claims regarding the correctness of
+	 *            the code in this module and are not responsible for any loss or
+	 *            damage resulting from its use.
+	 */
 
 	/**
 	 * The collection class for Product objects
@@ -93,48 +120,13 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Add product method. 
-	 * This method will allow for the addition of new products. 
-	 * Called from addProduct method in Interface.
+	 * The collection class for Member objects
 	 * 
-	 * @param request - This is the product object. Contains
-	 * all the product information. 
-	 * @return Result - Which advises the user whether the
-	 * function was successful. 
+	 * ====== Start Member List Class ========
 	 */
-	public Result addProduct(Request request) {
-		Result result = new Result();
-		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
-				request.getReorderLevel(), request.getCurrentPrice());
-		if (productList.insertProduct(product)) {
-			result.setResultCode(Result.OPERATION_COMPLETED);
-			result.setProductFields(product);
-			return result;
-		}
-		result.setResultCode(Result.OPERATION_FAILED);
-		return result;
-	}
-
-	// ====== Start Member List Class ========
 	private class MemberList implements Iterable<Member>, Serializable {
 		private static final long serialVersionUID = 1L;
 		private List<Member> members = new LinkedList<Member>();
-
-		// Adding members method.
-		public boolean insertMember(Member member) {
-			members.add(member);
-			return true;
-		}
-
-		@Override
-		public Iterator<Member> iterator() {
-			return members.iterator();
-		}
-
-		@Override
-		public String toString() {
-			return members.toString();
-		}
 
 		/**
 		 * Checks whether a member with a given member id exists.
@@ -153,12 +145,37 @@ public class GroceryStore implements Serializable {
 			return null;
 		}
 
+		/**
+		 * Inserts a member into the collection
+		 * 
+		 * @param member the member to be inserted
+		 * @return true iff the member could be inserted. Currently always true
+		 */
+		public boolean insertMember(Member member) {
+			members.add(member);
+			return true;
+		}
+
+		@Override
+		public Iterator<Member> iterator() {
+			return members.iterator();
+		}
+
+		/**
+		 * String form of the collection
+		 * 
+		 */
+		@Override
+		public String toString() {
+			return members.toString();
+		}
+
 	}
 	// ====== End of Member List Class ========
 
 	/**
-	 * Private for the singleton pattern Creates the catalog and member collection
-	 * objects
+	 * Private for the singleton pattern Creates the productList and member
+	 * collection objects
 	 */
 	private GroceryStore() {
 	}
@@ -193,6 +210,27 @@ public class GroceryStore implements Serializable {
 		if (members.insertMember(member)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setMemberFields(member);
+			return result;
+		}
+		result.setResultCode(Result.OPERATION_FAILED);
+		return result;
+	}
+
+	/**
+	 * Add product method. This method will allow for the addition of new products.
+	 * Called from addProduct method in Interface.
+	 * 
+	 * @param request - This is the product object. Contains all the product
+	 *                information.
+	 * @return Result - Which advises the user whether the function was successful.
+	 */
+	public Result addProduct(Request request) {
+		Result result = new Result();
+		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
+				request.getReorderLevel(), request.getCurrentPrice());
+		if (productList.insertProduct(product)) {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setProductFields(product);
 			return result;
 		}
 		result.setResultCode(Result.OPERATION_FAILED);
@@ -272,6 +310,22 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
+	 * Returns an iterator to the transactions for a specific member on a certain
+	 * date
+	 * 
+	 * @param memberId member id
+	 * @param date     date of issue
+	 * @return iterator to the collection
+	 */
+	public Iterator<Transaction> getTransactions(Request request) {
+		Member member = members.search(request.getMemberId());
+		if (member == null) {
+			return new LinkedList<Transaction>().iterator();
+		}
+		return member.getTransactionsOnDate(request.getDate());
+	}
+
+	/**
 	 * Retrieves a deserialized version of the groceryStore from disk
 	 * 
 	 * @return a GroceryStore object
@@ -311,4 +365,12 @@ public class GroceryStore implements Serializable {
 		}
 	}
 
+	/**
+	 * String form of the library
+	 * 
+	 */
+	@Override
+	public String toString() {
+		return productList + "\n" + members;
+	}
 }

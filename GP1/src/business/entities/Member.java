@@ -5,9 +5,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import business.entities.iterators.FilteredIterator;
+
+/**
+ * Member represents a member of the groceryStore.
+ * 
+ * @author Brahma Dathan and Sarnath Ramnath
+ *
+ */
 public class Member implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,7 +30,15 @@ public class Member implements Serializable {
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private Calendar joinedDate;
 
-	// Member constructor
+	/**
+	 * Creates a single member
+	 * 
+	 * @param name        name of the member
+	 * @param address     address of the member
+	 * @param phoneNumber phone number of the member
+	 * @param feePaid     how much fee have they paid
+	 * @param joinedData  date joined
+	 */
 	public Member(String name, String phoneNumber, String address, double feePaid, Calendar joinedDate) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
@@ -45,6 +62,25 @@ public class Member implements Serializable {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Gets an iterator to a collection of selected transactions
+	 * 
+	 * @param date the date for which the transactions have to be retrieved
+	 * @return the iterator to the collection
+	 */
+	public Iterator<Transaction> getTransactionsOnDate(Calendar date) {
+		return new FilteredIterator(transactions.iterator(), transaction -> transaction.onDate(date));
+	}
+
+	/**
+	 * Returns the list of all transactions for this member.
+	 * 
+	 * @return the iterator to the list of Transaction objects
+	 */
+	public Iterator<Transaction> getTransactions() {
+		return transactions.iterator();
 	}
 
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
@@ -144,6 +180,13 @@ public class Member implements Serializable {
 	 * 
 	 * @return the Calendar object joinedDate
 	 */
+	public Calendar getJoinedDate() {
+		return joinedDate;
+	}
+
+	public void setJoinedDate(Calendar joinedDate) {
+		this.joinedDate = joinedDate;
+	}
 
 	@Override
 	public int hashCode() {
@@ -160,6 +203,12 @@ public class Member implements Serializable {
 
 	}
 
+	/**
+	 * Checks whether the member is equal to the one supplied
+	 * 
+	 * @param object the member who should be compared
+	 * @return true iff the member ids match
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -180,22 +229,6 @@ public class Member implements Serializable {
 			return false;
 		}
 		return true;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
-	}
-
-	public Calendar getJoinedDate() {
-		return joinedDate;
-	}
-
-	public void setJoinedDate(Calendar joinedDate) {
-		this.joinedDate = joinedDate;
 	}
 
 	public static void save(ObjectOutputStream output) throws IOException {
