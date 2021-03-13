@@ -445,10 +445,10 @@ public class Interface {
 	 */
 	public void listAllMembers() {
 		Iterator<Result> iterator = groceryStore.getMembers();
-		System.out.println("Listing all members by Name, Date joined, address and phone number");
+		System.out.println("Listing all members by Name, Date joined, address and phone number.");
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(result.getMemberName() + " | " + result.getDateJoined() + " | "
+			System.out.println(result.getMemberName() + " | " + result.getDateJoined().getTime().toString() + " | "
 					+ result.getMemberAddress() + " | " + result.getMemberPhone());
 		}
 
