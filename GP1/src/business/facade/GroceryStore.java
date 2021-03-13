@@ -188,6 +188,11 @@ public class GroceryStore implements Serializable {
 			return true;
 		}
 		
+		/**
+		 * Remove member method
+		 * Is called outside of the said class and removes the member 
+		 * from the list.
+		 */
 		public boolean removeMember(Member member) {
 			members.remove(member);
 			return true;

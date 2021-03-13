@@ -251,7 +251,12 @@ public class Interface {
 		}
 	}
 
-	// TODO: Mitch
+	/**
+	 * Remove Member Method.
+	 * This method is used to remove members from the existing list.
+	 * 
+	 * @return Advises if the user has since been removed or not.
+	 */
 	public void removeMember() {
 		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
 		Result result = groceryStore.removeMember(Request.instance());
