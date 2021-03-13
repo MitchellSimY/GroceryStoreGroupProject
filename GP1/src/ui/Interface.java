@@ -253,8 +253,15 @@ public class Interface {
 
 	// TODO: Mitch
 	public void removeMember() {
-		// TODO Auto-generated method stub
+		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
+		Result result = groceryStore.removeMember(Request.instance());
 
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("Could not remove member");
+		} else {
+			System.out.println("Member has since been removed");
+		}
+		
 	}
 
 	/**
@@ -342,7 +349,7 @@ public class Interface {
 								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
 								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
 			}
-		} while (yesOrNo("Do you want ro change the price for different product? "));
+		} while (yesOrNo("Do you want to change the price for different product? "));
 	}
 
 //	TODO: Trung
@@ -405,7 +412,7 @@ public class Interface {
 				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
 						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
 						+ " | member's phone Number is " + result.getMemberPhone() + " | paid fee is "
-						+ result.getMemberFeePaid() + " | and the joined date is " + result.getDateJoined());
+						+ result.getMemberFeePaid() + " | and the joined date is " + result.getDateJoined().getTime().toString());
 				result.reset();
 			}
 
