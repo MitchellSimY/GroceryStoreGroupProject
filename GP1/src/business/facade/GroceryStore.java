@@ -75,7 +75,13 @@ public class GroceryStore implements Serializable {
 			return null;
 		}
 
-		// trung
+		/**
+		 * Checks whether a product with a given product name exists.
+		 * 
+		 * @param product name of the product
+		 * @return That product iff the product exists
+		 * 
+		 */
 		public Product searchProductName(String name) {
 			for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 				Product product = (Product) iterator.next();
@@ -121,6 +127,10 @@ public class GroceryStore implements Serializable {
 			return products.iterator();
 		}
 
+		public List<Product> getProductList() {
+			return products;
+		}
+
 		/**
 		 * String form of the collection
 		 * 
@@ -128,6 +138,7 @@ public class GroceryStore implements Serializable {
 		public String toString() {
 			return products.toString();
 		}
+
 	}
 
 	/**
@@ -214,6 +225,11 @@ public class GroceryStore implements Serializable {
 		}
 	}
 
+	public ProductList getProductList() {
+		return productList;
+
+	}
+
 	/**
 	 * Add member method. This method adds a member utilizing the request object as
 	 * parameters for the new member. In order the member parameters are, Name,
@@ -268,6 +284,24 @@ public class GroceryStore implements Serializable {
 		return new SafeIterator<Member>(members.iterator(), SafeIterator.MEMBER);
 	}
 
+	/**
+	 * getProduct method Showing all products that have since added. This was called
+	 * by interface > listAllProducts
+	 * 
+	 * @return all iterator of productList
+	 */
+	public Iterator<Result> getProducts() {
+		return new SafeIterator<Product>(productList.iterator(), SafeIterator.PRODUCT);
+	}
+
+	/**
+	 * retrievedMemberInfor searching the members list by iterator to find every
+	 * member has matching name with the user input then add all found result in to
+	 * a list and return an iterator of that result list
+	 * 
+	 * @param is user input which is a string of member's name
+	 * @return all iterator of all members has matching name
+	 */
 	public Iterator<Result> retrievedMemberInfor(String name) {
 		List<Member> memberList = new LinkedList<Member>();
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
@@ -279,6 +313,14 @@ public class GroceryStore implements Serializable {
 		return new SafeIterator<Member>(memberList.iterator(), SafeIterator.MEMBER);
 	}
 
+	/**
+	 * retrievedProductInfor searching the product list by iterator to find every
+	 * product has matching name with the user input then add all found results in
+	 * to a temp list and return an iterator of that result list
+	 * 
+	 * @param is user input which is a string of name of the product
+	 * @return all iterator of all members has matching name
+	 */
 	public Iterator<Result> retrievedProductInfor(String name) {
 		List<Product> tempList = new LinkedList<Product>();
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
@@ -294,7 +336,7 @@ public class GroceryStore implements Serializable {
 	 * Searches for a given member
 	 * 
 	 * @param memberId id of the member
-	 * @return true iff the member is in the member list collection
+	 * @return true if the member is in the member list collection
 	 */
 	public Result searchMembership(Request request) {
 		Result result = new Result();
@@ -308,6 +350,13 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 
+	/**
+	 * Searches for a given member by member name which assigned in result object
+	 * 
+	 * @param request object which have name use for condition for searching
+	 * @return OPERATION_COMPLETED if the member is in the member list collection
+	 *         and NO_SUCH_MEMBER if no member found
+	 */
 	public Result searchName(Request request) {
 		Result result = new Result();
 		Member member = members.searchName(request.getMemberName());
@@ -320,6 +369,25 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 
+	public Result searchProduct(Request request) {
+		Result result = new Result();
+		Product product = productList.search(request.getProductId());
+		if (product == null) {
+			result.setResultCode(Result.NO_SUCH_MEMBER);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setProductFields(product);
+		}
+		return result;
+	}
+
+	/**
+	 * Searches for a given product by product name which assigned in result object
+	 * 
+	 * @param request object which have name use for condition for searching
+	 * @return OPERATION_COMPLETED if the product is in the product list collection
+	 *         and NO_SUCH_MEMBER if no product found
+	 */
 	public Result searchProductName(Request request) {
 		Result result = new Result();
 		Product product = productList.searchProductName(request.getProductName());
@@ -330,6 +398,16 @@ public class GroceryStore implements Serializable {
 			result.setProductFields(product);
 		}
 		return result;
+	}
+
+	public void changePrice(String productId, double price) {
+		for (Product productToUpdate : getProductList().getProductList()) {
+			if (productToUpdate.getProductId().equals(productId)) {
+				productToUpdate.setCurrentPrice(price);
+				break;
+			}
+		}
+
 	}
 
 	/**

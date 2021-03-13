@@ -126,6 +126,16 @@ public class Interface {
 		return true;
 	}
 
+	private String equalsLength(String string) {
+		int standar = 20 - string.length();
+		if (standar > 0) {
+			for (int i = 0; i < (standar / 2); ++i) {
+				string = " " + string + " ";
+			}
+		}
+		return string;
+	}
+
 	/**
 	 * Converts the string to a number
 	 * 
@@ -308,10 +318,31 @@ public class Interface {
 
 	}
 
-//	TODO: up for grabs
+//	TODO: Trung
+	/**
+	 * The method take the user input which is a id of a product then searching in
+	 * the product list of GroceryStore object to find out if there a products with
+	 * user Id string input exist, then update the price for the product by asking
+	 * user Then print out all the information of the product was update in price
+	 * term
+	 */
 	public void changePrice() {
-		// TODO Auto-generated method stub
-
+		do {
+			Request.instance().setProductId(getToken("Please enter id of product you want to change the price"));
+			Result result = groceryStore.searchProduct(Request.instance());
+			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+				System.out.println("No Product found with given name " + Request.instance().getProductName());
+			} else {
+				double newPrice = getDouble(
+						"Please enter the new price for the product has id " + Request.instance().getProductId());
+				result.setCurrentPrice(newPrice);
+				groceryStore.changePrice(Request.instance().getProductId(), newPrice);
+				System.out.println(
+						"Prodcut name " + Request.instance().getProductName() + " has ID  is " + result.getProductId()
+								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
+								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
+			}
+		} while (yesOrNo("Do you want ro change the price for different product? "));
 	}
 
 //	TODO: Trung
@@ -373,8 +404,8 @@ public class Interface {
 				result = iterator.next();
 				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
 						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
-						+ " | member's phone Number is " + result.getMemberPhone() + " | and paid fee is "
-						+ result.getMemberFeePaid());
+						+ " | member's phone Number is " + result.getMemberPhone() + " | paid fee is "
+						+ result.getMemberFeePaid() + " | and the joined date is " + result.getDateJoined());
 				result.reset();
 			}
 
@@ -423,9 +454,25 @@ public class Interface {
 
 	}
 
-//	TODO: Up for grabs
+//	TODO: Trung
+	/**
+	 * List all products will list all the products that have added on the
+	 * productList.
+	 * 
+	 * @return All members
+	 */
 	public void listAllProducts() {
-		// TODO Auto-generated method stub
+		Iterator<Result> iterator = groceryStore.getProducts();
+		System.out.println(
+				equalsLength("Product Name") + "|" + equalsLength("Product ID") + "|" + equalsLength("Current Price")
+						+ "|" + equalsLength("Reorder Level") + "|" + equalsLength("StockInhand") + "\n");
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			System.out.println(equalsLength(result.getProductName()) + "|" + equalsLength(result.getProductId()) + "|"
+					+ equalsLength(String.valueOf(result.getCurrentPrice())) + "|"
+					+ equalsLength(String.valueOf(result.getReorderLevel())) + "|"
+					+ equalsLength(String.valueOf(result.getStockInhand())));
+		}
 
 	}
 
