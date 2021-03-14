@@ -187,6 +187,16 @@ public class GroceryStore implements Serializable {
 			members.add(member);
 			return true;
 		}
+		
+		/**
+		 * Remove member method
+		 * Is called outside of the said class and removes the member 
+		 * from the list.
+		 */
+		public boolean removeMember(Member member) {
+			members.remove(member);
+			return true;
+		}
 
 		@Override
 		public Iterator<Member> iterator() {
@@ -250,6 +260,27 @@ public class GroceryStore implements Serializable {
 			return result;
 		}
 		result.setResultCode(Result.OPERATION_FAILED);
+		return result;
+	}
+	
+	/**
+	 * Remove Member. 
+	 * This method is utilized for people that no longer want to be 
+	 * a member with the grocery store. 
+	 * @param instance - An object that has the requested memberId
+	 * @return result - this is the result for whether the operation failed or not.
+	 */
+	public Result removeMember(Request instance) {
+		Member memberToBeRemoved = members.search(instance.getMemberId());
+		Result result = new Result();
+		System.out.println(memberToBeRemoved.getMemberId());
+				
+		if (members.removeMember(memberToBeRemoved)) {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			return result;
+		} 
+		result.setResultCode(Result.OPERATION_FAILED);
+		
 		return result;
 	}
 
@@ -518,5 +549,6 @@ public class GroceryStore implements Serializable {
 	public String toString() {
 		return productList + "\n" + members;
 	}
+
 
 }

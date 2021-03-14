@@ -137,16 +137,16 @@ public class Interface {
 	private String equalsLength(String string) {
 		int standar = 20 - string.length();
 		if (standar > 0 && standar % 2 == 0) {
-			for (int i = 0; i <= (standar / 2); ++i) {
+			for (int i = 0; i <= (standar / 2) - 1; ++i) {
 				string = " " + string + " ";
 			}
 		}
 		if (standar > 0 && standar % 2 != 0) {
-			for (int i = 0; i <= (standar / 2) - 1; ++i) {
-				string = " " + string + " ";
-				if (i == (standar / 2) - 1) {
+			for (int i = 0; i <= standar / 2; ++i) {
+				if (i == standar / 2) {
 					string = string + " ";
-				}
+				} else
+					string = " " + string + " ";
 			}
 		}
 		return string;
@@ -267,9 +267,21 @@ public class Interface {
 		}
 	}
 
-	// TODO: Mitch
+	/**
+	 * Remove Member Method. This method is used to remove members from the existing
+	 * list.
+	 * 
+	 * @return Advises if the user has since been removed or not.
+	 */
 	public void removeMember() {
-		// TODO Auto-generated method stub
+		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
+		Result result = groceryStore.removeMember(Request.instance());
+
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("Could not remove member");
+		} else {
+			System.out.println("Member has since been removed");
+		}
 
 	}
 
@@ -358,7 +370,7 @@ public class Interface {
 								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
 								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
 			}
-		} while (yesOrNo("Do you want ro change the price for different product? "));
+		} while (yesOrNo("Do you want to change the price for different product? "));
 	}
 
 //	TODO: Trung
@@ -384,8 +396,9 @@ public class Interface {
 			System.out.println("Listing all ProductID, stock in hand, Current Price and Reoder Level has name is "
 					+ Request.instance().getProductName());
 
-			System.out.println(equalsLength("Product Name") + equalsLength("Product ID") + equalsLength("Current Price")
-					+ equalsLength("Reorder Level") + equalsLength("StockInhand"));
+			System.out.println(equalsLength("Product Name") + "|" + equalsLength("Product ID") + "|"
+					+ equalsLength("Current Price") + "|" + equalsLength("Reorder Level") + "|"
+					+ equalsLength("StockInhand"));
 
 			while (iterator.hasNext()) {
 				result = iterator.next();
@@ -420,16 +433,23 @@ public class Interface {
 			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
 			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
 					+ Request.instance().getMemberName());
-			System.out.println(equalsLength("Member Name") + equalsLength("Member ID") + equalsLength("Member Address")
-					+ equalsLength("Member Phonenumber") + equalsLength("Member Paid Fee")
-					+ equalsLength("Member joined date"));
+			System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|"
+					+ equalsLength("Member Address") + equalsLength("Member Phonenumber") + "|"
+					+ equalsLength("Member Paid Fee") + "|" + equalsLength("Member joined date"));
 			while (iterator.hasNext()) {
 				result = iterator.next();
+
 				System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
 						+ equalsLength(String.valueOf(result.getMemberAddress())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberPhone())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
 						+ equalsLength(String.valueOf(result.getDateJoined())));
+				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
+						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
+						+ " | member's phone Number is " + result.getMemberPhone() + " | paid fee is "
+						+ result.getMemberFeePaid() + " | and the joined date is "
+						+ result.getDateJoined().getTime().toString());
+
 				result.reset();
 			}
 
@@ -469,11 +489,16 @@ public class Interface {
 	 */
 	public void listAllMembers() {
 		Iterator<Result> iterator = groceryStore.getMembers();
-		System.out.println("Listing all members by Name, Date joined, address and phone number");
+
+		System.out.println(
+				equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|" + equalsLength("Member Address")
+						+ "|" + equalsLength("Member Phone") + "|" + equalsLength("Member Date Joined"));
+
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(result.getMemberName() + " | " + result.getDateJoined() + " | "
-					+ result.getMemberAddress() + " | " + result.getMemberPhone());
+			System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
+					+ equalsLength(result.getMemberAddress()) + "|" + equalsLength(result.getMemberPhone()) + "|"
+					+ equalsLength(result.getDateJoinedByString()));
 		}
 
 	}
@@ -487,8 +512,9 @@ public class Interface {
 	 */
 	public void listAllProducts() {
 		Iterator<Result> iterator = groceryStore.getProducts();
-		System.out.println(equalsLength("Product Name") + equalsLength("Product ID") + equalsLength("Current Price")
-				+ equalsLength("Reorder Level") + equalsLength("StockInhand"));
+		System.out.println(
+				equalsLength("Product Name") + "|" + equalsLength("Product ID") + "|" + equalsLength("Current Price")
+						+ "|" + equalsLength("Reorder Level") + "|" + equalsLength("StockInhand"));
 
 		while (iterator.hasNext()) {
 			Result result = iterator.next();

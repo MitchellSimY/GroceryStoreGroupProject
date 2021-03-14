@@ -1,4 +1,5 @@
 package business.facade;
+
 import java.util.Calendar;
 
 import business.entities.Member;
@@ -124,6 +125,11 @@ public abstract class DataTransfer {
 
 	public Calendar getDateJoined() {
 		return dateJoined;
+	}
+
+	public String getDateJoinedByString() {
+		int month = dateJoined.get(Calendar.MONTH) + 1;
+		return "" + month + "/" + dateJoined.get(Calendar.DAY_OF_MONTH) + "/" + dateJoined.get(Calendar.YEAR);
 	}
 
 	public void setDateJoined(Calendar dateJoined) {
