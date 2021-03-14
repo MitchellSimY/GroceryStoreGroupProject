@@ -184,6 +184,11 @@ public class Member implements Serializable {
 		return joinedDate;
 	}
 
+	public String getJoinedDateByString() {
+		return "" + joinedDate.get(Calendar.MONTH) + "/" + joinedDate.get(Calendar.DAY_OF_MONTH) + "/"
+				+ joinedDate.get(Calendar.YEAR);
+	}
+
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
 	}

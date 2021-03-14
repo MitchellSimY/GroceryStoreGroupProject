@@ -126,11 +126,27 @@ public class Interface {
 		return true;
 	}
 
+	/**
+	 * return all string have same length and set the string in the middle
+	 * 
+	 * @param a tring
+	 * @return a string with space in front and back to make string set in the
+	 *         middle
+	 * 
+	 */
 	private String equalsLength(String string) {
 		int standar = 20 - string.length();
-		if (standar > 0) {
-			for (int i = 0; i < (standar / 2); ++i) {
+		if (standar > 0 && standar % 2 == 0) {
+			for (int i = 0; i <= (standar / 2); ++i) {
 				string = " " + string + " ";
+			}
+		}
+		if (standar > 0 && standar % 2 != 0) {
+			for (int i = 0; i <= (standar / 2) - 1; ++i) {
+				string = " " + string + " ";
+				if (i == (standar / 2) - 1) {
+					string = string + " ";
+				}
 			}
 		}
 		return string;
@@ -367,12 +383,16 @@ public class Interface {
 			Iterator<Result> iterator = groceryStore.retrievedProductInfor(Request.instance().getProductName());
 			System.out.println("Listing all ProductID, stock in hand, Current Price and Reoder Level has name is "
 					+ Request.instance().getProductName());
+
+			System.out.println(equalsLength("Product Name") + equalsLength("Product ID") + equalsLength("Current Price")
+					+ equalsLength("Reorder Level") + equalsLength("StockInhand"));
+
 			while (iterator.hasNext()) {
 				result = iterator.next();
-				System.out.println(
-						"Prodcut name " + Request.instance().getProductName() + " has ID  is " + result.getProductId()
-								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
-								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
+				System.out.println(equalsLength(result.getProductName()) + "|" + equalsLength(result.getProductId())
+						+ "|" + equalsLength(String.valueOf(result.getCurrentPrice())) + "|"
+						+ equalsLength(String.valueOf(result.getReorderLevel())) + "|"
+						+ equalsLength(String.valueOf(result.getStockInhand())));
 				result.reset();
 			}
 
@@ -400,12 +420,16 @@ public class Interface {
 			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
 			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
 					+ Request.instance().getMemberName());
+			System.out.println(equalsLength("Member Name") + equalsLength("Member ID") + equalsLength("Member Address")
+					+ equalsLength("Member Phonenumber") + equalsLength("Member Paid Fee")
+					+ equalsLength("Member joined date"));
 			while (iterator.hasNext()) {
 				result = iterator.next();
-				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
-						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
-						+ " | member's phone Number is " + result.getMemberPhone() + " | paid fee is "
-						+ result.getMemberFeePaid() + " | and the joined date is " + result.getDateJoined());
+				System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
+						+ equalsLength(String.valueOf(result.getMemberAddress())) + "|"
+						+ equalsLength(String.valueOf(result.getMemberPhone())) + "|"
+						+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
+						+ equalsLength(String.valueOf(result.getDateJoined())));
 				result.reset();
 			}
 
@@ -463,9 +487,9 @@ public class Interface {
 	 */
 	public void listAllProducts() {
 		Iterator<Result> iterator = groceryStore.getProducts();
-		System.out.println(
-				equalsLength("Product Name") + "|" + equalsLength("Product ID") + "|" + equalsLength("Current Price")
-						+ "|" + equalsLength("Reorder Level") + "|" + equalsLength("StockInhand") + "\n");
+		System.out.println(equalsLength("Product Name") + equalsLength("Product ID") + equalsLength("Current Price")
+				+ equalsLength("Reorder Level") + equalsLength("StockInhand"));
+
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
 			System.out.println(equalsLength(result.getProductName()) + "|" + equalsLength(result.getProductId()) + "|"
