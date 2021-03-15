@@ -487,7 +487,7 @@ public class Interface {
 		Iterator<Result> iterator = groceryStore.getMembers();
 
 		System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|"
-				+ equalsLength("Member Address") + "|" + equalsLength("Member Phone") + "|"
+				+ equalsLength("Member Phone") + "|" + equalsLength("Member Address") + "|"
 				+ equalsLength("Member Paid Fee") + equalsLength("Member Date Joined"));
 
 		while (iterator.hasNext()) {
