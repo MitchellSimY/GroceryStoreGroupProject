@@ -433,9 +433,11 @@ public class Interface {
 			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
 			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
 					+ Request.instance().getMemberName());
+
 			System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|"
 					+ equalsLength("Member Address") + equalsLength("Member Phonenumber") + "|"
 					+ equalsLength("Member Paid Fee") + "|" + equalsLength("Member joined date"));
+
 			while (iterator.hasNext()) {
 				result = iterator.next();
 
@@ -443,13 +445,7 @@ public class Interface {
 						+ equalsLength(String.valueOf(result.getMemberAddress())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberPhone())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
-						+ equalsLength(String.valueOf(result.getDateJoined())));
-				System.out.println("Member name " + Request.instance().getMemberName() + " has ID member is "
-						+ result.getMemberId() + " | Member Address is " + result.getMemberAddress()
-						+ " | member's phone Number is " + result.getMemberPhone() + " | paid fee is "
-						+ result.getMemberFeePaid() + " | and the joined date is "
-						+ result.getDateJoined().getTime().toString());
-
+						+ equalsLength(result.getDateJoinedByString()));
 				result.reset();
 			}
 
@@ -490,14 +486,15 @@ public class Interface {
 	public void listAllMembers() {
 		Iterator<Result> iterator = groceryStore.getMembers();
 
-		System.out.println(
-				equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|" + equalsLength("Member Address")
-						+ "|" + equalsLength("Member Phone") + "|" + equalsLength("Member Date Joined"));
+		System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|"
+				+ equalsLength("Member Address") + "|" + equalsLength("Member Phone") + "|"
+				+ equalsLength("Member Paid Fee") + equalsLength("Member Date Joined"));
 
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
 			System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
 					+ equalsLength(result.getMemberAddress()) + "|" + equalsLength(result.getMemberPhone()) + "|"
+					+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
 					+ equalsLength(result.getDateJoinedByString()));
 		}
 
