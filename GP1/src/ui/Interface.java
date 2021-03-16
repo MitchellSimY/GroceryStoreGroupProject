@@ -218,16 +218,12 @@ public class Interface {
 	private boolean isValid(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
-			 System.out.println("Your input is not right format");
 			if (item.split("/").length == 3) {
-				// System.out.println("2");
 				String[] split = item.split("/");
 				if ((split[0].length() < 3) && (split[1].length() < 3) && (split[2].length() < 3)) {
-					System.out.println("Your input is not right format");
 					if ((Integer.parseInt(split[0]) > 0 && Integer.parseInt(split[0]) < 13)
 							&& (Integer.parseInt(split[1]) > 0 && Integer.parseInt(split[1]) < 32)
 							&& (Integer.parseInt(split[2]) > 0 && Integer.parseInt(split[2]) < 100)) {
-						System.out.println("Your input is not right format");
 						result = true;
 					}
 				}
