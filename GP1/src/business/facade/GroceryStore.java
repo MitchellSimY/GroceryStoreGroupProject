@@ -296,11 +296,25 @@ public class GroceryStore implements Serializable {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
 				request.getReorderLevel(), request.getCurrentPrice());
+		
+		/**
+		 * If satements checking to see if the product already exists
+		 * via the ID or the name.
+		 */
+		if (productList.search(request.getProductId()) != null) {
+			result.setResultCode(Result.PRODUCTID_EXISTS);
+			return result;
+		} else if (productList.searchProductName(request.getProductName()) != null) {
+			result.setResultCode(Result.PRODUCT_NAME_EXISTS);
+			return result;
+		}
+
 		if (productList.insertProduct(product)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
 			return result;
 		}
+
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}

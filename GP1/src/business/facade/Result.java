@@ -22,7 +22,8 @@ public class Result extends DataTransfer {
 	public static final int OPERATION_COMPLETED = 7;
 	public static final int OPERATION_FAILED = 8;
 	public static final int NO_SUCH_MEMBER = 9;
-
+	public static final int PRODUCTID_EXISTS = 10;
+	public static final int PRODUCT_NAME_EXISTS = 11;
 	private int resultCode;
 
 	public int getResultCode() {

@@ -226,7 +226,14 @@ public class Interface {
 			}
 		} while (true);
 	}
-
+	
+	/**
+	 * isValid date checker method. 
+	 * Makes sure the user is entering in the correct date format.
+	 * 
+	 * @param item
+	 * @return whether the date is valud or not.
+	 */
 	private boolean isValid(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
@@ -341,8 +348,12 @@ public class Interface {
 			Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 			Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
 			Result result = groceryStore.addProduct(Request.instance());
-			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			if (result.getResultCode() == Result.OPERATION_FAILED) {
 				System.out.println("Product could not be added.");
+			} else if (result.getResultCode() == Result.PRODUCTID_EXISTS) {
+				System.out.println("Product ID already exists");
+			} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
+				System.out.println("Product Name already exists");
 			} else {
 				System.out.println(result.getProductName() + " has since been added.");
 			}
