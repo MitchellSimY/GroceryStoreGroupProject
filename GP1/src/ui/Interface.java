@@ -192,8 +192,20 @@ public class Interface {
 	public Calendar getDate(String prompt) {
 		do {
 			try {
+				boolean dateValid = true;
+				String item = "";
 				Calendar date = new GregorianCalendar();
-				String item = getToken(prompt);
+				// item = getToken(prompt);
+
+				do {
+					item = getToken(prompt);
+					if (isValid(item)) {
+						dateValid = false;
+						// break;
+					}
+				} while (dateValid);
+				// System.out.println("Please input a date as mm/dd/yy");
+
 				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
 				date.setTime(dateFormat.parse(item));
 				return date;
@@ -201,6 +213,27 @@ public class Interface {
 				System.out.println("Please input a date as mm/dd/yy");
 			}
 		} while (true);
+	}
+
+	private boolean isValid(String item) {
+		boolean result = false;
+		if (item.contains("/")) {
+			 System.out.println("Your input is not right format");
+			if (item.split("/").length == 3) {
+				// System.out.println("2");
+				String[] split = item.split("/");
+				if ((split[0].length() < 3) && (split[1].length() < 3) && (split[2].length() < 3)) {
+					System.out.println("Your input is not right format");
+					if ((Integer.parseInt(split[0]) > 0 && Integer.parseInt(split[0]) < 13)
+							&& (Integer.parseInt(split[1]) > 0 && Integer.parseInt(split[1]) < 32)
+							&& (Integer.parseInt(split[2]) > 0 && Integer.parseInt(split[2]) < 100)) {
+						System.out.println("Your input is not right format");
+						result = true;
+					}
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
