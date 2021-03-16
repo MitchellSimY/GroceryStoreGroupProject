@@ -126,6 +126,7 @@ public class Interface {
 		return true;
 	}
 
+//Trung
 	/**
 	 * return all string have same length and set the string in the middle
 	 * 
@@ -150,6 +151,17 @@ public class Interface {
 			}
 		}
 		return string;
+	}
+
+	private String ignoredCase(String string) {
+		if (string.length() == 1) {
+			string = string.toUpperCase();
+		}
+		if (string.length() > 1) {
+			string = string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+		}
+		return string;
+
 	}
 
 	/**
@@ -282,7 +294,9 @@ public class Interface {
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		Request.instance().setMemberName(getName("Please enter the Member's name: "));
+		// String name=getName("Please enter the Member's name: ");
+		// name
+		Request.instance().setMemberName(ignoredCase(getName("Please enter the Member's name: ")));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
 		Request.instance().setMemberFeePaid(getDouble("Please enter how much the Member paid: "));
@@ -321,7 +335,7 @@ public class Interface {
 	 */
 	public void addProduct() {
 		do {
-			Request.instance().setProductName(getName("Enter Product name: "));
+			Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
 			Request.instance().setProductId(getToken("Enter Product ID: "));
 			Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 			Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
