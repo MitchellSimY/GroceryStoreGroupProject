@@ -211,7 +211,7 @@ public class Interface {
 
 				do {
 					item = getToken(prompt);
-					if (isValid(item)) {
+					if (dateisValid(item)) {
 						dateValid = false;
 						// break;
 					}
@@ -222,30 +222,59 @@ public class Interface {
 				date.setTime(dateFormat.parse(item));
 				return date;
 			} catch (Exception fe) {
-				System.out.println("Please input a date as mm/dd/yy");
+
 			}
 		} while (true);
 	}
-	
+
 	/**
-	 * isValid date checker method. 
-	 * Makes sure the user is entering in the correct date format.
+	 * isValid date checker method. Makes sure the user is entering in the correct
+	 * date format.
 	 * 
 	 * @param item
 	 * @return whether the date is valud or not.
 	 */
-	private boolean isValid(String item) {
+	private boolean dateisValid(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
+
 			if (item.split("/").length == 3) {
+
 				String[] split = item.split("/");
+
 				if ((split[0].length() < 3) && (split[1].length() < 3) && (split[2].length() < 3)) {
-					if ((Integer.parseInt(split[0]) > 0 && Integer.parseInt(split[0]) < 13)
-							&& (Integer.parseInt(split[1]) > 0 && Integer.parseInt(split[1]) < 32)
-							&& (Integer.parseInt(split[2]) > 0 && Integer.parseInt(split[2]) < 100)) {
+					int month = Integer.parseInt(split[0]);
+					int day = Integer.parseInt(split[1]);
+					int year = Integer.parseInt(split[2]);
+					if (month == 2 && day < 30 && year % 4 == 0) {
 						result = true;
 					}
+					if (month == 2 && day < 29 && year % 4 != 0) {
+						result = true;
+					}
+					if (month == 2 && day >= 30 && year % 4 == 0) {
+						System.out.println("The FEBRUARY does not has more than 29 days");
+					}
+					if (month == 2 && day >= 29 && year % 4 != 0) {
+						System.out.println("Not a leap year, FEBRUARY does not has more than 28 days");
+					}
+
+					if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
+							|| month == 12) && day < 32) {
+						result = true;
+					}
+					if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
+							|| month == 12) && day >= 32) {
+						System.out.println("The Month you entered does not has more than 31 days");
+					}
+					if ((month == 4 || month == 6 || month == 9 || month == 11) && day < 31) {
+						result = true;
+					}
+					if ((month == 4 || month == 6 || month == 9 || month == 11) && day >= 31) {
+						System.out.println("The Month you entered does not has more than 30 days");
+					}
 				}
+
 			}
 		}
 		return result;
