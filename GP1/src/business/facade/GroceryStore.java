@@ -273,15 +273,15 @@ public class GroceryStore implements Serializable {
 	public Result removeMember(Request instance) {
 		Member memberToBeRemoved = members.search(instance.getMemberId());
 		Result result = new Result();
-		System.out.println(memberToBeRemoved.getMemberId());
-				
-		if (members.removeMember(memberToBeRemoved)) {
+		
+		if (memberToBeRemoved == null) {
+			result.setResultCode(Result.NO_SUCH_MEMBER);
+			return result;
+		} else {
+			members.removeMember(memberToBeRemoved);
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			return result;
-		} 
-		result.setResultCode(Result.OPERATION_FAILED);
-		
-		return result;
+		}
 	}
 
 	/**

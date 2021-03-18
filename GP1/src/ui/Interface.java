@@ -356,10 +356,12 @@ public class Interface {
 		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
 		Result result = groceryStore.removeMember(Request.instance());
 
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("Could not remove member");
-		} else {
+		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 			System.out.println("Member has since been removed");
+		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER){
+			System.out.println("MemberID entered not found");
+		} else {
+			System.out.println("Member could not be removed");
 		}
 
 	}
