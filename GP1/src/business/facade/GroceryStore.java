@@ -262,7 +262,7 @@ public class GroceryStore implements Serializable {
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}
-	
+	 
 	/**
 	 * Remove Member. 
 	 * This method is utilized for people that no longer want to be 
