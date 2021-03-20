@@ -330,15 +330,18 @@ public class Interface {
 	 * @return none. Creates a member
 	 */
 	public void addMember() {
-		// String name=getName("Please enter the Member's name: ");
-		// name
+
+		// Putting everything in a request instance.
 		Request.instance().setMemberName(ignoredCase(getName("Please enter the Member's name: ")));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
 		Request.instance().setMemberFeePaid(getDouble("Please enter how much the Member paid: "));
 		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy"));
+
+		// Grabbing generated results.
 		Result result = groceryStore.addMember(Request.instance());
 
+		// If statements that'll notify what has happened.
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("Could not add member");
 		} else {
@@ -353,12 +356,13 @@ public class Interface {
 	 * @return Advises if the user has since been removed or not.
 	 */
 	public void removeMember() {
+		// Creating a request
 		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
 		Result result = groceryStore.removeMember(Request.instance());
 
 		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 			System.out.println("Member has since been removed");
-		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER){
+		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER) {
 			System.out.println("MemberID entered not found");
 		} else {
 			System.out.println("Member could not be removed");
@@ -372,23 +376,26 @@ public class Interface {
 	 * @return none. Creates product object.
 	 */
 	public void addProduct() {
-		do {
-			Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
-			Request.instance().setProductId(getToken("Enter Product ID: "));
-			Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
-			Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
-			Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
-			Result result = groceryStore.addProduct(Request.instance());
-			if (result.getResultCode() == Result.OPERATION_FAILED) {
-				System.out.println("Product could not be added.");
-			} else if (result.getResultCode() == Result.PRODUCTID_EXISTS) {
-				System.out.println("Product ID already exists");
-			} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
-				System.out.println("Product Name already exists");
-			} else {
-				System.out.println(result.getProductName() + " has since been added.");
-			}
-		} while (yesOrNo("Add more products?"));
+		// Putting everything in a Request instance.
+		Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
+		Request.instance().setProductId(getToken("Enter Product ID: "));
+		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
+		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
+		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
+
+		// Creating a result object to advise any messages
+		Result result = groceryStore.addProduct(Request.instance());
+
+		// If statements that'll advise the user what had happened
+		if (result.getResultCode() == Result.OPERATION_FAILED) {
+			System.out.println("Product could not be added.");
+		} else if (result.getResultCode() == Result.PRODUCTID_EXISTS) {
+			System.out.println("Product ID already exists");
+		} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
+			System.out.println("Product Name already exists");
+		} else {
+			System.out.println(result.getProductName() + " has since been added.");
+		}
 	}
 
 	/**
