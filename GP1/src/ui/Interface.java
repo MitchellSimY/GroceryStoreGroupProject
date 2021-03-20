@@ -80,7 +80,7 @@ public class Interface {
 	 * @return - the token from the keyboard
 	 * 
 	 */
-	public String getToken(String prompt) {
+	public String getUserInput(String prompt) {
 		do {
 			try {
 				System.out.println(prompt);
@@ -122,7 +122,7 @@ public class Interface {
 	 * 
 	 */
 	private boolean yesOrNo(String prompt) {
-		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		String more = getUserInput(prompt + " Enter Y for Yes, anything else for No.");
 		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
 			return false;
 		}
@@ -156,6 +156,13 @@ public class Interface {
 		return string;
 	}
 
+	/**
+	 * ignoredCase method.
+	 * Utilized for ignoring the case input from users.
+	 * 
+	 * @param string
+	 * @return returns the string only the first letter uppercased.
+	 */
 	private String ignoredCase(String string) {
 		if (string.length() == 1) {
 			string = string.toUpperCase();
@@ -177,7 +184,7 @@ public class Interface {
 	public int getNumber(String prompt) {
 		do {
 			try {
-				String item = getToken(prompt);
+				String item = getUserInput(prompt);
 				Integer number = Integer.valueOf(item);
 				return number.intValue();
 			} catch (NumberFormatException nfe) {
@@ -196,7 +203,7 @@ public class Interface {
 	public double getDouble(String prompt) {
 		do {
 			try {
-				String item = getToken(prompt);
+				String item = getUserInput(prompt);
 				Double number = Double.valueOf(item);
 				return number.doubleValue();
 			} catch (Exception exception) {
@@ -220,7 +227,7 @@ public class Interface {
 				// item = getToken(prompt);
 
 				do {
-					item = getToken(prompt);
+					item = getUserInput(prompt);
 					if (dateisValid(item)) {
 						dateValid = false;
 						// break;
@@ -300,7 +307,7 @@ public class Interface {
 		do {
 			try {
 				Calendar date = new GregorianCalendar();
-				String item = getToken(prompt);
+				String item = getUserInput(prompt);
 				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 				date.setTime(dateFormat.parse(item));
 				return date;
@@ -319,7 +326,7 @@ public class Interface {
 	public int getCommand() {
 		do {
 			try {
-				int value = Integer.parseInt(getToken("Enter command: "));
+				int value = Integer.parseInt(getUserInput("Enter command: "));
 				if (value >= EXIT && value <= HELP) {
 					return value;
 				}
@@ -388,7 +395,7 @@ public class Interface {
 	 */
 	public void removeMember() {
 		// Creating a request
-		Request.instance().setMemberId(getToken("Enter the ID of the member you'd like to remove: "));
+		Request.instance().setMemberId(getUserInput("Enter the ID of the member you'd like to remove: "));
 		Result result = groceryStore.removeMember(Request.instance());
 
 		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
@@ -409,7 +416,7 @@ public class Interface {
 	public void addProduct() {
 		// Putting everything in a Request instance.
 		Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
-		Request.instance().setProductId(getToken("Enter Product ID: "));
+		Request.instance().setProductId(getUserInput("Enter Product ID: "));
 		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
@@ -435,14 +442,14 @@ public class Interface {
 	 * 
 	 */
 	public void checkOutMember() {
-		Request.instance().setMemberId(getToken("Enter member id"));
+		Request.instance().setMemberId(getUserInput("Enter member id"));
 		Result result = groceryStore.searchMembership(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
 		do {
-			Request.instance().setProductId(getToken("Enter product id"));
+			Request.instance().setProductId(getUserInput("Enter product id"));
 			// test. Is there a safer way to store quantity variable?
 			int quantity;
 			quantity = (getNumber("Enter the number of units being sold: "));
@@ -479,7 +486,7 @@ public class Interface {
 	 */
 	public void changePrice() {
 		do {
-			Request.instance().setProductId(getToken("Please enter id of product you want to change the price"));
+			Request.instance().setProductId(getUserInput("Please enter id of product you want to change the price"));
 			Result result = groceryStore.searchProduct(Request.instance());
 			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 				System.out.println("No Product found with given name " + Request.instance().getProductName());
@@ -583,7 +590,7 @@ public class Interface {
 	 * 
 	 */
 	public void printTransactions() {
-		Request.instance().setMemberId(getToken("Enter member id"));
+		Request.instance().setMemberId(getUserInput("Enter member id"));
 		// TODO: Needs to have a range with a start date and end date inclusive.
 		Request.instance().setStartDate(
 				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
