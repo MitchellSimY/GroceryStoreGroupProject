@@ -8,7 +8,7 @@ package business.facade;
  * fields of Product and Member. They are the product name, id, member id,
  * member name, member phone, and member id.
  * 
- * @author group
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  */
 public class Result extends DataTransfer {
 

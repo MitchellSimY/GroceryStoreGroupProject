@@ -1,5 +1,4 @@
 package ui;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,8 +20,12 @@ import business.facade.Result;
  * commands are encoded as integers using a number of static final variables. A
  * number of utility methods exist to make it easier to parse the input.
  *
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ *
  */
 public class Interface {
+	
+	// Creating objects for later use. 
 	private static Interface interfaceVariable;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static GroceryStore groceryStore;
@@ -49,7 +52,7 @@ public class Interface {
 	 * Otherwise, it gets a singleton GroceryStore object.
 	 */
 	private Interface() {
-		if (yesOrNo("Look for saved data and  use it?")) {
+		if (yesOrNo("Would you like to use previously saved data?")) {
 			retrieve();
 		} else {
 			groceryStore = GroceryStore.instance();
@@ -183,6 +186,13 @@ public class Interface {
 		} while (true);
 	}
 
+	/**
+	 * getDouble method.
+	 * This method takes a double type from the user's input
+	 * 
+	 * @param prompt - this is the user input
+	 * @return returns the double that the user input.
+	 */
 	public double getDouble(String prompt) {
 		do {
 			try {

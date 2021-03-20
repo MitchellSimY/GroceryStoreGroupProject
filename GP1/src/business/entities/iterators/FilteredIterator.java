@@ -1,6 +1,4 @@
 package business.entities.iterators;
-
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;

@@ -2,6 +2,15 @@ package business.entities;
 import java.io.Serializable;
 import java.util.Calendar;
 
+/**
+ * Order Class
+ * This class is utilized for creating orders. 
+ * 
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ *
+ */
+
+
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int orderID;

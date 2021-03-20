@@ -18,7 +18,7 @@ import business.entities.iterators.SafeIterator;
 /**
  * The facade class handling all requests from users.
  * 
- * @author group
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
 public class GroceryStore implements Serializable {

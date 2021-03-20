@@ -1,5 +1,15 @@
 package business.entities;
 
+/**
+ * Transaction Class
+ * 
+ * This class is made to create Transaction objects.
+ * Each transaction object will have a series of variables that'll 
+ * determine the correct transactions. (ie when a member purchased)
+ * 
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ */
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;

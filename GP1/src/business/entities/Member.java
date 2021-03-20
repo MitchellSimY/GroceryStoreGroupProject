@@ -1,5 +1,15 @@
 package business.entities;
 
+/**
+ * Member Class.
+ * 
+ * This class is designed to create member objects for later use. 
+ * Once an object (member) is created, the members can purchase items
+ * along with other functionality.
+ * 
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ */
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

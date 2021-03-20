@@ -1,6 +1,15 @@
 package business.entities;
 import java.io.Serializable;
 
+/**
+ * Product Class.
+ * This class is utilized to create product objects.
+ * Each product object will have a series of variables such as the name
+ * ID, current stock, price, and it's re-order value.
+ * 
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ */
+
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// Product variables
@@ -31,7 +40,7 @@ public class Product implements Serializable {
 			return true;
 		}
 	}
-///// 			SETTER AND GETTER, HASHCODE AND TOSTRING SECTION	
+
 
 	/*
 	 * Getter for productName
