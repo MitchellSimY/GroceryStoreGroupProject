@@ -281,6 +281,26 @@ public class Interface {
 	}
 
 	/**
+	 * Prompts for a date and gets a date object
+	 * 
+	 * @param prompt the prompt
+	 * @return the data as a Calendar object
+	 */
+	public Calendar getDateFullYear(String prompt) {
+		do {
+			try {
+				Calendar date = new GregorianCalendar();
+				String item = getToken(prompt);
+				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				date.setTime(dateFormat.parse(item));
+				return date;
+			} catch (Exception fe) {
+				System.out.println("Please input a date as mm/dd/yyyy");
+			}
+		} while (true);
+	}
+
+	/**
 	 * Prompts for a command from the keyboard
 	 * 
 	 * @return a valid command
@@ -358,7 +378,7 @@ public class Interface {
 
 		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 			System.out.println("Member has since been removed");
-		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER){
+		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER) {
 			System.out.println("MemberID entered not found");
 		} else {
 			System.out.println("Member could not be removed");
@@ -547,14 +567,22 @@ public class Interface {
 	public void printTransactions() {
 		Request.instance().setMemberId(getToken("Enter member id"));
 		// TODO: Needs to have a range with a start date and end date inclusive.
-		Request.instance().setDate(getDate("Please enter the date for which you want records as mm/dd/yy"));
+		Request.instance().setStartDate(
+				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
+		Request.instance().setEndDate(
+				getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
 		Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
-		while (result.hasNext()) {
-			Transaction transaction = (Transaction) result.next();
-			System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
-		}
-		System.out.println("\nEnd of transactions \n");
+		if (!result.hasNext()) {
+			System.out.println("\nNo transactions found in that date range.\n");
+		} else {
 
+			while (result.hasNext()) {
+				Transaction transaction = (Transaction) result.next();
+				System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
+			}
+			System.out.println("\nEnd of transactions \n");
+
+		}
 	}
 
 //	TODO: Up for grabs

@@ -1,4 +1,5 @@
 package business.entities;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -15,18 +16,21 @@ public class Transaction implements Serializable {
 		this.type = type;
 		this.productName = productName;
 		date = new GregorianCalendar();
+
 	}
 
 	/**
-	 * Checks whether this transaction is on the given date
+	 * Checks whether this transaction is in a given date range.
 	 * 
-	 * @param date The date for which transactions are being sought
+	 * @param startDate The startDate for which transactions are being sought
+	 *                  (inclusive)
+	 * @param endDate   The endDate for which transactions are being sought
+	 *                  (inclusive)
 	 * @return true iff the dates match
 	 */
-	public boolean onDate(Calendar date) {
-		return ((date.get(Calendar.YEAR) == this.date.get(Calendar.YEAR))
-				&& (date.get(Calendar.MONTH) == this.date.get(Calendar.MONTH))
-				&& (date.get(Calendar.DATE) == this.date.get(Calendar.DATE)));
+	public boolean inDateRange(Calendar startDate, Calendar endDate) {
+		return ((startDate.before(this.date) || startDate.equals(this.date))
+				&& (endDate.after(this.date) || endDate.equals(this.date)));
 	}
 
 	/**

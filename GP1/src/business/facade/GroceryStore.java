@@ -187,11 +187,10 @@ public class GroceryStore implements Serializable {
 			members.add(member);
 			return true;
 		}
-		
+
 		/**
-		 * Remove member method
-		 * Is called outside of the said class and removes the member 
-		 * from the list.
+		 * Remove member method Is called outside of the said class and removes the
+		 * member from the list.
 		 */
 		public boolean removeMember(Member member) {
 			members.remove(member);
@@ -262,18 +261,18 @@ public class GroceryStore implements Serializable {
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}
-	 
+
 	/**
-	 * Remove Member. 
-	 * This method is utilized for people that no longer want to be 
-	 * a member with the grocery store. 
+	 * Remove Member. This method is utilized for people that no longer want to be a
+	 * member with the grocery store.
+	 * 
 	 * @param instance - An object that has the requested memberId
 	 * @return result - this is the result for whether the operation failed or not.
 	 */
 	public Result removeMember(Request instance) {
 		Member memberToBeRemoved = members.search(instance.getMemberId());
 		Result result = new Result();
-		
+
 		if (memberToBeRemoved == null) {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
@@ -296,10 +295,10 @@ public class GroceryStore implements Serializable {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
 				request.getReorderLevel(), request.getCurrentPrice());
-		
+
 		/**
-		 * If satements checking to see if the product already exists
-		 * via the ID or the name.
+		 * If satements checking to see if the product already exists via the ID or the
+		 * name.
 		 */
 		if (productList.search(request.getProductId()) != null) {
 			result.setResultCode(Result.PRODUCTID_EXISTS);
@@ -512,7 +511,7 @@ public class GroceryStore implements Serializable {
 		if (member == null) {
 			return new LinkedList<Transaction>().iterator();
 		}
-		return member.getTransactionsOnDate(request.getDate());
+		return member.getTransactionsDateRange(request.getStartDate(), request.getEndDate());
 	}
 
 	/**
@@ -563,6 +562,5 @@ public class GroceryStore implements Serializable {
 	public String toString() {
 		return productList + "\n" + members;
 	}
-
 
 }

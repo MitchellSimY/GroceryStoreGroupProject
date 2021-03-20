@@ -1,4 +1,5 @@
 package business.facade;
+
 import java.util.Calendar;
 
 /**
@@ -15,6 +16,10 @@ import java.util.Calendar;
 public class Request extends DataTransfer {
 	private static Request request;
 	private Calendar date;
+
+	// variables used for printTransaction
+	private Calendar startDate;
+	private Calendar endDate;
 
 	/**
 	 * This is a singleton class. Hence the private constructor.
@@ -41,5 +46,33 @@ public class Request extends DataTransfer {
 
 	public void setDate(Calendar date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public Calendar getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Calendar startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Calendar getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Calendar endDate) {
+		this.endDate = endDate;
 	}
 }
