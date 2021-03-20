@@ -1,5 +1,14 @@
 package business.entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Member Class.
  * 
@@ -9,15 +18,6 @@ package business.entities;
  * 
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  */
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import business.entities.iterators.FilteredIterator;
 
