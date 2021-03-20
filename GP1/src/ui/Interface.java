@@ -343,6 +343,7 @@ public class Interface {
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
 	}
+	
 
 	/**
 	 * Completed Add member method. Utilized for adding a new member.
