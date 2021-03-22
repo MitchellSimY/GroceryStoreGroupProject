@@ -1,4 +1,5 @@
 package ui;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,8 +25,8 @@ import business.facade.Result;
  *
  */
 public class Interface {
-	
-	// Creating objects for later use. 
+
+	// Creating objects for later use.
 	private static Interface interfaceVariable;
 	private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static GroceryStore groceryStore;
@@ -157,8 +158,7 @@ public class Interface {
 	}
 
 	/**
-	 * ignoredCase method.
-	 * Utilized for ignoring the case input from users.
+	 * ignoredCase method. Utilized for ignoring the case input from users.
 	 * 
 	 * @param string
 	 * @return returns the string only the first letter uppercased.
@@ -194,8 +194,7 @@ public class Interface {
 	}
 
 	/**
-	 * getDouble method.
-	 * This method takes a double type from the user's input
+	 * getDouble method. This method takes a double type from the user's input
 	 * 
 	 * @param prompt - this is the user input
 	 * @return returns the double that the user input.
@@ -228,7 +227,7 @@ public class Interface {
 
 				do {
 					item = getUserInput(prompt);
-					if (dateisValid(item)) {
+					if (dateIsValid(item)) {
 						dateValid = false;
 						// break;
 					}
@@ -245,13 +244,86 @@ public class Interface {
 	}
 
 	/**
+	 * Prompts for a date and gets a date object
+	 * 
+	 * @param prompt the prompt
+	 * @return the data as a Calendar object
+	 */
+	public Calendar getDateFullYear(String prompt) {
+		do {
+			try {
+				boolean dateValid = true;
+				String item = "";
+				Calendar date = new GregorianCalendar();
+
+				do {
+					item = getUserInput(prompt);
+					if (dateIsValidMMDDYYYY(item)) {
+						dateValid = false;
+					}
+				} while (dateValid);
+				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				date.setTime(dateFormat.parse(item));
+				return date;
+			} catch (Exception fe) {
+			}
+		} while (true);
+	}
+
+	private boolean dateIsValidMMDDYYYY(String item) {
+		boolean result = false;
+		if (item.contains("/")) {
+
+			if (item.split("/").length == 3) {
+
+				String[] split = item.split("/");
+
+				if ((split[0].length() < 3) && (split[1].length() < 3) && (split[2].length() == 4)) {
+					int month = Integer.parseInt(split[0]);
+					int day = Integer.parseInt(split[1]);
+					int year = Integer.parseInt(split[2]);
+					if (month == 2 && day < 30 && year % 4 == 0) {
+						result = true;
+					}
+					if (month == 2 && day < 29 && year % 4 != 0) {
+						result = true;
+					}
+					if (month == 2 && day >= 30 && year % 4 == 0) {
+						System.out.println("The FEBRUARY does not has more than 29 days");
+					}
+					if (month == 2 && day >= 29 && year % 4 != 0) {
+						System.out.println("Not a leap year, FEBRUARY does not has more than 28 days");
+					}
+
+					if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
+							|| month == 12) && day < 32) {
+						result = true;
+					}
+					if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10
+							|| month == 12) && day >= 32) {
+						System.out.println("The Month you entered does not has more than 31 days");
+					}
+					if ((month == 4 || month == 6 || month == 9 || month == 11) && day < 31) {
+						result = true;
+					}
+					if ((month == 4 || month == 6 || month == 9 || month == 11) && day >= 31) {
+						System.out.println("The Month you entered does not has more than 30 days");
+					}
+				}
+
+			}
+		}
+		return result;
+	}
+
+	/**
 	 * isValid date checker method. Makes sure the user is entering in the correct
 	 * date format.
 	 * 
 	 * @param item
 	 * @return whether the date is valud or not.
 	 */
-	private boolean dateisValid(String item) {
+	private boolean dateIsValid(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
 
@@ -298,26 +370,6 @@ public class Interface {
 	}
 
 	/**
-	 * Prompts for a date and gets a date object
-	 * 
-	 * @param prompt the prompt
-	 * @return the data as a Calendar object
-	 */
-	public Calendar getDateFullYear(String prompt) {
-		do {
-			try {
-				Calendar date = new GregorianCalendar();
-				String item = getUserInput(prompt);
-				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-				date.setTime(dateFormat.parse(item));
-				return date;
-			} catch (Exception fe) {
-				System.out.println("Please input a date as mm/dd/yyyy");
-			}
-		} while (true);
-	}
-
-	/**
 	 * Prompts for a command from the keyboard
 	 * 
 	 * @return a valid command
@@ -360,7 +412,6 @@ public class Interface {
 		System.out.println(SAVE + " to  save data");
 		System.out.println(HELP + " for help");
 	}
-	
 
 	/**
 	 * Completed Add member method. Utilized for adding a new member.
@@ -485,22 +536,18 @@ public class Interface {
 	 * term
 	 */
 	public void changePrice() {
-		do {
-			Request.instance().setProductId(getUserInput("Please enter id of product you want to change the price"));
-			Result result = groceryStore.searchProduct(Request.instance());
-			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-				System.out.println("No Product found with given name " + Request.instance().getProductName());
-			} else {
-				double newPrice = getDouble(
-						"Please enter the new price for the product has id " + Request.instance().getProductId());
-				result.setCurrentPrice(newPrice);
-				groceryStore.changePrice(Request.instance().getProductId(), newPrice);
-				System.out.println(
-						"Prodcut name " + Request.instance().getProductName() + " has ID  is " + result.getProductId()
-								+ " | stock in hand is " + result.getStockInhand() + " | product price is "
-								+ result.getCurrentPrice() + "| reorder level is " + result.getReorderLevel());
-			}
-		} while (yesOrNo("Do you want to change the price for different product? "));
+		Request.instance().setProductId(getUserInput("Please enter id of product you want to change the price"));
+		Result result = groceryStore.searchProduct(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No Product found with given name " + Request.instance().getProductName());
+		} else {
+			double newPrice = getDouble(
+					"Please enter the new price for the product has id " + Request.instance().getProductId());
+			result.setCurrentPrice(newPrice);
+			groceryStore.changePrice(Request.instance().getProductId(), newPrice);
+			System.out.println("Prodcut name " + Request.instance().getProductName() + " has new price is "
+					+ result.getCurrentPrice());
+		}
 	}
 
 //	TODO: Trung
@@ -513,33 +560,31 @@ public class Interface {
 	 */
 	public void retrieveProductInfo() {
 
-		do {
-			Request.instance()
-					.setProductName(getName("Please enter name of product you want to retrieved the information"));
-			Result result = groceryStore.searchProductName(Request.instance());
-			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-				System.out.println("No Product found with given name " + Request.instance().getProductName());
-				break;
-			}
+		Request.instance()
+				.setProductName(getName("Please enter name of product you want to retrieved the information"));
+		Result result = groceryStore.searchProductName(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No Product found with given name " + Request.instance().getProductName());
 
+		} else {
 			Iterator<Result> iterator = groceryStore.retrievedProductInfor(Request.instance().getProductName());
-			System.out.println("Listing all ProductID, stock in hand, Current Price and Reoder Level has name is "
+			System.out.println("Listing all ProductID, Current Price, stock in hand and Reoder Level has name is "
 					+ Request.instance().getProductName());
 
 			System.out.println(equalsLength("Product Name") + "|" + equalsLength("Product ID") + "|"
-					+ equalsLength("Current Price") + "|" + equalsLength("Reorder Level") + "|"
-					+ equalsLength("StockInhand"));
+					+ equalsLength("Current Price") + "|" + equalsLength("StockInhand") + "|"
+					+ equalsLength("Reorder Level"));
 
 			while (iterator.hasNext()) {
 				result = iterator.next();
 				System.out.println(equalsLength(result.getProductName()) + "|" + equalsLength(result.getProductId())
 						+ "|" + equalsLength(String.valueOf(result.getCurrentPrice())) + "|"
-						+ equalsLength(String.valueOf(result.getReorderLevel())) + "|"
-						+ equalsLength(String.valueOf(result.getStockInhand())));
+						+ equalsLength(String.valueOf(result.getStockInhand())) + "|"
+						+ equalsLength(String.valueOf(result.getReorderLevel())));
 				result.reset();
 			}
+		}
 
-		} while (yesOrNo("Find information of other product ?"));
 	}
 
 	// TODO: Trung
@@ -551,35 +596,27 @@ public class Interface {
 	 * paid fee
 	 */
 	public void retrieveMemberInfo() {
-		do {
-			Request.instance()
-					.setMemberName(getName("Please enter name of member you want to retrieved the information"));
-			Result result = groceryStore.searchName(Request.instance());
-			if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-				System.out.println("No member found with given name " + Request.instance().getMemberName());
-				break;
-			}
 
+		Request.instance().setMemberName(getName("Please enter name of member you want to retrieved the information"));
+		Result result = groceryStore.searchName(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member found with given name " + Request.instance().getMemberName());
+		} else {
 			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
-			System.out.println("Listing all MemberID, Address,Phone and Fee Paid whose name begin with "
+			System.out.println("Listing all  address, fee paid and member id whose name begin with "
 					+ Request.instance().getMemberName());
-
-			System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member ID") + "|"
-					+ equalsLength("Member Address") + equalsLength("Member Phonenumber") + "|"
-					+ equalsLength("Member Paid Fee") + "|" + equalsLength("Member joined date"));
-
+			System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member Address") + "|"
+					+ equalsLength("Member Paid Fee") + "|" + equalsLength("Member ID"));
 			while (iterator.hasNext()) {
 				result = iterator.next();
-
-				System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
+				System.out.println(equalsLength(result.getMemberName()) + "|"
 						+ equalsLength(String.valueOf(result.getMemberAddress())) + "|"
-						+ equalsLength(String.valueOf(result.getMemberPhone())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
-						+ equalsLength(result.getDateJoinedByString()));
+						+ equalsLength(result.getMemberId()));
 				result.reset();
 			}
+		}
 
-		} while (yesOrNo("Find information of other member ?"));
 	}
 
 //	TODO: Jack
@@ -609,7 +646,6 @@ public class Interface {
 
 		}
 	}
-	
 
 //	TODO: Up for grabs
 	private void listOutstandingOrders() {
