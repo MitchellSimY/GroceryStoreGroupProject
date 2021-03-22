@@ -633,17 +633,22 @@ public class Interface {
 				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
 		Request.instance().setEndDate(
 				getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
-		Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
-		if (!result.hasNext()) {
-			System.out.println("\nNo transactions found in that date range.\n");
+		if (!(Request.instance().getStartDate().before(Request.instance().getEndDate()))
+				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate()))) {
+			System.out.println("Start date must be before or equal to end date.");
 		} else {
+			Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
+			if (!result.hasNext()) {
+				System.out.println("\nNo transactions found in that date range.\n");
+			} else {
 
-			while (result.hasNext()) {
-				Transaction transaction = (Transaction) result.next();
-				System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
+				while (result.hasNext()) {
+					Transaction transaction = (Transaction) result.next();
+					System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
+				}
+				System.out.println("\nEnd of transactions \n");
+
 			}
-			System.out.println("\nEnd of transactions \n");
-
 		}
 	}
 
