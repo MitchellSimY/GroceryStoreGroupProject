@@ -133,7 +133,7 @@ public class GroceryStore implements Serializable {
 		 * Checks whether a member with a given member id exists.
 		 * 
 		 * @param memberId the id of the member
-		 * @return true iff member exists
+		 * @return Member iff member exists
 		 * 
 		 */
 		public Member search(String memberId) {
@@ -146,6 +146,17 @@ public class GroceryStore implements Serializable {
 			return null;
 		}
 
+		/**
+		 * 
+		 * Checks whether a member with a given name exists.
+		 * 
+		 * @param name
+		 * @return Member iff member exists
+		 */
+		/**
+		 * @param name
+		 * @return
+		 */
 		public Member searchName(String name) {
 			for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 				Member member = iterator.next();
@@ -176,6 +187,9 @@ public class GroceryStore implements Serializable {
 			return true;
 		}
 
+		/**
+		 *
+		 */
 		@Override
 		public Iterator<Member> iterator() {
 			return members.iterator();
@@ -337,14 +351,14 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * retrievedProductInfor searching the product list by iterator to find every
-	 * product has matching name with the user input then add all found results in
-	 * to a temp list and return an iterator of that result list
+	 * retrieveProductInfo searches the product list by iterator to find every
+	 * product that with that matches parameter name, then adds all found results in
+	 * to a temp list and returns it as an iterator.
 	 * 
-	 * @param is user input which is a string of name of the product
-	 * @return all iterator of all members has matching name
+	 * @param name of the product(user input)
+	 * @return iterator of all products with matching name.
 	 */
-	public Iterator<Result> retrievedProductInfor(String name) {
+	public Iterator<Result> retrieveProductInfo(String name) {
 		List<Product> tempList = new LinkedList<Product>();
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
@@ -374,11 +388,12 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Searches for a given member by member name which assigned in result object
+	 * Searches for a given member by member name. Create a new result object and
+	 * assign name.
 	 * 
-	 * @param request object which have name use for condition for searching
-	 * @return OPERATION_COMPLETED if the member is in the member list collection
-	 *         and NO_SUCH_MEMBER if no member found
+	 * @param request object that has the name to use for searching.
+	 * @return Result object. (OPERATION_COMPLETED if the member is in the member
+	 *         list collection and NO_SUCH_MEMBER if no member found).
 	 */
 	public Result searchName(Request request) {
 		Result result = new Result();
@@ -392,6 +407,13 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 
+	/**
+	 * 
+	 * Search for a product by i.d.
+	 * 
+	 * @param request - has the product i.d. to use for searching.
+	 * @return Result object with product files set.
+	 */
 	public Result searchProduct(Request request) {
 		Result result = new Result();
 		Product product = productList.search(request.getProductId());
@@ -407,9 +429,13 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Searches for a given product by product name which assigned in result object
 	 * 
-	 * @param request object which have name use for condition for searching
-	 * @return OPERATION_COMPLETED if the product is in the product list collection
-	 *         and NO_SUCH_MEMBER if no product found
+	 * @param request - object that has name to use as condition for searching
+	 * @return Result - OPERATION_COMPLETED if the product is in the product list
+	 *         collection and NO_SUCH_MEMBER if no product found
+	 */
+	/**
+	 * @param request
+	 * @return
 	 */
 	public Result searchProductName(Request request) {
 		Result result = new Result();
@@ -423,6 +449,14 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 
+	/**
+	 * 
+	 * change the price of a product.
+	 * 
+	 * 
+	 * @param productId - The product to change.
+	 * @param price     - the new price.
+	 */
 	public void changePrice(String productId, double price) {
 		for (Product productToUpdate : getProductList().getProductList()) {
 			if (productToUpdate.getProductId().equals(productId)) {
@@ -436,15 +470,12 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Organizes the checking out of a product
 	 * 
-	 * @param memberId  member id
-	 * @param productId product id
-	 * @return the product checked out.
+	 * @param Request   - has the product id of the item getting checked out and
+	 *                  member id of the member checking out.
+	 * @param quantity- how much of the item is getting checked out.
+	 * @return Result - The result of the operation.
 	 */
-	/**
-	 * @param request
-	 * @param quantity
-	 * @return
-	 */
+
 	public Result checkOut(Request request, int quantity) {
 		Result result = new Result();
 		Product product = productList.search(request.getProductId());
@@ -481,8 +512,7 @@ public class GroceryStore implements Serializable {
 	 * Returns an iterator to the transactions for a specific member on a certain
 	 * date
 	 * 
-	 * @param memberId member id
-	 * @param date     date of issue
+	 * @param Request - used for member id. start date and end date.
 	 * @return iterator to the collection
 	 */
 	public Iterator<Transaction> getTransactions(Request request) {
@@ -494,7 +524,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Retrieves a deserialized version of the groceryStore from disk
+	 * Retrieves a de-serialized version of the groceryStore from disk
 	 * 
 	 * @return a GroceryStore object
 	 */
@@ -515,7 +545,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Serializes the Library object
+	 * Serializes the GroceryStore object
 	 * 
 	 * @return true iff the data could be saved
 	 */
@@ -534,7 +564,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * String form of the library
+	 * String form of the groceryStore
 	 * 
 	 */
 	@Override

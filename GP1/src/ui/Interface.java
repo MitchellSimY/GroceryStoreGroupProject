@@ -24,6 +24,10 @@ import business.facade.Result;
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
+/**
+ * @author jrhab
+ *
+ */
 public class Interface {
 
 	// Creating objects for later use.
@@ -134,7 +138,7 @@ public class Interface {
 	/**
 	 * return all string have same length and set the string in the middle
 	 * 
-	 * @param a tring
+	 * @param a string
 	 * @return a string with space in front and back to make string set in the
 	 *         middle
 	 * 
@@ -212,7 +216,7 @@ public class Interface {
 	}
 
 	/**
-	 * Prompts for a date and gets a date object
+	 * Prompts for a date and gets a date object. In mm/dd/yy form.
 	 * 
 	 * @param prompt the prompt
 	 * @return the data as a Calendar object
@@ -244,10 +248,14 @@ public class Interface {
 	}
 
 	/**
-	 * Prompts for a date and gets a date object
+	 * Prompts for a date and gets a date object. In MM/dd/yyyy form.
 	 * 
 	 * @param prompt the prompt
 	 * @return the data as a Calendar object
+	 */
+	/**
+	 * @param prompt
+	 * @return
 	 */
 	public Calendar getDateFullYear(String prompt) {
 		do {
@@ -270,6 +278,12 @@ public class Interface {
 		} while (true);
 	}
 
+	/**
+	 * Checks to see if date is formated properly.
+	 * 
+	 * @param item - the date to check
+	 * @return - true if date is valid or false if not.
+	 */
 	private boolean dateIsValidMMDDYYYY(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
@@ -321,7 +335,7 @@ public class Interface {
 	 * date format.
 	 * 
 	 * @param item
-	 * @return whether the date is valud or not.
+	 * @return whether the date is valid or not.
 	 */
 	private boolean dateIsValid(String item) {
 		boolean result = false;
@@ -488,9 +502,12 @@ public class Interface {
 	}
 
 	/**
-	 * Method to be called for checkingOut. Prompts the user for the appropriate
-	 * values and uses the appropriate GroceryStore method for checking out.
+	 * Method to be called for checking out a members products from the grocery
+	 * store. Prompts the user for their products and quantity and uses the
+	 * appropriate GroceryStore method for checking out. Displays the transaction
+	 * and reorders a product if it falls below the reorder level.
 	 * 
+	 * No parameters and no return.
 	 */
 	public void checkOutMember() {
 		Request.instance().setMemberId(getUserInput("Enter member id"));
@@ -567,7 +584,7 @@ public class Interface {
 			System.out.println("No Product found with given name " + Request.instance().getProductName());
 
 		} else {
-			Iterator<Result> iterator = groceryStore.retrievedProductInfor(Request.instance().getProductName());
+			Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
 			System.out.println("Listing all ProductID, Current Price, stock in hand and Reoder Level has name is "
 					+ Request.instance().getProductName());
 
@@ -619,12 +636,12 @@ public class Interface {
 
 	}
 
-//	TODO: Jack
 	/**
-	 * Method to be called for displaying transactions. Prompts the user for the
-	 * appropriate values and uses the appropriate Library method for displaying
-	 * transactions.
+	 * Method to be called for displaying transactions within a given date range.
+	 * Prompts the user for the start and end date and uses the appropriate
+	 * GroceryStore method for displaying transactions.
 	 * 
+	 * No parameters and no return.
 	 */
 	public void printTransactions() {
 		Request.instance().setMemberId(getUserInput("Enter member id"));
@@ -704,8 +721,8 @@ public class Interface {
 	}
 
 	/**
-	 * Method to be called for saving the GroceryStore object. Uses the appropriate
-	 * GroceryStore method for saving.
+	 * Method to be called for saving the GroceryStore object. Uses the GroceryStore
+	 * method for saving.
 	 * 
 	 */
 	private void save() {
@@ -717,8 +734,8 @@ public class Interface {
 	}
 
 	/**
-	 * Method to be called for retrieving saved data. Uses the appropriate
-	 * GroceryStore method for retrieval.
+	 * Method to be called for retrieving saved data. Uses the GroceryStore method
+	 * for retrieval.
 	 * 
 	 */
 
