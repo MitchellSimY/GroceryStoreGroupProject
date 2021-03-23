@@ -86,6 +86,7 @@ public class AutomatedTester2 {
 	public void testAllMethods() {
 		testAddMembers();
 		testAddProducts();
+		testSearchMembership();
 	}
 	
 	public static void main(String[] args) {

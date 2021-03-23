@@ -58,9 +58,9 @@ public class AutomatedTester {
 	}
 
 	public void testAll() {
-		// testAddMember();
+		testAddMember();
 		testAddProduct();
-		// testSearchMembership();
+		testSearchMembership();
 	}
 
 	public static void main(String[] args) {
