@@ -15,17 +15,17 @@ public class AutomatedTester2 {
 	private String[] names = { "name1", "name2", "name3", "name4" };
 	private String[] address = { "Address1", "Address2", "Address3", "Address4" };
 	private String[] phones = { "Phone1", "Phone2", "Phone3", "Phone4" };
-	private double[] feePaid = {9.99, 4.99, 24.99, 19.99};
+	private double[] feePaid = { 9.99, 4.99, 24.99, 19.99 };
 	private Member[] membersList = new Member[4];
 
 	// Setting arrays of variables for product creation
 	private String[] productName = { "Product1", "Product2", "Product3", "Product4" };
 	private String[] idList = { "id1", "id2", "id3", "id4" };
 	private Product[] productsList = new Product[4];
-	
+
 	/**
-	 * testAddMembers method.
-	 * This method is to test add members from the above arrays
+	 * testAddMembers method. This method is to test add members from the above
+	 * arrays
 	 * 
 	 * @return nothing. Creates the member
 	 */
@@ -36,39 +36,38 @@ public class AutomatedTester2 {
 			Request.instance().setMemberPhone(phones[count]);
 			Request.instance().setMemberFeePaid(feePaid[count]);
 			Result result = GroceryStore.instance().addMember(Request.instance());
-			
+
 			assert result.getResultCode() == Result.OPERATION_COMPLETED;
 			assert result.getMemberName().equals(names[count]);
 			assert result.getMemberPhone().equals(phones[count]);
 			assert result.getMemberAddress().equals(address[count]);
 			// assert result.getMemberFeePaid().equals(feePaid[count]);
-			
+
 		}
 	}
-	
+
 	/**
-	 * testAddProducts method
-	 * This method is designed to add products
+	 * testAddProducts method This method is designed to add products
 	 * 
 	 * @return nothing. Creates products
 	 */
 	public void testAddProducts() {
-		for (int count = 0; count < productsList.length; count++ ) {
+		for (int count = 0; count < productsList.length; count++) {
 			Request.instance().setProductName(productName[count]);
 			Request.instance().setProductId(idList[count]);
-			
+
 			Result result = GroceryStore.instance().addProduct(Request.instance());
-			
+
 			assert result.getResultCode() == Result.OPERATION_COMPLETED;
 			assert result.getProductName().equals(productName[count]);
 			assert result.getProductId().equals(idList[count]);
-			
+
 		}
 	}
-	
+
 	/**
-	 * testSearchMembership
-	 * This method is utilized to test search all the available members
+	 * testSearchMembership This method is utilized to test search all the available
+	 * members
 	 * 
 	 * @return nothing. Searches for the member
 	 */
@@ -78,20 +77,18 @@ public class AutomatedTester2 {
 		Request.instance().setMemberId("M10");
 		assert GroceryStore.instance().searchMembership(Request.instance()) == null;
 	}
-	
+
 	/**
-	 * testAllMethods
-	 * This method is for calling all the test methods
+	 * testAllMethods This method is for calling all the test methods
 	 */
 	public void testAllMethods() {
 		testAddMembers();
 		testAddProducts();
 		testSearchMembership();
 	}
-	
+
 	public static void main(String[] args) {
 		new AutomatedTester2().testAllMethods();
 	}
-	
 
 }

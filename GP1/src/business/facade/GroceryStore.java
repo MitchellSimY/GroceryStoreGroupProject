@@ -243,7 +243,7 @@ public class GroceryStore implements Serializable {
 	 */
 	public Result addMember(Request request) {
 		Result result = new Result();
-		Member member = new Member(request.getMemberName(), request.getMemberAddress(), request.getMemberPhone(),
+		Member member = new Member(request.getMemberName(), request.getMemberPhone(), request.getMemberAddress(),
 				request.getMemberFeePaid(), request.getDate());
 
 		if (members.insertMember(member)) {

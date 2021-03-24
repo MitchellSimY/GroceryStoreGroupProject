@@ -55,7 +55,7 @@ public class Member implements Serializable {
 		this.address = address;
 		this.feePaid = feePaid;
 		counter = counter + 1;
-		this.memberId = "" + counter;
+		this.memberId = "M" + counter;
 		this.joinedDate = joinedDate;
 
 	}
