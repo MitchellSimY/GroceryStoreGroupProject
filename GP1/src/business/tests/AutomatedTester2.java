@@ -75,7 +75,8 @@ public class AutomatedTester2 {
 		Request.instance().setMemberId("M1");
 		assert GroceryStore.instance().searchMembership(Request.instance()).getMemberId().equals("M1");
 		Request.instance().setMemberId("M10");
-		assert GroceryStore.instance().searchMembership(Request.instance()) == null;
+		System.out.println(GroceryStore.instance().searchMembership(Request.instance()));
+		assert GroceryStore.instance().searchMembership(Request.instance()).getResultCode() == 9;
 	}
 
 	/**
