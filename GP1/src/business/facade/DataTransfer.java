@@ -1,9 +1,13 @@
 package business.facade;
 
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import business.entities.Member;
+import business.entities.Order;
 import business.entities.Product;
+import business.entities.Transaction;
 
 /**
  * The DataTransfer class is used to facilitate data transfer between
@@ -17,19 +21,24 @@ import business.entities.Product;
 public abstract class DataTransfer {
 
 	// Member Variables
-	private String memberId;
-	private String memberName;
-	private String memberAddress;
-	private String memberPhone;
+	private String memberId, memberName, memberAddress, memberPhone;
 	private Calendar dateJoined;
+	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private double feePaid;
+	private int checkOutTransactionIndex;
 
 	// Product variables
-	private String productName;
-	private String productId;
-	private int stockInhand, reorderLevel;
+	private String productName, productId;
+	private int stockInhand, reorderLevel, checkoutQty;
 	private double currentPrice;
+	private boolean reorderPlaced = false;
 
+	//Order Variables
+	private int orderID, quantityOrdered;
+	private Product reorderProduct;
+	private String dateOrderPlaced, dateOrderArrival;
+	private boolean orderStatus;
+	
 	/**
 	 * This sets all fields to "none".
 	 */
@@ -50,7 +59,7 @@ public abstract class DataTransfer {
 		stockInhand = product.getStockInHand();
 		reorderLevel = product.getReorderLevel();
 		currentPrice = product.getCurrentPrice();
-
+		checkoutQty = product.getCheckoutQty();
 	}
 
 	public String getProductName() {
@@ -77,6 +86,14 @@ public abstract class DataTransfer {
 		this.stockInhand = stockInhand;
 	}
 
+	public int getCheckoutQty() {
+		return checkoutQty;
+	}
+
+	public void setCheckoutQty(int checkoutQty) {
+		this.checkoutQty = checkoutQty;
+	}
+
 	public int getReorderLevel() {
 		return reorderLevel;
 	}
@@ -93,6 +110,14 @@ public abstract class DataTransfer {
 		this.currentPrice = currentPrice;
 	}
 
+	public boolean isReorderPlaced() {
+		return reorderPlaced;
+	}
+
+	public void setReorderPlaced(boolean reorderPlaced) {
+		this.reorderPlaced = reorderPlaced;
+	}
+
 	/**
 	 * Sets all the member-related fields using the Member parameter.
 	 * 
@@ -105,6 +130,7 @@ public abstract class DataTransfer {
 		memberAddress = member.getAddress();
 		feePaid = member.getFeePaid();
 		dateJoined = member.getJoinedDate();
+		transactions = member.getTransactionsList();
 	}
 
 	public String getMemberAddress() {
@@ -161,18 +187,88 @@ public abstract class DataTransfer {
 		this.memberPhone = memberPhone;
 	}
 
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public int getCheckOutTransactionIndex() {
+		return checkOutTransactionIndex;
+	}
+
+	public void setCheckOutTransactionIndex(int checkOutTransactionIndex) {
+		this.checkOutTransactionIndex = checkOutTransactionIndex;
+	}
+
+	//Order Setters/Getters
+	public void setOrderFields(Order order) {
+		orderID = order.getOrderID();
+		quantityOrdered = order.getQuantityOrdered();
+		reorderProduct = order.getReorderProduct();
+		dateOrderPlaced = order.getDateOrderPlaced();
+		dateOrderArrival = order.getDateOrderArrival();
+		orderStatus = order.isOrderStatus();
+	}
+	
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
+	}
+
+	public int getQuantityOrdered() {
+		return quantityOrdered;
+	}
+
+	public void setQuantityOrdered(int quantityOrdered) {
+		this.quantityOrdered = quantityOrdered;
+	}
+
+	public Product getReorderProduct() {
+		return reorderProduct;
+	}
+
+	public void setReorderProduct(Product reorderProduct) {
+		this.reorderProduct = reorderProduct;
+	}
+
+	public String getDateOrderPlaced() {
+		return dateOrderPlaced;
+	}
+
+	public void setDateOrderPlaced(String dateOrderPlaced) {
+		this.dateOrderPlaced = dateOrderPlaced;
+	}
+
+	public String getDateOrderArrival() {
+		return dateOrderArrival;
+	}
+
+	public void setDateOrderArrival(String dateOrderArrival) {
+		this.dateOrderArrival = dateOrderArrival;
+	}
+
+	public boolean isOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(boolean orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
 	/**
 	 * Sets all String fields to "none"
 	 */
 	public void reset() {
-		productName = "none";
-		productId = "none";
+		productName = "N/A";
+		productId = "N/A";
 		stockInhand = 0;
 		reorderLevel = 0;
 		currentPrice = 0;
-		memberId = "none";
-		memberName = "none";
-		memberPhone = "none";
-		memberAddress = "none";
+		memberId = "N/A";
+		memberName = "N/A";
+		memberPhone = "N/A";
+		memberAddress = "N/A";
 	}
 }

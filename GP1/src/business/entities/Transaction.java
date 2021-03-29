@@ -11,22 +11,23 @@ package business.entities;
  */
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
+
+import business.collections.CheckOutProductList;
 
 public class Transaction implements Serializable {
 	// Variables for Transaction
 	private static final long serialVersionUID = 1L;
-	private String type;
-	private String productName;
+	private CheckOutProductList checkOutProductList = new CheckOutProductList();
 	private double totalCost;
 	private Calendar date;
 
-	public Transaction(String type, String productName) {
-		this.type = type;
-		this.productName = productName;
+	public Transaction() {
+		totalCost = 0;
 		date = new GregorianCalendar();
-
 	}
 
 	/**
@@ -43,24 +44,26 @@ public class Transaction implements Serializable {
 				&& (endDate.after(this.date) || endDate.equals(this.date)));
 	}
 
-	/**
-	 * Returns the type field
-	 * 
-	 * @return type field
-	 */
-	public String getType() {
-		return type;
+	public void computeTotalCost() {
+		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
+			totalCost += product.getCheckoutQty() * product.getCurrentPrice();
+		}
+	}
+	
+	
+	public CheckOutProductList getCheckOutProductList() {
+		return checkOutProductList;
 	}
 
-	/**
-	 * Returns the title field
-	 * 
-	 * @return title field
-	 */
-	public String getProductName() {
-		return productName;
+	public void setDate(Calendar date) {
+		this.date = date;
 	}
 
+	public Calendar getCalenderDate() {
+		return date;
+	}
+	
 	/**
 	 * Returns the date as a String
 	 * 
@@ -70,12 +73,57 @@ public class Transaction implements Serializable {
 		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null) {
+			return false;
+		}
+		if (getClass() != object.getClass()) {
+			return false;
+		}
+		Transaction other = (Transaction) object;
+		if (date == null) {
+			if (other.date != null) {
+				return false;
+			}
+		} 
+		else if (date.get(Calendar.MONTH) == other.date.get(Calendar.MONTH) &&
+				date.get(Calendar.DATE) == other.date.get(Calendar.DATE) &&
+				date.get(Calendar.YEAR) == other.date.get(Calendar.YEAR)) {
+			return true;
+		}
+		return false;
+	}
+
+	// TODO: fix this
+	public String currentProductCheckoutToString() {
+		DecimalFormat df = new DecimalFormat("$###,##0.00");
+		String productString = "";
+		Iterator<Product> iterator = checkOutProductList.iterator();
+		Product product = (Product) iterator.next();
+		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
+		productString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
+				"\t" + df.format(productPurchasedCost) + "\n";
+		return productString;
+	}
+	
 	/**
 	 * String form of the transaction
 	 * 
 	 */
 	@Override
 	public String toString() {
-		return (type + "   " + productName);
+		DecimalFormat df = new DecimalFormat("$###,##0.00");
+		String productListString = "";
+		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
+			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
+			productListString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
+					"\t" + df.format(productPurchasedCost) + "\n";
+		} 
+		return "Checkout Transaction date: " + date + "\nProduct Name\tQty\tPerCost\tTotal" + productListString + "\nTotal Cost: " + totalCost;
 	}
 }

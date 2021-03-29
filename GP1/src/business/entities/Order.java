@@ -13,21 +13,29 @@ import java.util.Calendar;
 
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int orderID;
+	private int orderID, quantityOrdered;
 	private Product reorderProduct;
-	private int quantityOrdered;
-	private Calendar date;
+	private Calendar dateOrderPlaced, dateOrderArrival;
+	private boolean orderStatus;
 	private static int counter = 0;
 	
 	public Order(Product productToOrder, Calendar date) {
-		orderID = counter++;
+		counter += 1;
+		orderID = counter;
 		quantityOrdered = productToOrder.getReorderLevel()*2;
 		reorderProduct = productToOrder;
-		this.date = date;
+		dateOrderPlaced = date;
+		dateOrderArrival = date;
+		dateOrderArrival.add(Calendar.WEEK_OF_YEAR, 2);	//Shipment will always arrive 2 weeks after initial order date.
+		orderStatus = false;
 	}
 
 	public int getOrderID() {
 		return orderID;
+	}
+	
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
 	}
 
 	public Product getReorderProduct() {
@@ -38,14 +46,48 @@ public class Order implements Serializable {
 		return quantityOrdered;
 	}
 	
-	public String getDate() {
-		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
+	public String getDateOrderPlaced() {
+		return dateOrderPlaced.get(Calendar.MONTH) + "/" + dateOrderPlaced.get(Calendar.DATE) + "/" + dateOrderPlaced.get(Calendar.YEAR);
+	}
+
+	public String getDateOrderArrival() {
+		return dateOrderArrival.get(Calendar.MONTH) + "/" + dateOrderArrival.get(Calendar.DATE) + "/" + dateOrderArrival.get(Calendar.YEAR);
+	}
+	
+	public boolean isOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(boolean orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null) {
+			return false;
+		}
+		if (getClass() != object.getClass()) {
+			return false;
+		}
+		Order other = (Order) object;
+		if (orderID == 0) {
+			if (other.orderID != 0) {
+				return false;
+			}
+		} else if (orderID != other.orderID) {
+			return false;
+		}
+		return true;
+	}
+	
+	@Override
 	public String toString() {
-		return "OrderID: " + orderID + "\t" + reorderProduct.getProductName() + "\tQty Ordered: "
-				+ getDate() + "\t" + quantityOrdered;
+		return "OrderID: " + orderID + "\tProduct Name: " + reorderProduct.getProductName() + "\tDate Ordered: " + getDateOrderPlaced()
+		+ "\tQty Ordered: " + "\t" + quantityOrdered;
 	}
 	
 	

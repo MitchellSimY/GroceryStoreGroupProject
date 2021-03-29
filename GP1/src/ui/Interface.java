@@ -14,7 +14,7 @@ import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
-//Test comment
+//Test comment updated
 /**
  * 
  * This class implements the user interface for the Library project. The
@@ -519,14 +519,16 @@ public class Interface {
 		do {
 			Request.instance().setProductId(getUserInput("Enter product id"));
 			// test. Is there a safer way to store quantity variable?
-			int quantity;
-			quantity = (getNumber("Enter the number of units being sold: "));
-			result = groceryStore.checkOut(Request.instance(), quantity);
+			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
+			Request.instance().setDate(new GregorianCalendar());
+			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-				// Edit output for unit price, total price, etc.
-				System.out.println("Product: " + result.getProductName() + "\nNumber of item: " + quantity
-						+ "\nUnit Price: " + result.getCurrentPrice() + "\nPrice for Item: "
-						+ (result.getCurrentPrice() * quantity));
+				int transactionIndex = result.getCheckOutTransactionIndex();
+				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString());
+				if (result.isReorderPlaced()) {
+					System.out.println("Reorder placed for " + result.getProductName() + " for " + result.getReorderLevel()*2 + 
+							"with orderID " + result.getOrderID());
+				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
 				System.out.println("Product not found.");
 			} else if (result.getResultCode() == Result.INSUFFICIENT_STOCK) {
@@ -601,7 +603,6 @@ public class Interface {
 				result.reset();
 			}
 		}
-
 	}
 
 	// TODO: Trung
@@ -658,10 +659,9 @@ public class Interface {
 			if (!result.hasNext()) {
 				System.out.println("\nNo transactions found in that date range.\n");
 			} else {
-
 				while (result.hasNext()) {
 					Transaction transaction = (Transaction) result.next();
-					System.out.println(transaction.getType() + "   " + transaction.getProductName() + "\n");
+					System.out.println(transaction.toString());
 				}
 				System.out.println("\nEnd of transactions \n");
 

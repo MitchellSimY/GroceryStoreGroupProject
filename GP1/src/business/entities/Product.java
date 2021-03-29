@@ -14,14 +14,14 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// Product variables
 	private String productName, productId;
-	private int currentStock, reorderLevel;
+	private int stockInHand, reorderLevel, checkoutQty;
 	private double currentPrice;
 
 	// Constructor
 	public Product(String productName, String productId, int stockInHand, int reorderLevel, double currentPrice) {
 		this.productName = productName;
 		this.productId = productId;
-		this.currentStock = stockInHand;
+		this.stockInHand = stockInHand;
 		this.reorderLevel = reorderLevel;
 		this.currentPrice = currentPrice;
 	}
@@ -36,7 +36,8 @@ public class Product implements Serializable {
 		if ((getStockInHand() - quantity) < 0) {
 			return false;
 		} else {
-			setStockInHand(currentStock - quantity);
+			checkoutQty = quantity;
+			setStockInHand(stockInHand - checkoutQty);
 			return true;
 		}
 	}
@@ -77,6 +78,14 @@ public class Product implements Serializable {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+	
+	public int getCheckoutQty() {
+		return checkoutQty;
+	}
+
+	public void setCheckoutQty(int checkoutQty) {
+		this.checkoutQty = checkoutQty;
+	}
 
 	/*
 	 * Getter for stockInHand
@@ -84,7 +93,7 @@ public class Product implements Serializable {
 	 * @return the string stockInHand
 	 */
 	public int getStockInHand() {
-		return currentStock;
+		return stockInHand;
 	}
 
 	/**
@@ -93,7 +102,7 @@ public class Product implements Serializable {
 	 * @param a String for new stockInHand
 	 */
 	public void setStockInHand(int stockInHand) {
-		this.currentStock = stockInHand;
+		this.stockInHand = stockInHand;
 	}
 
 	/*
@@ -142,7 +151,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product Name " + productName + " Product ID " + productId + " Stock in Hand " + currentStock
+		return "Product Name " + productName + " Product ID " + productId + " Stock in Hand " + stockInHand
 				+ " Reoder Level " + reorderLevel + " Current Price" + currentPrice;
 
 	}

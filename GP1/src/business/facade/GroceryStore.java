@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import business.entities.Member;
+import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
 import business.entities.iterators.SafeIterator;
@@ -26,6 +27,7 @@ public class GroceryStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ProductList productList = new ProductList();
 	private MemberList members = new MemberList();
+	private OrderList orderList = new OrderList();
 	private static GroceryStore groceryStore;
 
 	/**
@@ -207,6 +209,96 @@ public class GroceryStore implements Serializable {
 	}
 	// ====== End of Member List Class ========
 
+	/**
+	 * The collection class for Order objects
+	 * 
+	 * @author group
+	 */
+	private class OrderList implements Iterable<Order>, Serializable {
+		private static final long serialVersionUID = 1L;
+		private List<Order> orders = new LinkedList<Order>();
+
+		/**
+		 * Checks whether an order with a given order id exists.
+		 * 
+		 * @param orderID: the ID of the order we wish to find.
+		 * @return Order: returns the Order object in the orderList if it exists.
+		 * 
+		 */
+		public Order search(int orderId) {
+			Order tempOrder = new Order(null, null);
+			tempOrder.setOrderID(orderId);
+			for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
+				Order orderCursor = (Order) iterator.next();
+				if (orderCursor.equals(tempOrder)) {
+					return orderCursor;
+				}
+			}
+			return null;
+		}
+
+		/**
+		 * Removes an order from the orderList given a specific orderID
+		 * 
+		 * @param orderID: the ID of the order we wish to find.
+		 * @return true iff product could be removed
+		 */
+		public boolean removeOrder(int orderId) {
+			Order orderToBeRemove = search(orderId);
+			if (orderToBeRemove == null) {
+				return false;
+			} else {
+				return orders.remove(orderToBeRemove);
+			}
+		}
+
+		/** Original insertOrder code
+		 * 	if (orderList == null) {
+			orders.add(order);
+			return true;
+			}
+			else if (search(order.getOrderID()) == null){
+				orders.add(order);
+				return true;
+			}
+			System.out.println("An Order with " + order.getOrderID() + " id already exists. Order could not be added.");
+			return false;
+		 */
+		/**
+		 * Inserts an order into the OrderList.
+		 * 
+		 * @param order: the Order object to be inserted.
+		 * @return true: iff an Order with the orderID doesn't already exists within orders.
+		 * @return false: iff an Order with the orderID already exists within orders.
+		 */
+		public boolean insertOrder(Order order) {
+			orders.add(order);
+			return true;
+		}
+
+		/**
+		 * Returns an iterator to all Orders.
+		 * 
+		 * @return iterator to the collection
+		 */
+		public Iterator<Order> iterator() {
+			return orders.iterator();
+		}
+
+		public List<Order> getOrderList() {
+			return orders;
+		}
+
+		/**
+		 * String form of the collection
+		 * 
+		 */
+		public String toString() {
+			return orders.toString();
+		}
+
+	}
+	
 	/**
 	 * Private for the singleton pattern Creates the productList and member
 	 * collection objects
@@ -476,34 +568,37 @@ public class GroceryStore implements Serializable {
 	 * @return Result - The result of the operation.
 	 */
 
-	public Result checkOut(Request request, int quantity) {
+	public Result checkOut(Request request) {
 		Result result = new Result();
-		Product product = productList.search(request.getProductId());
-
-		if (product == null) {
-			result.setResultCode(Result.PRODUCT_NOT_FOUND);
-			return result;
-
-		}
-		result.setProductFields(product);
-		if ((product.getStockInHand() - quantity) < 0) {
-			result.setResultCode(Result.INSUFFICIENT_STOCK);
-			return result;
-		}
 		Member member = members.search(request.getMemberId());
 		if (member == null) {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
 		}
-
-		result.setMemberFields(member);
-
-		if (!(product.checkOut(quantity) && member.checkOut(product))) {
-			result.setResultCode(Result.OPERATION_FAILED);
+		
+		Product product = productList.search(request.getProductId());
+		if (product == null) {	//Check if product id exists in warehouse
+			result.setResultCode(Result.PRODUCT_NOT_FOUND);
+			return result;
+		}
+	
+		System.out.println("Before productcheckout " + product.getStockInHand() + " " + product.getCheckoutQty());
+		if (!(product.checkOut(request.getCheckoutQty()))) {
+			result.setResultCode(Result.INSUFFICIENT_STOCK);
 		} else {
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate()));
+			System.out.println("after productcheckout " + product.getStockInHand() + " " + product.getCheckoutQty());
+			if (product.getStockInHand() <= product.getReorderLevel()) {
+				Order newOrder = new Order(product, request.getDate());
+				System.out.println(newOrder.toString());
+				orderList.insertOrder(newOrder);
+				System.out.println("Product Reordered");
+			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
 		}
+		result.setProductFields(product);
+		result.setMemberFields(member);
 		return result;
 
 	}

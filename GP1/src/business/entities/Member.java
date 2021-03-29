@@ -31,12 +31,9 @@ public class Member implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	// variables to help create the member object
-	private String name;
-	private String phoneNumber, address;
+	private String name, phoneNumber, address, memberId;
 	private double feePaid;
-	private String memberId;
 	private static int counter = 0;
-	private List<Product> productsPurchased = new LinkedList<Product>();
 	private List<Transaction> transactions = new LinkedList<Transaction>();
 	private Calendar joinedDate;
 
@@ -64,14 +61,23 @@ public class Member implements Serializable {
 	 * Stores the product as sold to the member
 	 * 
 	 * @param product the product to be issued
-	 * @return true iff the product could be marked as sold. always true currently
+	 * @return transactionIndex: returns the current index of the current transaction in the transaction list.
 	 */
-	public boolean checkOut(Product product) {
-		if (productsPurchased.add(product)) {
-			transactions.add(new Transaction("Sold", product.getProductName()));
-			return true;
+	public int checkOut(Product product, Calendar dateOfTransaction) {
+		int transactionIndex = 0;
+		Transaction tempTransaction = new Transaction();
+		tempTransaction.setDate(dateOfTransaction);
+		for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
+			Transaction currentTransaction = (Transaction) iterator.next();
+			if (currentTransaction.equals(tempTransaction)) {
+				transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+				return transactionIndex;
+			}
+			transactionIndex++;
 		}
-		return false;
+		transactions.add(new Transaction());
+		transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+		return transactionIndex;
 	}
 
 	/**
@@ -92,6 +98,11 @@ public class Member implements Serializable {
 	 */
 	public Iterator<Transaction> getTransactions() {
 		return transactions.iterator();
+	}
+	
+	//Return exact object copy of transactions list
+	public List<Transaction> getTransactionsList() {
+		return transactions;
 	}
 
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
