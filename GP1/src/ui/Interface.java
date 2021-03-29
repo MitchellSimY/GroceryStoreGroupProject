@@ -14,7 +14,12 @@ import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
+<<<<<<< HEAD
 //Test comment By kou 03/29/2021
+=======
+
+//Test comment
+>>>>>>> branch 'main' of https://github.com/MitchellSimY/GroceryStoreGroupProject
 /**
  * 
  * This class implements the user interface for the Library project. The
@@ -24,10 +29,7 @@ import business.facade.Result;
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
-/**
- * @author jrhab
- *
- */
+
 public class Interface {
 
 	// Creating objects for later use.

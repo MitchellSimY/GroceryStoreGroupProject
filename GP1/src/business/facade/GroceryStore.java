@@ -404,7 +404,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Get members method Showing all members that have since registerd. This was
+	 * Get members method Showing all members that have since registered. This was
 	 * called by interface > listAllMembers
 	 * 
 	 * @return all members

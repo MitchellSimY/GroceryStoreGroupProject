@@ -10,16 +10,15 @@ import java.util.Calendar;
  * fields of Product and Member. They are the product name, id, member id,
  * member name, member phone, and member id.
  * 
- * @author Group
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
 public class Request extends DataTransfer {
 	private static Request request;
 	private Calendar date;
 
-	// variables used for printTransaction
-	private Calendar startDate;
-	private Calendar endDate;
+	private Calendar startDate;// used for printTransaction
+	private Calendar endDate;// used for printTransaction
 
 	/**
 	 * This is a singleton class. Hence the private constructor.

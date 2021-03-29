@@ -17,7 +17,7 @@ import business.facade.Result;
  * instead, they should also choose SafeIterator.MEMBER as the second parameter
  * of constructor.
  * 
- * @author group
+ * 
  *
  * @param <T> Either Product or Member
  */
