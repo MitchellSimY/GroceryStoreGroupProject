@@ -14,6 +14,7 @@ import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
+
 //Test comment
 /**
  * 
@@ -24,10 +25,7 @@ import business.facade.Result;
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
-/**
- * @author jrhab
- *
- */
+
 public class Interface {
 
 	// Creating objects for later use.

@@ -11,7 +11,7 @@ import business.entities.Product;
  * and Product objects. The class stores copies of fields that may be sent in
  * either direction.
  * 
- * @author Group
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
 public abstract class DataTransfer {
