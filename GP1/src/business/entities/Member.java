@@ -70,6 +70,7 @@ public class Member implements Serializable {
 		if (transactions.isEmpty()){
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+			System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
 			return transactionIndex;
 		}
 		else if (!transactions.isEmpty()){
@@ -77,6 +78,7 @@ public class Member implements Serializable {
 				Transaction currentTransaction = (Transaction) iterator.next();
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+					System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
 					return transactionIndex;
 				}
 				transactionIndex++;
@@ -85,6 +87,7 @@ public class Member implements Serializable {
 		else {
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+			System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
 		}
 		return transactionIndex;
 	}
