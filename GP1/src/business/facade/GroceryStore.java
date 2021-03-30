@@ -588,12 +588,14 @@ public class GroceryStore implements Serializable {
 				System.out.println(newOrder.toString()); // TODO: DELETE AFTER DEBUG > CURRENT DAY INCORRECTLY PRINTING
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
+				result.setOrderID(newOrder.getOrderID());
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
 		result.setProduct(product);
 		result.setProductFields(product);
 		result.setMemberFields(member);
+
 		return result;
 	}
 

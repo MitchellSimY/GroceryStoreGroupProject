@@ -576,8 +576,8 @@ public class Interface {
 	 */
 	public void retrieveProductInfo() {
 
-		Request.instance()
-				.setProductName(getName("Please enter name of product you want to retrieved the information"));
+		Request.instance().setProductName(
+				ignoredCase(getName("Please enter name of product you want to retrieved the information")));
 		Result result = groceryStore.searchProductName(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("No Product found with given name " + Request.instance().getProductName());
@@ -612,7 +612,8 @@ public class Interface {
 	 */
 	public void retrieveMemberInfo() {
 
-		Request.instance().setMemberName(getName("Please enter name of member you want to retrieved the information"));
+		Request.instance().setMemberName(
+				ignoredCase(getName("Please enter name of member you want to retrieved the information")));
 		Result result = groceryStore.searchName(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("No member found with given name " + Request.instance().getMemberName());
