@@ -27,7 +27,7 @@ public class Transaction implements Serializable {
 
 	public Transaction() {
 		totalCost = 0;
-		date = new GregorianCalendar();	//TODO : ADD ONE MONTH TO CALENDER.MONTH INDEX GOES FROM 0-11
+		date = new GregorianCalendar(); // TODO : ADD ONE MONTH TO CALENDER.MONTH INDEX GOES FROM 0-11
 	}
 
 	/**
@@ -52,8 +52,7 @@ public class Transaction implements Serializable {
 		}
 		setTotalCost(totalCostCalc);
 	}
-	
-	
+
 	public double getTotalCost() {
 		return totalCost;
 	}
@@ -73,14 +72,14 @@ public class Transaction implements Serializable {
 	public Calendar getCalenderDate() {
 		return date;
 	}
-	
+
 	/**
 	 * Returns the date as a String
 	 * 
 	 * @return date with month, date, and year
 	 */
 	public String getDate() {
-		return date.get(Calendar.MONTH) + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
+		return date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
 	}
 
 	@Override
@@ -99,10 +98,9 @@ public class Transaction implements Serializable {
 			if (other.date != null) {
 				return false;
 			}
-		} 
-		else if (date.get(Calendar.MONTH) == other.date.get(Calendar.MONTH) &&
-				date.get(Calendar.DATE) == other.date.get(Calendar.DATE) &&
-				date.get(Calendar.YEAR) == other.date.get(Calendar.YEAR)) {
+		} else if (date.get(Calendar.MONTH) == other.date.get(Calendar.MONTH)
+				&& date.get(Calendar.DATE) == other.date.get(Calendar.DATE)
+				&& date.get(Calendar.YEAR) == other.date.get(Calendar.YEAR)) {
 			return true;
 		}
 		return false;
@@ -112,10 +110,10 @@ public class Transaction implements Serializable {
 	public String currentProductCheckoutToString(Product product) {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
 		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-		return product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
-				"\t" + df.format(productPurchasedCost) + "\n";
+		return product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice())
+				+ "\t" + df.format(productPurchasedCost) + "\n";
 	}
-	
+
 	/**
 	 * String form of the transaction
 	 * 
@@ -128,10 +126,10 @@ public class Transaction implements Serializable {
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-			productListString += product.getProductName() + "\t\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
-					"\t" + df.format(productPurchasedCost) + "\n";
-		} 
-		return "Checkout Transaction date: " + getDate() + "\nProduct\t\\tQty\tPerCost\tTotal\n" + productListString + "\nTotal Cost: " + 
-		df.format(totalCost);
+			productListString += product.getProductName() + "\t\t" + product.getCheckoutQty() + "\t"
+					+ df.format(product.getCurrentPrice()) + "\t" + df.format(productPurchasedCost) + "\n";
+		}
+		return "Checkout Transaction date: " + getDate() + "\nProduct\t\\tQty\tPerCost\tTotal\n" + productListString
+				+ "\nTotal Cost: " + df.format(totalCost);
 	}
 }

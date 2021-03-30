@@ -14,6 +14,7 @@ import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
+
 //Test commit comment This is kou's code
 /**
  * 
@@ -516,14 +517,15 @@ public class Interface {
 		do {
 			Request.instance().setProductId(getUserInput("Enter product id"));
 			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
-			Request.instance().setDate(new GregorianCalendar());
+			Request.instance().setDateOrderPlaced(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString(result.getProduct()));
+				System.out.println(result.getTransactions().get(transactionIndex)
+						.currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
-					System.out.println("Reorder placed for " + result.getProductName() + " for " + result.getReorderLevel()*2 + 
-							" with orderID " + result.getOrderID());
+					System.out.println("Reorder placed for " + result.getProductName() + " for "
+							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());
 				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
 				System.out.println("Product not found.");

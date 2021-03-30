@@ -252,23 +252,18 @@ public class GroceryStore implements Serializable {
 			}
 		}
 
-		/** Original insertOrder code
-		 * 	if (orderList == null) {
-			orders.add(order);
-			return true;
-			}
-			else if (search(order.getOrderID()) == null){
-				orders.add(order);
-				return true;
-			}
-			System.out.println("An Order with " + order.getOrderID() + " id already exists. Order could not be added.");
-			return false;
+		/**
+		 * Original insertOrder code if (orderList == null) { orders.add(order); return
+		 * true; } else if (search(order.getOrderID()) == null){ orders.add(order);
+		 * return true; } System.out.println("An Order with " + order.getOrderID() + "
+		 * id already exists. Order could not be added."); return false;
 		 */
 		/**
 		 * Inserts an order into the OrderList.
 		 * 
 		 * @param order: the Order object to be inserted.
-		 * @return true: iff an Order with the orderID doesn't already exists within orders.
+		 * @return true: iff an Order with the orderID doesn't already exists within
+		 *         orders.
 		 * @return false: iff an Order with the orderID already exists within orders.
 		 */
 		public boolean insertOrder(Order order) {
@@ -297,7 +292,7 @@ public class GroceryStore implements Serializable {
 			return orders.toString();
 		}
 	}
-	
+
 	/**
 	 * Private for the singleton pattern Creates the productList and member
 	 * collection objects
@@ -574,21 +569,23 @@ public class GroceryStore implements Serializable {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
 		}
-		
+
 		Product product = productList.search(request.getProductId());
-		if (product == null) {	//Check if product id exists in warehouse
+		if (product == null) { // Check if product id exists in warehouse
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
 		}
-	
+
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
-		} 
-		else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate())); //Creates/Edit and get current transaction index
+		} else {
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDateOrderPlaced())); // Creates/Edit
+																										// and get
+			// current transaction
+			// index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
-				Order newOrder = new Order(product, request.getDate());
-				System.out.println(newOrder.toString()); //TODO: DELETE AFTER DEBUG > CURRENT DAY INCORRECTLY PRINTING
+				Order newOrder = new Order(product, request.getDateOrderPlaced());
+				System.out.println(newOrder.toString()); // TODO: DELETE AFTER DEBUG > CURRENT DAY INCORRECTLY PRINTING
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 			}
@@ -599,7 +596,7 @@ public class GroceryStore implements Serializable {
 		result.setMemberFields(member);
 		return result;
 	}
-	
+
 	/**
 	 * Returns an iterator to the transactions for a specific member on a certain
 	 * date
