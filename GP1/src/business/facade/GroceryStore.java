@@ -592,6 +592,7 @@ public class GroceryStore implements Serializable {
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
+
 		result.setProduct(product);
 		result.setProductFields(product);
 		result.setMemberFields(member);
