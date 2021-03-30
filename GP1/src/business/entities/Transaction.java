@@ -111,11 +111,9 @@ public class Transaction implements Serializable {
 	// TODO: fix this
 	public String currentProductCheckoutToString(Product product) {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
-		String productString = "";
 		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-		productString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
+		return product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
 				"\t" + df.format(productPurchasedCost) + "\n";
-		return productString;
 	}
 	
 	/**

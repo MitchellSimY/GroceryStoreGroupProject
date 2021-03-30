@@ -582,7 +582,7 @@ public class GroceryStore implements Serializable {
 			return result;
 		}
 	
-		if (!(product.checkOut(request.getCheckoutQty()))) {//
+		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
 		} 
 		else {
