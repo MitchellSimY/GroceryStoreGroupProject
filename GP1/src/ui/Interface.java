@@ -14,6 +14,7 @@ import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
+
 //Test commit comment This is kou's code
 /**
  * 
@@ -520,10 +521,11 @@ public class Interface {
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString(result.getProduct()));
+				System.out.println(result.getTransactions().get(transactionIndex)
+						.currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
-					System.out.println("Reorder placed for " + result.getProductName() + " for " + result.getReorderLevel()*2 + 
-							" with orderID " + result.getOrderID());
+					System.out.println("Reorder placed for " + result.getProductName() + " for "
+							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());
 				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
 				System.out.println("Product not found.");
@@ -640,8 +642,13 @@ public class Interface {
 	 * No parameters and no return.
 	 */
 	public void printTransactions() {
+
 		Request.instance().setMemberId(getUserInput("Enter member id"));
-		// TODO: Needs to have a range with a start date and end date inclusive.
+		Result result = groceryStore.searchMembership(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			return;
+		}
 		Request.instance().setStartDate(
 				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
 		Request.instance().setEndDate(
@@ -650,12 +657,12 @@ public class Interface {
 				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate()))) {
 			System.out.println("Start date must be before or equal to end date.");
 		} else {
-			Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
-			if (!result.hasNext()) {
+			Iterator<Transaction> result1 = groceryStore.getTransactions(Request.instance());
+			if (!result1.hasNext()) {
 				System.out.println("\nNo transactions found in that date range.\n");
 			} else {
-				while (result.hasNext()) {
-					Transaction transaction = (Transaction) result.next();
+				while (result1.hasNext()) {
+					Transaction transaction = (Transaction) result1.next();
 					System.out.println(transaction.toString());
 				}
 				System.out.println("\nEnd of transactions \n");
