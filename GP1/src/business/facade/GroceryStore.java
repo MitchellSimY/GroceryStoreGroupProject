@@ -582,20 +582,18 @@ public class GroceryStore implements Serializable {
 			return result;
 		}
 	
-		System.out.println("Before productcheckout " + product.getStockInHand() + " " + product.getCheckoutQty());
-		if (!(product.checkOut(request.getCheckoutQty()))) {
+		if (!(product.checkOut(request.getCheckoutQty()))) {//
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
-		} else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate()));
-			System.out.println("after productcheckout " + product.getStockInHand() + " " + product.getCheckoutQty());
+		} 
+		else {
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate())); //Creates/Edit and get current transaction index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
-				System.out.println(newOrder.toString());
+				System.out.println(newOrder.toString()); //TODO: DELETE AFTER DEBUG
 				orderList.insertOrder(newOrder);
-				System.out.println("Product Reordered");
+				result.setReorderPlaced(true);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
-			result.setProductFields(product);
 		}
 		result.setProductFields(product);
 		result.setMemberFields(member);

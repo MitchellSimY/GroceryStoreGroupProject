@@ -515,13 +515,12 @@ public class Interface {
 		}
 		do {
 			Request.instance().setProductId(getUserInput("Enter product id"));
-			// test. Is there a safer way to store quantity variable?
 			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
 			Request.instance().setDate(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString());
+//				int transactionIndex = result.getCheckOutTransactionIndex();
+//				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString());
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for " + result.getReorderLevel()*2 + 
 							"with orderID " + result.getOrderID());

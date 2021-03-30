@@ -67,16 +67,28 @@ public class Member implements Serializable {
 		int transactionIndex = 0;
 		Transaction tempTransaction = new Transaction();
 		tempTransaction.setDate(dateOfTransaction);
-		for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
-			Transaction currentTransaction = (Transaction) iterator.next();
-			if (currentTransaction.equals(tempTransaction)) {
-				transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
-				return transactionIndex;
-			}
-			transactionIndex++;
+		if (transactions.isEmpty()){
+			transactions.add(new Transaction());
+			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+			System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
+			return transactionIndex;
 		}
-		transactions.add(new Transaction());
-		transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+		else if (!transactions.isEmpty()){
+			for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
+				Transaction currentTransaction = (Transaction) iterator.next();
+				if (currentTransaction.equals(tempTransaction)) {
+					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+					System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
+					return transactionIndex;
+				}
+				transactionIndex++;
+			}
+		}
+		else {
+			transactions.add(new Transaction());
+			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+			System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
+		}
 		return transactionIndex;
 	}
 
@@ -105,6 +117,11 @@ public class Member implements Serializable {
 		return transactions;
 	}
 
+	public boolean insertTransaction(Transaction transaction) {
+		transactions.add(transaction);
+		return true;
+	}
+	
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
 
 	/**
@@ -214,6 +231,7 @@ public class Member implements Serializable {
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
 	}
+	
 
 	@Override
 	public int hashCode() {

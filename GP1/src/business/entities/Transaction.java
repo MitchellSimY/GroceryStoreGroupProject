@@ -45,13 +45,23 @@ public class Transaction implements Serializable {
 	}
 
 	public void computeTotalCost() {
+		double totalCostCalc = 0;
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
-			totalCost += product.getCheckoutQty() * product.getCurrentPrice();
+			totalCostCalc += product.getCurrentPrice() * product.getCheckoutQty();
 		}
+		setTotalCost(totalCostCalc);
 	}
 	
 	
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
+
 	public CheckOutProductList getCheckOutProductList() {
 		return checkOutProductList;
 	}
@@ -99,11 +109,9 @@ public class Transaction implements Serializable {
 	}
 
 	// TODO: fix this
-	public String currentProductCheckoutToString() {
+	public String currentProductCheckoutToString(Product product) {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
 		String productString = "";
-		Iterator<Product> iterator = checkOutProductList.iterator();
-		Product product = (Product) iterator.next();
 		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
 		productString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
 				"\t" + df.format(productPurchasedCost) + "\n";
@@ -118,12 +126,14 @@ public class Transaction implements Serializable {
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
 		String productListString = "";
+		computeTotalCost();
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
 			productListString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
 					"\t" + df.format(productPurchasedCost) + "\n";
 		} 
-		return "Checkout Transaction date: " + date + "\nProduct Name\tQty\tPerCost\tTotal" + productListString + "\nTotal Cost: " + totalCost;
+		return "Checkout Transaction date: " + getDate() + "\nProduct\tQty\tPerCost\tTotal\n" + productListString + "\nTotal Cost: " + 
+		df.format(totalCost);
 	}
 }
