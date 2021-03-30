@@ -52,7 +52,7 @@ public class Member implements Serializable {
 		this.address = address;
 		this.feePaid = feePaid;
 		counter = counter + 1;
-		this.memberId = "M" + counter;
+		this.memberId = "" + counter;
 		this.joinedDate = joinedDate;
 
 	}
@@ -70,7 +70,6 @@ public class Member implements Serializable {
 		if (transactions.isEmpty()){
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
-			System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
 			return transactionIndex;
 		}
 		else if (!transactions.isEmpty()){
@@ -78,7 +77,6 @@ public class Member implements Serializable {
 				Transaction currentTransaction = (Transaction) iterator.next();
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
-					System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
 					return transactionIndex;
 				}
 				transactionIndex++;
@@ -87,7 +85,6 @@ public class Member implements Serializable {
 		else {
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
-			System.out.println(transactions.get(transactionIndex).currentProductCheckoutToString(product));
 		}
 		return transactionIndex;
 	}
@@ -245,7 +242,6 @@ public class Member implements Serializable {
 	public String toString() {
 		return " Name is " + name + " Phone Number " + phoneNumber + " Addess " + address + " Fee Paid " + feePaid
 				+ " MemberId " + memberId + " Date of Join" + joinedDate.toString();
-
 	}
 
 	/**

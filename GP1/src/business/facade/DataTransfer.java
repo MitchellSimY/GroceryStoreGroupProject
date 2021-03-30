@@ -32,6 +32,7 @@ public abstract class DataTransfer {
 	private int stockInhand, reorderLevel, checkoutQty;
 	private double currentPrice;
 	private boolean reorderPlaced = false;
+	private Product product;
 
 	//Order Variables
 	private int orderID, quantityOrdered;
@@ -60,6 +61,14 @@ public abstract class DataTransfer {
 		reorderLevel = product.getReorderLevel();
 		currentPrice = product.getCurrentPrice();
 		checkoutQty = product.getCheckoutQty();
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public String getProductName() {
@@ -260,7 +269,7 @@ public abstract class DataTransfer {
 	/**
 	 * Sets all String fields to "none"
 	 */
-	public void reset() {
+	public void reset() {	//TODO: ADD ORDER CLASS FIELDS
 		productName = "N/A";
 		productId = "N/A";
 		stockInhand = 0;

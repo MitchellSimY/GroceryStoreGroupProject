@@ -519,11 +519,11 @@ public class Interface {
 			Request.instance().setDate(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-//				int transactionIndex = result.getCheckOutTransactionIndex();
-//				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString());
+				int transactionIndex = result.getCheckOutTransactionIndex();
+				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for " + result.getReorderLevel()*2 + 
-							"with orderID " + result.getOrderID());
+							" with orderID " + result.getOrderID());
 				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
 				System.out.println("Product not found.");

@@ -64,7 +64,7 @@ public class GroceryStore implements Serializable {
 		 * 
 		 */
 		public Product searchProductName(String name) {
-			for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
+			for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 				Product product = (Product) iterator.next();
 				if (product.getProductName().equals(name)) {
 					return product;
@@ -296,7 +296,6 @@ public class GroceryStore implements Serializable {
 		public String toString() {
 			return orders.toString();
 		}
-
 	}
 	
 	/**
@@ -589,18 +588,17 @@ public class GroceryStore implements Serializable {
 			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate())); //Creates/Edit and get current transaction index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
-				System.out.println(newOrder.toString()); //TODO: DELETE AFTER DEBUG
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
+		result.setProduct(product);
 		result.setProductFields(product);
 		result.setMemberFields(member);
 		return result;
-
 	}
-
+	
 	/**
 	 * Returns an iterator to the transactions for a specific member on a certain
 	 * date
