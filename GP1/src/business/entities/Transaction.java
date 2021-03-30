@@ -27,7 +27,7 @@ public class Transaction implements Serializable {
 
 	public Transaction() {
 		totalCost = 0;
-		date = new GregorianCalendar();
+		date = new GregorianCalendar();	//TODO : ADD ONE MONTH TO CALENDER.MONTH INDEX GOES FROM 0-11
 	}
 
 	/**
@@ -128,10 +128,10 @@ public class Transaction implements Serializable {
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-			productListString += product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
+			productListString += product.getProductName() + "\t\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice()) + 
 					"\t" + df.format(productPurchasedCost) + "\n";
 		} 
-		return "Checkout Transaction date: " + getDate() + "\nProduct\tQty\tPerCost\tTotal\n" + productListString + "\nTotal Cost: " + 
+		return "Checkout Transaction date: " + getDate() + "\nProduct\t\\tQty\tPerCost\tTotal\n" + productListString + "\nTotal Cost: " + 
 		df.format(totalCost);
 	}
 }

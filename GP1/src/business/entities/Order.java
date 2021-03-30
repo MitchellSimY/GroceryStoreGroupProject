@@ -46,6 +46,14 @@ public class Order implements Serializable {
 		return quantityOrdered;
 	}
 	
+	public Calendar getCalendarOrderPlaced() {
+		return dateOrderPlaced;
+	}
+
+	public Calendar getCalendarOrderArrival() {
+		return dateOrderArrival;
+	}
+	
 	public String getDateOrderPlaced() {
 		return dateOrderPlaced.get(Calendar.MONTH) + "/" + dateOrderPlaced.get(Calendar.DATE) + "/" + dateOrderPlaced.get(Calendar.YEAR);
 	}

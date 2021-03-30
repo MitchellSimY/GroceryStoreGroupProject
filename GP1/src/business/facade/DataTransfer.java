@@ -37,7 +37,7 @@ public abstract class DataTransfer {
 	//Order Variables
 	private int orderID, quantityOrdered;
 	private Product reorderProduct;
-	private String dateOrderPlaced, dateOrderArrival;
+	private Calendar dateOrderPlaced, dateOrderArrival;
 	private boolean orderStatus;
 	
 	/**
@@ -213,8 +213,8 @@ public abstract class DataTransfer {
 		orderID = order.getOrderID();
 		quantityOrdered = order.getQuantityOrdered();
 		reorderProduct = order.getReorderProduct();
-		dateOrderPlaced = order.getDateOrderPlaced();
-		dateOrderArrival = order.getDateOrderArrival();
+		dateOrderPlaced = order.getCalendarOrderPlaced();
+		dateOrderArrival = order.getCalendarOrderArrival();
 		orderStatus = order.isOrderStatus();
 	}
 	
@@ -242,19 +242,19 @@ public abstract class DataTransfer {
 		this.reorderProduct = reorderProduct;
 	}
 
-	public String getDateOrderPlaced() {
+	public Calendar getDateOrderPlaced() {
 		return dateOrderPlaced;
 	}
 
-	public void setDateOrderPlaced(String dateOrderPlaced) {
+	public void setDateOrderPlaced(Calendar dateOrderPlaced) {
 		this.dateOrderPlaced = dateOrderPlaced;
 	}
 
-	public String getDateOrderArrival() {
+	public Calendar getDateOrderArrival() {
 		return dateOrderArrival;
 	}
 
-	public void setDateOrderArrival(String dateOrderArrival) {
+	public void setDateOrderArrival(Calendar dateOrderArrival) {
 		this.dateOrderArrival = dateOrderArrival;
 	}
 
@@ -279,5 +279,6 @@ public abstract class DataTransfer {
 		memberName = "N/A";
 		memberPhone = "N/A";
 		memberAddress = "N/A";
+		
 	}
 }

@@ -24,7 +24,7 @@ import business.entities.iterators.FilteredIterator;
 /**
  * Member represents a member of the groceryStore.
  * 
- * @author Brahma Dathan and Sarnath Ramnath
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  *
  */
 public class Member implements Serializable {

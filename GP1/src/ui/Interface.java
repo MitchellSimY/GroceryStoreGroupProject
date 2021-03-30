@@ -532,7 +532,6 @@ public class Interface {
 			} else {
 				System.out.println("Could not sell product.");
 			}
-			// TODO: Check reorder level. Reorder if necessary and display.
 		} while (yesOrNo("Check out more products?"));
 	}
 
@@ -690,7 +689,6 @@ public class Interface {
 					+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
 					+ equalsLength(result.getDateJoinedByString()));
 		}
-
 	}
 
 //	TODO: Trung

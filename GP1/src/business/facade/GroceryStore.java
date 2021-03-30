@@ -588,6 +588,7 @@ public class GroceryStore implements Serializable {
 			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate())); //Creates/Edit and get current transaction index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
+				System.out.println(newOrder.toString()); //TODO: Delete Later
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 			}
