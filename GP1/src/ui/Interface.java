@@ -496,7 +496,8 @@ public class Interface {
 		} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
 			System.out.println("Product Name already exists");
 		} else {
-			System.out.println(result.getProductName() + " has since been added.");
+			System.out.println(result.getProductName() + " has since been added." + "\nAn Order for " + result.getProductName()
+			+ " has been made with qty " + result.getQuantityOrdered() + ".");
 		}
 	}
 

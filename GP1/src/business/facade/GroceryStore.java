@@ -389,6 +389,7 @@ public class GroceryStore implements Serializable {
 		if (productList.insertProduct(product) && orderList.insertOrder(newOrder)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
+			result.setOrderFields(newOrder);
 			return result;
 		}
 
