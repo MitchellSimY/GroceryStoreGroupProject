@@ -269,16 +269,33 @@ public abstract class DataTransfer {
 	/**
 	 * Sets all String fields to "none"
 	 */
-	public void reset() {	//TODO: ADD ORDER CLASS FIELDS
+	public void reset() {
+		//Reset Member Fields
+		memberId = "N/A";
+		memberName = "N/A";
+		memberPhone = "N/A";
+		memberAddress = "N/A";
+		dateJoined = null;
+		transactions = null;
+		feePaid = 0;
+		checkOutTransactionIndex = 0;
+
+		//Reset Product Fields
 		productName = "N/A";
 		productId = "N/A";
 		stockInhand = 0;
 		reorderLevel = 0;
 		currentPrice = 0;
-		memberId = "N/A";
-		memberName = "N/A";
-		memberPhone = "N/A";
-		memberAddress = "N/A";
-		
+		checkoutQty = 0;
+		reorderPlaced = false;
+		product = null;
+
+		//Reset Order Fields
+		orderID = 0;
+		quantityOrdered = 0;
+		reorderProduct = null;
+		dateOrderPlaced= null;
+		dateOrderArrival = null;
+		orderStatus = false;
 	}
 }

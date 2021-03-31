@@ -514,10 +514,10 @@ public class Interface {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
+		Request.instance().setDateOrderPlaced(new GregorianCalendar());
 		do {
 			Request.instance().setProductId(getUserInput("Enter product id"));
 			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
-			Request.instance().setDateOrderPlaced(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
