@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.GregorianCalendar;
 
 import business.entities.Member;
 import business.entities.Order;
@@ -607,6 +608,11 @@ public class GroceryStore implements Serializable {
 		result.setCheckoutQty(request.getCheckoutQty());
 		result.setMemberFields(member);
 		return result;
+	}
+	
+	private boolean createOrder(Product product) {
+		//TODO: MAKE PRIVATE CREATE ORDER CLASS?
+		return false;
 	}
 
 	/**

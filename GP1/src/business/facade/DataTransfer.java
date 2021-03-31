@@ -3,6 +3,7 @@ package business.facade;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.GregorianCalendar;
 
 import business.entities.Member;
 import business.entities.Order;
@@ -246,7 +247,7 @@ public abstract class DataTransfer {
 		return dateOrderPlaced;
 	}
 	public String getDateOrderPlacedString() {
-		return dateOrderPlaced.get(Calendar.MONTH) + "/" + dateOrderPlaced.get(Calendar.DATE) + "/" + dateOrderPlaced.get(Calendar.YEAR);
+		return dateOrderPlaced.get(Calendar.MONTH) + 1 + "/" + dateOrderPlaced.get(Calendar.DATE) + "/" + dateOrderPlaced.get(Calendar.YEAR);
 	}
 	public void setDateOrderPlaced(Calendar dateOrderPlaced) {
 		this.dateOrderPlaced = dateOrderPlaced;

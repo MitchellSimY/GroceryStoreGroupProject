@@ -24,7 +24,7 @@ public class Order implements Serializable {
 		orderID = counter;
 		quantityOrdered = productToOrder.getReorderLevel() * 2;
 		reorderProduct = productToOrder;
-		dateOrderPlaced = date;
+		dateOrderPlaced = new GregorianCalendar();
 		dateOrderArrival = date;
 		dateOrderArrival.add(Calendar.WEEK_OF_YEAR, 2); // Shipment will always arrive 2 weeks after initial order date.
 		orderStatus = false;
