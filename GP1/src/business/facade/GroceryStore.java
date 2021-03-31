@@ -568,28 +568,31 @@ public class GroceryStore implements Serializable {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
 		}
-
+		
 		Product product = productList.search(request.getProductId());
-		if (product == null) { // Check if product id exists in warehouse
+		if (product == null) {	//Check if product id exists in warehouse
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
 		}
-
+	
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
-		} else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); //create the transaction,transactionindex
+		} 
+		else {
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); //Creates/Edit and get current transaction index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
-				System.out.println(newOrder.toString()); // TODO: DELETE AFTER DEBUG > CURRENT DAY INCORRECTLY PRINTING
+				//System.out.println(newOrder.toString()); //TODO: delete after debug
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 				result.setOrderFields(newOrder);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
+		//System.out.println(product.getCheckoutQty());//TODO: DELETE AFTER DEBUG
 		result.setProduct(product);
 		result.setProductFields(product);
+		result.setCheckoutQty(request.getCheckoutQty());
 		result.setMemberFields(member);
 		return result;
 	}

@@ -36,7 +36,8 @@ public class Product implements Serializable {
 		if ((getStockInHand() - quantity) < 0) {
 			return false;
 		} else {
-			setStockInHand(stockInHand - checkoutQty);
+			checkoutQty = quantity;
+			setStockInHand(stockInHand - quantity);
 			return true;
 		}
 	}

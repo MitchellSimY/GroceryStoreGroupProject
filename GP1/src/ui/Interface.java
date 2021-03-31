@@ -514,17 +514,16 @@ public class Interface {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
-		Request.instance().setDateOrderPlaced(new GregorianCalendar());
 		do {
 			Request.instance().setProductId(getUserInput("Enter product id"));
 			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
+			Request.instance().setDate(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex)
-						.currentProductCheckoutToString(result.getProduct()));
+				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
-					System.out.println("Reorder placed for " + result.getProductName() + " for "
+					System.out.println("Reorder placed for " + result.getProductName() + " for qty = "
 							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());
 				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {

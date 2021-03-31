@@ -67,14 +67,15 @@ public class Member implements Serializable {
 		int transactionIndex = 0;
 		Transaction tempTransaction = new Transaction();
 		tempTransaction.setDate(dateOfTransaction);
+		//System.out.println(tempTransaction.getDate());
 		if (transactions.isEmpty() == false){
 			//System.out.println("In if");//TODO: DELETE AFTER DEBUG
 			for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
 				Transaction currentTransaction = (Transaction) iterator.next();
-				System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
+				//System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-					System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
+					//System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG
 					//System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
 					return transactionIndex;
 				}
@@ -86,7 +87,7 @@ public class Member implements Serializable {
 			//System.out.println("In else");//TODO: DELETE AFTER DEBUG
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-			System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
+			//System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG
 		}
 		//System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
 		return transactionIndex;
