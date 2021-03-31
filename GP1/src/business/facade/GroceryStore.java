@@ -263,8 +263,7 @@ public class GroceryStore implements Serializable {
 		 * 
 		 * @param order: the Order object to be inserted.
 		 * @return true: iff an Order with the orderID doesn't already exists within
-		 *         orders.
-		 * @return false: iff an Order with the orderID already exists within orders.
+		 *         orders and the Order object is inserted successfully. Currently set to always true.
 		 */
 		public boolean insertOrder(Order order) {
 			orders.add(order);
@@ -579,24 +578,19 @@ public class GroceryStore implements Serializable {
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
 		} else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDateOrderPlaced())); // Creates/Edit
-																										// and get
-			// current transaction
-			// index
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); //create the transaction,transactionindex
 			if (product.getStockInHand() <= product.getReorderLevel()) {
-				Order newOrder = new Order(product, request.getDateOrderPlaced());
+				Order newOrder = new Order(product, request.getDate());
 				System.out.println(newOrder.toString()); // TODO: DELETE AFTER DEBUG > CURRENT DAY INCORRECTLY PRINTING
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
-				result.setOrderID(newOrder.getOrderID());
+				result.setOrderFields(newOrder);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
-
 		result.setProduct(product);
 		result.setProductFields(product);
 		result.setMemberFields(member);
-
 		return result;
 	}
 

@@ -66,8 +66,11 @@ public class CheckOutProductList implements Iterable<Product>, Serializable{
 		 * @param product the product to be inserted
 		 * @return true iff the product could be inserted. Currently always true
 		 */
-		public boolean insertProduct(Product product) {
-			products.add(product);
+		public boolean insertProduct(Product product, int checkOutQty) {
+			Product tempProduct = new Product(product.getProductName(), product.getProductId(), product.getStockInHand()
+					, product.getReorderLevel(), product.getCurrentPrice());
+			tempProduct.setCheckoutQty(checkOutQty);
+			products.add(tempProduct);
 			return true;
 		}
 

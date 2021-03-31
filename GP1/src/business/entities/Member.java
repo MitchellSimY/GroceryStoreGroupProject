@@ -63,32 +63,32 @@ public class Member implements Serializable {
 	 * @param product the product to be issued
 	 * @return transactionIndex: returns the current index of the current transaction in the transaction list.
 	 */
-	public int checkOut(Product product, Calendar dateOfTransaction) {
+	public int checkOut(Product product, Calendar dateOfTransaction, int checkOutQty) {
 		int transactionIndex = 0;
 		Transaction tempTransaction = new Transaction();
 		tempTransaction.setDate(dateOfTransaction);
-		if (transactions.isEmpty()){
-			transactions.add(new Transaction());
-			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
-			System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
-			return transactionIndex;
-		}
-		else if (!transactions.isEmpty()){
+		if (transactions.isEmpty() == false){
+			//System.out.println("In if");//TODO: DELETE AFTER DEBUG
 			for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
 				Transaction currentTransaction = (Transaction) iterator.next();
+				System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
 				if (currentTransaction.equals(tempTransaction)) {
-					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
 					System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
+					//System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
 					return transactionIndex;
 				}
+				//System.out.println("Adding 1 to transaction Index");//TODO: DELETE AFTER DEBUG
 				transactionIndex++;
 			}
 		}
 		else {
+			//System.out.println("In else");//TODO: DELETE AFTER DEBUG
 			transactions.add(new Transaction());
-			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product);
+			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
 			System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG > CURRENT MONTH INCORRECTLY PRINTING
 		}
+		//System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
 		return transactionIndex;
 	}
 
