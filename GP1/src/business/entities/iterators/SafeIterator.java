@@ -4,9 +4,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import business.entities.Member;
+import business.entities.Order;
 import business.entities.Product;
 import business.entities.iterators.SafeIterator.Type.SafeMember;
 import business.entities.iterators.SafeIterator.Type.SafeProduct;
+import business.entities.iterators.SafeIterator.Type.SafeOrder;
 import business.facade.Result;
 
 /**
@@ -19,7 +21,7 @@ import business.facade.Result;
  * 
  * 
  *
- * @param <T> Either Product or Member
+ * @param <T> Either Product or Member or Orders
  */
 public class SafeIterator<T> implements Iterator<Result> {
 	private Iterator<T> iterator;
@@ -27,6 +29,7 @@ public class SafeIterator<T> implements Iterator<Result> {
 	private Result result = new Result();
 	public static final Type PRODUCT = new SafeProduct();
 	public static final Type MEMBER = new SafeMember();
+	public static final Type ORDER = new SafeOrder();
 
 	/**
 	 * This class is designed to ensure that the appropriate object is used to copy
@@ -61,6 +64,13 @@ public class SafeIterator<T> implements Iterator<Result> {
 			}
 		}
 
+		public static class SafeOrder extends Type {
+			@Override
+			public void copy(Result result, Object object) {
+				Order order = (Order) object;
+				result.setOrderFields(order);
+			}
+		}
 	}
 
 	/**

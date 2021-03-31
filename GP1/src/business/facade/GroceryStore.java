@@ -373,7 +373,6 @@ public class GroceryStore implements Serializable {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
 				request.getReorderLevel(), request.getCurrentPrice());
-		Order newOrder = new Order(product, request.getDate());
 		/**
 		 * If satements checking to see if the product already exists via the ID or the
 		 * name.
@@ -386,7 +385,9 @@ public class GroceryStore implements Serializable {
 			return result;
 		}
 
-		if (productList.insertProduct(product) && orderList.insertOrder(newOrder)) {
+		if (productList.insertProduct(product)) {
+			Order newOrder = new Order(product, request.getDate());
+			orderList.insertOrder(newOrder);
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
 			result.setOrderFields(newOrder);
@@ -417,6 +418,16 @@ public class GroceryStore implements Serializable {
 		return new SafeIterator<Product>(productList.iterator(), SafeIterator.PRODUCT);
 	}
 
+	/**
+	 * getProduct method Showing all products that have since added. This was called
+	 * by interface > listAllProducts
+	 * 
+	 * @return all iterator of productList
+	 */
+	public Iterator<Result> getOrders() {
+		return new SafeIterator<Order>(orderList.iterator(), SafeIterator.ORDER);
+	}
+	
 	/**
 	 * retrievedMemberInfor searching the members list by iterator to find every
 	 * member has matching name with the user input then add all found result in to

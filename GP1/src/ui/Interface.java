@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import business.entities.Product;
 import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
@@ -669,9 +670,19 @@ public class Interface {
 	}
 
 //	TODO: Kou
-	private void listOutstandingOrders() {
-		// TODO Auto-generated method stub
+	public void listOutstandingOrders() {
+		Iterator<Result> iterator = groceryStore.getOrders();
 
+		System.out.println(equalsLength("OrderID") + "|" + equalsLength("Product Name") + "|"
+				+ equalsLength("Date Place") + "|" + equalsLength("Qty Ordered"));
+		
+		while (iterator.hasNext()) {
+			Result result = iterator.next();
+			if (result.isOrderStatus() == false) {//TODO: COME BACK AND CHECK IF WHEN SET TO TRUE, ORDERS SHOULD NOT BE PRINTING; IMPLEMENT AFTER USE CASE 5
+				System.out.println(equalsLength("" + result.getOrderID()) + "|" + equalsLength(result.getReorderProduct().getProductName()) 
+				+ "|" + equalsLength(result.getDateOrderPlacedString()) + "|" + equalsLength("" + result.getQuantityOrdered()));
+			}
+		}
 	}
 
 	/**

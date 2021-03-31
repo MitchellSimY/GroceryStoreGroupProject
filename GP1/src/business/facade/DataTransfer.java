@@ -245,7 +245,9 @@ public abstract class DataTransfer {
 	public Calendar getDateOrderPlaced() {
 		return dateOrderPlaced;
 	}
-
+	public String getDateOrderPlacedString() {
+		return dateOrderPlaced.get(Calendar.MONTH) + "/" + dateOrderPlaced.get(Calendar.DATE) + "/" + dateOrderPlaced.get(Calendar.YEAR);
+	}
 	public void setDateOrderPlaced(Calendar dateOrderPlaced) {
 		this.dateOrderPlaced = dateOrderPlaced;
 	}
