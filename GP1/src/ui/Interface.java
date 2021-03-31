@@ -483,7 +483,8 @@ public class Interface {
 		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
-
+		Request.instance().setDate(new GregorianCalendar()); //TODO: DELETE COMMENT used to create order for when new product is created
+		
 		// Creating a result object to advise any messages
 		Result result = groceryStore.addProduct(Request.instance());
 

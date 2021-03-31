@@ -373,7 +373,7 @@ public class GroceryStore implements Serializable {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
 				request.getReorderLevel(), request.getCurrentPrice());
-
+		Order newOrder = new Order(product, request.getDate());
 		/**
 		 * If satements checking to see if the product already exists via the ID or the
 		 * name.
@@ -386,7 +386,7 @@ public class GroceryStore implements Serializable {
 			return result;
 		}
 
-		if (productList.insertProduct(product)) {
+		if (productList.insertProduct(product) && orderList.insertOrder(newOrder)) {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
 			return result;
