@@ -34,10 +34,10 @@ public class AutomatedTester2 {
 	private double[] priceList = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
 	private int[] reorderLevelList = { 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75,
-			75, };
+			75 };
 
 	private int[] stockInHandList = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
-			100, 100, 100, 100, };
+			100, 100, 100, 100 };
 
 	private Product[] productsList = new Product[20];
 
