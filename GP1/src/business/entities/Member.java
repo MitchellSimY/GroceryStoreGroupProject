@@ -77,7 +77,7 @@ public class Member implements Serializable {
 				// AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-					// System.out.println(transactions.get(transactionIndex).toString()); //TODO:
+					System.out.println(transactions.get(transactionIndex).toString()); //TODO:
 					// DELETE AFTER DEBUG
 					// System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
 					return transactionIndex;
@@ -90,7 +90,7 @@ public class Member implements Serializable {
 			// System.out.println("In else");//TODO: DELETE AFTER DEBUG
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-			// System.out.println(transactions.get(transactionIndex).toString()); //TODO:
+			System.out.println(transactions.get(transactionIndex).toString()); //TODO:
 			// DELETE AFTER DEBUG
 		}
 		// System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
