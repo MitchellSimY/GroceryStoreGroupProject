@@ -548,6 +548,24 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
+	 * Searches for a given member
+	 * 
+	 * @param memberId id of the member
+	 * @return true if the member is in the member list collection
+	 */
+	public Result searchOrder(Request request) {
+		Result result = new Result();
+		Order order = orderList.search(request.getOrderID());
+		if (order == null) {
+			result.setResultCode(Result.NO_ORDER_FOUND);
+		} else {
+			result.setResultCode(Result.OPERATION_COMPLETED);
+			result.setOrderFields(order);
+		}
+		return result;
+	}
+	
+	/**
 	 * 
 	 * change the price of a product.
 	 * 
@@ -610,9 +628,32 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 	
-	private boolean createOrder(Product product) {
-		//TODO: MAKE PRIVATE CREATE ORDER CLASS?
-		return false;
+	public Result processShipment(Request request) {
+		Result result = new Result();
+		Order orderToBeProcessed = orderList.search(request.getOrderID());
+		if (orderToBeProcessed == null) {
+			result.setResultCode(Result.NO_ORDER_FOUND);
+		} 
+		else {
+			Product orderProduct = productList.search(orderToBeProcessed.getReorderProduct().getProductId());
+			if (orderProduct == null) {
+				result.setResultCode(Result.PRODUCT_NOT_FOUND);
+				return result;
+			}
+			if (orderToBeProcessed.isOrderStatus() == true) {
+				result.setResultCode(Result.ORDER_ALREADY_PROCESSED);
+				return result;
+			}
+			else {
+				orderProduct.setStockInHand(orderToBeProcessed.getQuantityOrdered() + orderProduct.getStockInHand());
+				orderToBeProcessed.setOrderStatus(true);
+				result.setOrderFields(orderToBeProcessed);
+				result.setProduct(orderProduct);
+				result.setResultCode(Result.ORDER_PROCESSED);
+				return result;
+			}
+		}
+		return result;
 	}
 
 	/**

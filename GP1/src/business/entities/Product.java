@@ -42,7 +42,6 @@ public class Product implements Serializable {
 		}
 	}
 
-
 	/*
 	 * Getter for productName
 	 * 
