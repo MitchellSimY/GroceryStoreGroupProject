@@ -57,7 +57,10 @@ public class Interface {
 	private Interface() {
 		if (yesOrNo("Would you like to use previously saved data?")) {
 			retrieve();
+		} else if (yesOrNo("Do you want to generate a test bed and invoke the functionality using asserts?\n")) {
+			retrieveTest();
 		} else {
+			System.out.println("Creating new groceryStore.\n");
 			groceryStore = GroceryStore.instance();
 		}
 
@@ -763,6 +766,28 @@ public class Interface {
 				if (groceryStore != null) {
 					System.out.println(
 							" The groceryStore has been successfully retrieved from the file GroceryStoreData \n");
+				} else {
+					System.out.println("File doesnt exist; creating new groceryStore");
+					groceryStore = GroceryStore.instance();
+				}
+			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method to be called for retrieving saved data. Uses the GroceryStore method
+	 * for retrieval.
+	 * 
+	 */
+
+	private void retrieveTest() {
+		try {
+			if (groceryStore == null) {
+				groceryStore = GroceryStore.retrieveTest();
+				if (groceryStore != null) {
+					System.out.println("The groceryStore test bed has been successfully set up.\n");
 				} else {
 					System.out.println("File doesnt exist; creating new groceryStore");
 					groceryStore = GroceryStore.instance();
