@@ -708,7 +708,7 @@ public class Interface {
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
 			System.out.println(equalsLength(result.getMemberName()) + "|" + equalsLength(result.getMemberId()) + "|"
-					+ equalsLength(result.getMemberAddress()) + "|" + equalsLength(result.getMemberPhone()) + "|"
+					+ equalsLength(result.getMemberPhone()) + "|" + equalsLength(result.getMemberAddress()) + "|"
 					+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
 					+ equalsLength(result.getDateJoinedByString()));
 		}
