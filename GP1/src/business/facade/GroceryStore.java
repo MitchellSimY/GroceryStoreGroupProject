@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -227,7 +228,8 @@ public class GroceryStore implements Serializable {
 		 * 
 		 */
 		public Order search(int orderId) {
-			Order tempOrder = new Order(null, null);
+			Product tempProduct = new Product(null, null, 0, 0, 0);
+			Order tempOrder = new Order(tempProduct, new GregorianCalendar());
 			tempOrder.setOrderID(orderId);
 			for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
 				Order orderCursor = (Order) iterator.next();
@@ -549,10 +551,10 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Searches for a given member
+	 * Searches for a given order
 	 * 
-	 * @param memberId id of the member
-	 * @return true if the member is in the member list collection
+	 * @param request of type Request with data of the orderID
+	 * @return true if the order is in the orderlist collection
 	 */
 	public Result searchOrder(Request request) {
 		Result result = new Result();
@@ -653,7 +655,7 @@ public class GroceryStore implements Serializable {
 				orderProduct.setStockInHand(orderToBeProcessed.getQuantityOrdered() + orderProduct.getStockInHand());
 				orderToBeProcessed.setOrderStatus(true);
 				result.setOrderFields(orderToBeProcessed);
-				result.setProduct(orderProduct);
+				result.setProductFields(orderProduct);
 				result.setResultCode(Result.ORDER_PROCESSED);
 				return result;
 			}

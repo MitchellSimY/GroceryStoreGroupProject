@@ -545,14 +545,15 @@ public class Interface {
 
 //	TODO: Kou
 	public void processShipment() {
-		Request.instance().setOrderID(getNumber("Enter Order ID"));
-		Result result = groceryStore.searchOrder(Request.instance());
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("No order with ID " + Request.instance().getOrderID());
-			return;
-		}
+//		Request.instance().setOrderID(getNumber("Enter Order ID"));
+//		Result result = groceryStore.searchOrder(Request.instance());
+//		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+//			System.out.println("No order with ID " + Request.instance().getOrderID());
+//			return;
+//		}
 		do {
-			result = groceryStore.processShipment(Request.instance());
+			Request.instance().setOrderID(getNumber("Enter Order ID"));
+			Result result = groceryStore.processShipment(Request.instance());
 			if (result.getResultCode() == Result.ORDER_PROCESSED) {
 				if (result.isOrderStatus()) {
 					System.out.println("OrderID: " + result.getOrderID() + " processed.\nProduct ID: "
@@ -566,7 +567,7 @@ public class Interface {
 			} else {
 				System.out.println("Order does not exist.");
 			}
-		} while (yesOrNo("Check out more products?"));
+		} while (yesOrNo("Process more Orders?"));
 
 	}
 
