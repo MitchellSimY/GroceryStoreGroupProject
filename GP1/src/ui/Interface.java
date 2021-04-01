@@ -589,7 +589,7 @@ public class Interface {
 					"Please enter the new price for the product has id " + Request.instance().getProductId());
 			result.setCurrentPrice(newPrice);
 			groceryStore.changePrice(Request.instance().getProductId(), newPrice);
-			System.out.println("Prodcut name " + Request.instance().getProductName() + " has new price is "
+			System.out.println("Prodcut name " + result.getProductName() + " has new price is "
 					+ result.getCurrentPrice());
 		}
 	}
