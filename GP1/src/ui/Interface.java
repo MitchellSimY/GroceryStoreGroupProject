@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
-import business.entities.Product;
 import business.entities.Transaction;
 import business.facade.GroceryStore;
 import business.facade.Request;
@@ -484,8 +483,9 @@ public class Interface {
 		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
-		Request.instance().setDate(new GregorianCalendar()); //TODO: DELETE COMMENT used to create order for when new product is created
-		
+		Request.instance().setDate(new GregorianCalendar()); // TODO: DELETE COMMENT used to create order for when new
+																// product is created
+
 		// Creating a result object to advise any messages
 		Result result = groceryStore.addProduct(Request.instance());
 
@@ -497,8 +497,8 @@ public class Interface {
 		} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
 			System.out.println("Product Name already exists");
 		} else {
-			System.out.println(result.getProductName() + " has since been added." + "\nAn Order for " + result.getProductName()
-			+ " has been made with qty " + result.getQuantityOrdered() + ".");
+			System.out.println(result.getProductName() + " has since been added." + "\nAn Order for "
+					+ result.getProductName() + " has been made with qty " + result.getQuantityOrdered() + ".");
 		}
 	}
 
@@ -524,7 +524,8 @@ public class Interface {
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex).currentProductCheckoutToString(result.getProduct()));
+				System.out.println(result.getTransactions().get(transactionIndex)
+						.currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for qty = "
 							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());
@@ -646,25 +647,29 @@ public class Interface {
 	 */
 	public void printTransactions() {
 		Request.instance().setMemberId(getUserInput("Enter member id"));
-		// TODO: Needs to have a range with a start date and end date inclusive.
+		Result result = groceryStore.searchMembership(Request.instance());
+		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+			System.out.println("No member with id " + Request.instance().getMemberId());
+			return;
+		}
 		Request.instance().setStartDate(
 				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
 		Request.instance().setEndDate(
 				getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
-		if (!(Request.instance().getStartDate().before(Request.instance().getEndDate()))
-				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate()))) {
+		if (!((Request.instance().getStartDate().before(Request.instance().getEndDate()))
+				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate())))) {
 			System.out.println("Start date must be before or equal to end date.");
 		} else {
-			Iterator<Transaction> result = groceryStore.getTransactions(Request.instance());
-			if (!result.hasNext()) {
+			Iterator<Transaction> result1 = groceryStore.getTransactions(Request.instance());
+			if (!result1.hasNext()) {
 				System.out.println("\nNo transactions found in that date range.\n");
+
 			} else {
-				while (result.hasNext()) {
-					Transaction transaction = (Transaction) result.next();
+				while (result1.hasNext()) {
+					Transaction transaction = (Transaction) result1.next();
 					System.out.println(transaction.toString());
 				}
 				System.out.println("\nEnd of transactions \n");
-
 			}
 		}
 	}
@@ -675,12 +680,15 @@ public class Interface {
 
 		System.out.println(equalsLength("OrderID") + "|" + equalsLength("Product Name") + "|"
 				+ equalsLength("Date Place") + "|" + equalsLength("Qty Ordered"));
-		
+
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			if (result.isOrderStatus() == false) {//TODO: COME BACK AND CHECK IF WHEN SET TO TRUE, ORDERS SHOULD NOT BE PRINTING; IMPLEMENT AFTER USE CASE 5
-				System.out.println(equalsLength("" + result.getOrderID()) + "|" + equalsLength(result.getReorderProduct().getProductName()) 
-				+ "|" + equalsLength(result.getDateOrderPlacedString()) + "|" + equalsLength("" + result.getQuantityOrdered()));
+			if (result.isOrderStatus() == false) {// TODO: COME BACK AND CHECK IF WHEN SET TO TRUE, ORDERS SHOULD NOT BE
+													// PRINTING; IMPLEMENT AFTER USE CASE 5
+				System.out.println(equalsLength("" + result.getOrderID()) + "|"
+						+ equalsLength(result.getReorderProduct().getProductName()) + "|"
+						+ equalsLength(result.getDateOrderPlacedString()) + "|"
+						+ equalsLength("" + result.getQuantityOrdered()));
 			}
 		}
 	}

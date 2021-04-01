@@ -61,42 +61,49 @@ public class Member implements Serializable {
 	 * Stores the product as sold to the member
 	 * 
 	 * @param product the product to be issued
-	 * @return transactionIndex: returns the current index of the current transaction in the transaction list.
+	 * @return transactionIndex: returns the current index of the current
+	 *         transaction in the transaction list.
 	 */
 	public int checkOut(Product product, Calendar dateOfTransaction, int checkOutQty) {
 		int transactionIndex = 0;
 		Transaction tempTransaction = new Transaction();
 		tempTransaction.setDate(dateOfTransaction);
-		//System.out.println(tempTransaction.getDate());
-		if (transactions.isEmpty() == false){
-			//System.out.println("In if");//TODO: DELETE AFTER DEBUG
+		// System.out.println(tempTransaction.getDate());
+		if (transactions.isEmpty() == false) {
+			// System.out.println("In if");//TODO: DELETE AFTER DEBUG
 			for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
 				Transaction currentTransaction = (Transaction) iterator.next();
-				//System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
+				// System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE
+				// AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-					//System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG
-					//System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
+					// System.out.println(transactions.get(transactionIndex).toString()); //TODO:
+					// DELETE AFTER DEBUG
+					// System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
 					return transactionIndex;
 				}
-				//System.out.println("Adding 1 to transaction Index");//TODO: DELETE AFTER DEBUG
+				// System.out.println("Adding 1 to transaction Index");//TODO: DELETE AFTER
+				// DEBUG
 				transactionIndex++;
 			}
-		}
-		else {
-			//System.out.println("In else");//TODO: DELETE AFTER DEBUG
+		} else {
+			// System.out.println("In else");//TODO: DELETE AFTER DEBUG
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-			//System.out.println(transactions.get(transactionIndex).toString()); //TODO: DELETE AFTER DEBUG
+			// System.out.println(transactions.get(transactionIndex).toString()); //TODO:
+			// DELETE AFTER DEBUG
 		}
-		//System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
+		// System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
 		return transactionIndex;
 	}
 
 	/**
 	 * Gets an iterator to a collection of selected transactions
 	 * 
-	 * @param date the date for which the transactions have to be retrieved
+	 * @param startDate The startDate for which transactions are being sought
+	 *                  (inclusive)
+	 * @param endDate   The endDate for which transactions are being sought
+	 *                  (inclusive)
 	 * @return the iterator to the collection
 	 */
 	public Iterator<Transaction> getTransactionsDateRange(Calendar startDate, Calendar endDate) {
@@ -112,8 +119,8 @@ public class Member implements Serializable {
 	public Iterator<Transaction> getTransactions() {
 		return transactions.iterator();
 	}
-	
-	//Return exact object copy of transactions list
+
+	// Return exact object copy of transactions list
 	public List<Transaction> getTransactionsList() {
 		return transactions;
 	}
@@ -122,7 +129,7 @@ public class Member implements Serializable {
 		transactions.add(transaction);
 		return true;
 	}
-	
+
 ///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
 
 	/**
@@ -232,7 +239,6 @@ public class Member implements Serializable {
 	public void setJoinedDate(Calendar joinedDate) {
 		this.joinedDate = joinedDate;
 	}
-	
 
 	@Override
 	public int hashCode() {
