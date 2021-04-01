@@ -17,16 +17,16 @@ public class AutomatedTester2 {
 	private GroceryStore groceryStore;
 
 	// Setting arrays of variables for member creation
-	private String[] names = { "name1", "name2", "name3", "name4" };
-	private String[] address = { "Address1", "Address2", "Address3", "Address4" };
-	private String[] phones = { "Phone1", "Phone2", "Phone3", "Phone4" };
-	private double[] feePaid = { 9.99, 4.99, 24.99, 19.99 };
-	private Member[] membersList = new Member[4];
+	private String[] names = { "name1", "name2", "name3", "name4", "name5" };
+	private String[] address = { "Address1", "Address2", "Address3", "Address4", "Address5" };
+	private String[] phones = { "Phone1", "Phone2", "Phone3", "Phone4", "Phone5" };
+	private double[] feePaid = { 9.99, 4.99, 24.99, 19.99, 1.99 };
+	private Member[] membersList = new Member[5];
 
 	// Setting arrays of variables for product creation
-	private String[] productName = { "Product1", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7",
-			"Product8", "Product9", "Product10", "Product11", "Product12", "Product13", "Product14", "Product15",
-			"Product16", "Product17", "Product18", "Product19", "Product20" };
+	private String[] productName = { "Apple", "Apple Juice", "Apple Pie", "Apple Beer", "Apple Cake", "Banana", "Oranges",
+			"Tomato", "Kit-Kat", "BellPeppers", "Snickers", "Olive Oil", "Olives", "Chicken", "Chicken Breasts",
+			"Chicken Thighs", "Raw Chicken", "Ground Beef", "Bacon", "Milk" };
 
 	private String[] idList = { "id1", "id2", "id3", "id4", "id5", "id6", "id7", "id8", "id9", "id10", "id11", "id12",
 			"id13", "id14", "id15", "id16", "id17", "id18", "id19", "id20" };
