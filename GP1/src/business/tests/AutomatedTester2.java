@@ -24,9 +24,22 @@ public class AutomatedTester2 {
 	private Member[] membersList = new Member[4];
 
 	// Setting arrays of variables for product creation
-	private String[] productName = { "Product1", "Product2", "Product3", "Product4" };
-	private String[] idList = { "id1", "id2", "id3", "id4" };
-	private Product[] productsList = new Product[4];
+	private String[] productName = { "Product1", "Product2", "Product3", "Product4", "Product5", "Product6", "Product7",
+			"Product8", "Product9", "Product10", "Product11", "Product12", "Product13", "Product14", "Product15",
+			"Product16", "Product17", "Product18", "Product19", "Product20" };
+
+	private String[] idList = { "id1", "id2", "id3", "id4", "id5", "id6", "id7", "id8", "id9", "id10", "id11", "id12",
+			"id13", "id14", "id15", "id16", "id17", "id18", "id19", "id20" };
+
+	private double[] priceList = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+
+	private int[] reorderLevelList = { 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75,
+			75, };
+
+	private int[] stockInHandList = { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+			100, 100, 100, 100, };
+
+	private Product[] productsList = new Product[20];
 
 	private Calendar date = new GregorianCalendar();
 
@@ -71,12 +84,15 @@ public class AutomatedTester2 {
 		for (int count = 0; count < productsList.length; count++) {
 			Request.instance().setProductName(productName[count]);
 			Request.instance().setProductId(idList[count]);
+			Request.instance().setCurrentPrice(priceList[count]);
+			Request.instance().setReorderLevel(reorderLevelList[count]);
+			Request.instance().setStockInhand(stockInHandList[count]);
 
-//			Result result = GroceryStore.instance().addProduct(Request.instance());
-//
-//			assert result.getResultCode() == Result.OPERATION_COMPLETED;
-//			assert result.getProductName().equals(productName[count]);
-//			assert result.getProductId().equals(idList[count]);
+			Result result = GroceryStore.instance().addProduct(Request.instance());
+
+			assert result.getResultCode() == Result.OPERATION_COMPLETED;
+			assert result.getProductName().equals(productName[count]);
+			assert result.getProductId().equals(idList[count]);
 
 		}
 	}
