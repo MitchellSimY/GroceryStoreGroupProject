@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.GregorianCalendar;
 
 import business.entities.Member;
 import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
 import business.entities.iterators.SafeIterator;
+import business.tests.AutomatedTester2;
 
 /**
  * The facade class handling all requests from users.
@@ -264,7 +264,8 @@ public class GroceryStore implements Serializable {
 		 * 
 		 * @param order: the Order object to be inserted.
 		 * @return true: iff an Order with the orderID doesn't already exists within
-		 *         orders and the Order object is inserted successfully. Currently set to always true.
+		 *         orders and the Order object is inserted successfully. Currently set
+		 *         to always true.
 		 */
 		public boolean insertOrder(Order order) {
 			orders.add(order);
@@ -428,7 +429,7 @@ public class GroceryStore implements Serializable {
 	public Iterator<Result> getOrders() {
 		return new SafeIterator<Order>(orderList.iterator(), SafeIterator.ORDER);
 	}
-	
+
 	/**
 	 * retrievedMemberInfor searching the members list by iterator to find every
 	 * member has matching name with the user input then add all found result in to
@@ -599,28 +600,32 @@ public class GroceryStore implements Serializable {
 			result.setResultCode(Result.NO_SUCH_MEMBER);
 			return result;
 		}
-		
+
 		Product product = productList.search(request.getProductId());
-		if (product == null) {	//Check if product id exists in warehouse
+		if (product == null) { // Check if product id exists in warehouse
 			result.setResultCode(Result.PRODUCT_NOT_FOUND);
 			return result;
 		}
-	
+
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
-		} 
-		else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); //Creates/Edit and get current transaction index
+		} else {
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); // Creates/Edit
+																														// and
+																														// get
+																														// current
+																														// transaction
+																														// index
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
-				//System.out.println(newOrder.toString()); //TODO: delete after debug
+				// System.out.println(newOrder.toString()); //TODO: delete after debug
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 				result.setOrderFields(newOrder);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
-		//System.out.println(product.getCheckoutQty());//TODO: DELETE AFTER DEBUG
+		// System.out.println(product.getCheckoutQty());//TODO: DELETE AFTER DEBUG
 		result.setProduct(product);
 		result.setProductFields(product);
 		result.setCheckoutQty(request.getCheckoutQty());
@@ -669,6 +674,24 @@ public class GroceryStore implements Serializable {
 			return new LinkedList<Transaction>().iterator();
 		}
 		return member.getTransactionsDateRange(request.getStartDate(), request.getEndDate());
+	}
+
+	/**
+	 * Retrieves a test data version of the groceryStore from test bed.
+	 * 
+	 * @return a GroceryStore object
+	 */
+	public static GroceryStore retrieveTest() {
+
+		try {
+
+			new AutomatedTester2();
+			groceryStore = AutomatedTester2.main(null);
+			return groceryStore;
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
