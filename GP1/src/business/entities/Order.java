@@ -22,6 +22,7 @@ public class Order implements Serializable {
 	private boolean orderStatus;
 	private static int orderCounter = 0;
 
+	//Used to create actual Order object
 	public Order(Product productToOrder, Calendar date) {
 		orderCounter++;
 		orderID = orderCounter;
@@ -29,6 +30,17 @@ public class Order implements Serializable {
 		reorderProduct = productToOrder;
 		dateOrderPlaced = new GregorianCalendar();
 		dateOrderArrival = date;
+		dateOrderArrival.add(Calendar.WEEK_OF_YEAR, 2); // Shipment will always arrive 2 weeks after initial order date.
+		orderStatus = false;
+	}
+	
+	//Used to create temp Order for comparison
+	public Order(Product productToOrder, int orderID) {
+		this.orderID = orderID;
+		quantityOrdered = productToOrder.getReorderLevel() * 2;
+		reorderProduct = productToOrder;
+		dateOrderPlaced = new GregorianCalendar();
+		dateOrderArrival = dateOrderPlaced;
 		dateOrderArrival.add(Calendar.WEEK_OF_YEAR, 2); // Shipment will always arrive 2 weeks after initial order date.
 		orderStatus = false;
 	}
