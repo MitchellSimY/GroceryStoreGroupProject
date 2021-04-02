@@ -605,13 +605,12 @@ public class Interface {
 	public void retrieveProductInfo() {
 
 		Request.instance().setProductName(
-				ignoredCase(getName("Please enter name of product you want to retrieved the information")));
-		Result result = groceryStore.searchProductName(Request.instance());
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("No Product found with given name " + Request.instance().getProductName());
+				ignoredCase(getName("Please enter name of product you want to retrieve information about ")));
 
+		Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
+		if (!iterator.hasNext()) {
+			System.out.println("No Product found with given name " + Request.instance().getProductName());
 		} else {
-			Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
 			System.out.println("Listing all ProductID, Current Price, stock in hand and Reoder Level has name is "
 					+ Request.instance().getProductName());
 
@@ -620,7 +619,7 @@ public class Interface {
 					+ equalsLength("Reorder Level"));
 
 			while (iterator.hasNext()) {
-				result = iterator.next();
+				Result result = iterator.next();
 				System.out.println(equalsLength(result.getProductName()) + "|" + equalsLength(result.getProductId())
 						+ "|" + equalsLength(String.valueOf(result.getCurrentPrice())) + "|"
 						+ equalsLength(String.valueOf(result.getStockInhand())) + "|"
@@ -641,7 +640,7 @@ public class Interface {
 	public void retrieveMemberInfo() {
 
 		Request.instance().setMemberName(
-				ignoredCase(getName("Please enter name of member you want to retrieved the information")));
+				ignoredCase(getName("Please enter name of member you want to retrieve information about")));
 		Result result = groceryStore.searchName(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("No member found with given name " + Request.instance().getMemberName());

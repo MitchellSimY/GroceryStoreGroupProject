@@ -463,7 +463,7 @@ public class GroceryStore implements Serializable {
 		List<Product> tempList = new LinkedList<Product>();
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getProductName().equalsIgnoreCase(name)) {
+			if (product.getProductName().startsWith(name)) {
 				tempList.add(product);
 			}
 		}
@@ -567,7 +567,7 @@ public class GroceryStore implements Serializable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * change the price of a product.
@@ -637,14 +637,13 @@ public class GroceryStore implements Serializable {
 		result.setMemberFields(member);
 		return result;
 	}
-	
+
 	public Result processShipment(Request request) {
 		Result result = new Result();
 		Order orderToBeProcessed = orderList.search(request.getOrderID());
 		if (orderToBeProcessed == null) {
 			result.setResultCode(Result.NO_ORDER_FOUND);
-		} 
-		else {
+		} else {
 			Product orderProduct = productList.search(orderToBeProcessed.getReorderProduct().getProductId());
 			if (orderProduct == null) {
 				result.setResultCode(Result.PRODUCT_NOT_FOUND);
@@ -653,8 +652,7 @@ public class GroceryStore implements Serializable {
 			if (orderToBeProcessed.isOrderStatus() == true) {
 				result.setResultCode(Result.ORDER_ALREADY_PROCESSED);
 				return result;
-			}
-			else {
+			} else {
 				orderProduct.setStockInHand(orderToBeProcessed.getQuantityOrdered() + orderProduct.getStockInHand());
 				orderToBeProcessed.setOrderStatus(true);
 				result.setOrderFields(orderToBeProcessed);
