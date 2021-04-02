@@ -30,7 +30,6 @@ import business.entities.iterators.FilteredIterator;
 public class Member implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	// variables to help create the member object
 	private String name, phoneNumber, address, memberId;
 	private double feePaid;
 	private static int counter = 0;
@@ -38,13 +37,13 @@ public class Member implements Serializable {
 	private Calendar joinedDate;
 
 	/**
-	 * Creates a single member
+	 * Creates a single member object.
 	 * 
-	 * @param name        name of the member
-	 * @param address     address of the member
-	 * @param phoneNumber phone number of the member
-	 * @param feePaid     how much fee have they paid
-	 * @param joinedData  date joined
+	 * @param name: of type String. Name of the member
+	 * @param address:		address of the member
+	 * @param phoneNumber:	phone number of the member
+	 * @param feePaid:		how much fee have they paid
+	 * @param joinedData:	date joined
 	 */
 	public Member(String name, String phoneNumber, String address, double feePaid, Calendar joinedDate) {
 		this.name = name;
@@ -60,11 +59,10 @@ public class Member implements Serializable {
 	/**
 	 * Stores the product as sold to the member
 	 * 
-	 * @param product: the product to be checked out
-	 * @param product: the product to be checked out
-	 * @param product: the product to be checked out
-	 * @return transactionIndex: returns the current index of the current
-	 *         transaction in the transaction list.
+	 * @param product: of type Product. The product to be checked out
+	 * @param dateOfTransaction: of type Calendar. The date the checkout is occurring on.
+	 * @param checkOutQty: of type Int. The quantity being checked out.
+	 * @return transactionIndex: of type Int. Returns the current index of the current transaction in the member's transaction list.
 	 */
 	public int checkOut(Product product, Calendar dateOfTransaction, int checkOutQty) {
 		int transactionIndex = 0;
@@ -105,7 +103,7 @@ public class Member implements Serializable {
 	/**
 	 * Returns an Iterator object of the member's transaction list.
 	 * 
-	 * @return Iterator<Transaction>: The iterator of the list of Transaction objects for the member.
+	 * @return Iterator<Transaction>: of type Iterator. An iterator of the list of Transaction objects for the member.
 	 */
 	public Iterator<Transaction> getTransactions() {
 		return transactions.iterator();
@@ -114,7 +112,7 @@ public class Member implements Serializable {
 	/**
 	 * Returns the transaction list object of the member.
 	 * 
-	 * @return List<Transaction>: the List object of Transaction objects for a member.
+	 * @return List<Transaction>: of type List. The List object of Transaction objects for a member.
 	 */
 	public List<Transaction> getTransactionsList() {
 		return transactions;
