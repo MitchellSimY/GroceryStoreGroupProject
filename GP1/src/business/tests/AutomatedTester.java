@@ -12,6 +12,17 @@ import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
 
+/**
+ * Automated test bed. Utilized for creating the grocery store system.
+ * Once ran through the interface, it'll create a list of Members, one of which is deleted,
+ * and their respective information.
+ * A list of products will be generated, along with their respective information.
+ * It'll also perform a quick member search, a change in price for a product, 
+ * a checkout, and a ProcessOrder 
+ * 
+ * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
+ */
+
 public class AutomatedTester {
 	// Creating the grocerystore object
 	private GroceryStore groceryStore;
