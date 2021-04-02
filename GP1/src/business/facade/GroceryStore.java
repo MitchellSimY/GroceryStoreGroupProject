@@ -16,7 +16,7 @@ import business.entities.Order;
 import business.entities.Product;
 import business.entities.Transaction;
 import business.entities.iterators.SafeIterator;
-import business.tests.AutomatedTester2;
+import business.tests.AutomatedTester;
 
 /**
  * The facade class handling all requests from users.
@@ -576,14 +576,17 @@ public class GroceryStore implements Serializable {
 	 * @param productId - The product to change.
 	 * @param price     - the new price.
 	 */
-	public void changePrice(String productId, double price) {
+	public Result changePrice(String productId, double price) {
+		Result result = new Result();
 		for (Product productToUpdate : getProductList().getProductList()) {
 			if (productToUpdate.getProductId().equals(productId)) {
 				productToUpdate.setCurrentPrice(price);
-				break;
+				result.setResultCode(Result.OPERATION_COMPLETED);
+				return result;
 			}
 		}
-
+		result.setResultCode(Result.PRODUCT_NOT_FOUND);
+		return result;
 	}
 
 	/**
@@ -687,8 +690,8 @@ public class GroceryStore implements Serializable {
 
 		try {
 
-			new AutomatedTester2();
-			groceryStore = AutomatedTester2.main(null);
+			new AutomatedTester();
+			groceryStore = AutomatedTester.main(null);
 			return groceryStore;
 		} catch (Exception cnfe) {
 			cnfe.printStackTrace();
