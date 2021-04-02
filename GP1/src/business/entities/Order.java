@@ -1,5 +1,8 @@
 package business.entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -17,11 +20,11 @@ public class Order implements Serializable {
 	private Product reorderProduct;
 	private Calendar dateOrderPlaced, dateOrderArrival;
 	private boolean orderStatus;
-	private static int counter = 0;
+	private static int orderCounter = 0;
 
 	public Order(Product productToOrder, Calendar date) {
-		counter = counter + 1;
-		orderID = counter;
+		orderCounter++;
+		orderID = orderCounter;
 		quantityOrdered = productToOrder.getReorderLevel() * 2;
 		reorderProduct = productToOrder;
 		dateOrderPlaced = new GregorianCalendar();
@@ -100,4 +103,12 @@ public class Order implements Serializable {
 				+ getDateOrderPlaced() + "\tQty Ordered: " + "\t" + quantityOrdered;
 	}
 
+	public static void save(ObjectOutputStream output) throws IOException {
+		output.writeObject(orderCounter);
+	}
+
+	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
+		orderCounter = (int) input.readObject();
+	}
+	
 }

@@ -60,7 +60,9 @@ public class Member implements Serializable {
 	/**
 	 * Stores the product as sold to the member
 	 * 
-	 * @param product the product to be issued
+	 * @param product: the product to be checked out
+	 * @param product: the product to be checked out
+	 * @param product: the product to be checked out
 	 * @return transactionIndex: returns the current index of the current
 	 *         transaction in the transaction list.
 	 */
@@ -68,43 +70,32 @@ public class Member implements Serializable {
 		int transactionIndex = 0;
 		Transaction tempTransaction = new Transaction();
 		tempTransaction.setDate(dateOfTransaction);
-		// System.out.println(tempTransaction.getDate());
 		if (transactions.isEmpty() == false) {
-			// System.out.println("In if");//TODO: DELETE AFTER DEBUG
 			for (Iterator<Transaction> iterator = transactions.iterator(); iterator.hasNext();) {
 				Transaction currentTransaction = (Transaction) iterator.next();
-				// System.out.println(currentTransaction.equals(tempTransaction));//TODO: DELETE
-				// AFTER DEBUG > CHECK HOW MANY TRANSACTIONS IN LIST
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-					System.out.println(transactions.get(transactionIndex).toString()); //TODO:
-					// DELETE AFTER DEBUG
-					// System.out.println(transactionIndex);//TODO: DELETE AFTER DEBUG
+					System.out.println(transactions.get(transactionIndex).toString());
 					return transactionIndex;
 				}
-				// System.out.println("Adding 1 to transaction Index");//TODO: DELETE AFTER
-				// DEBUG
 				transactionIndex++;
 			}
 		} else {
-			// System.out.println("In else");//TODO: DELETE AFTER DEBUG
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-			System.out.println(transactions.get(transactionIndex).toString()); //TODO:
-			// DELETE AFTER DEBUG
+			System.out.println(transactions.get(transactionIndex).toString());
 		}
-		// System.out.println(transactionIndex); //TODO: DELETE AFTER DEBUG
 		return transactionIndex;
 	}
 
 	/**
-	 * Gets an iterator to a collection of selected transactions
+	 * Retrieves an Iterator of transactions whose transaction date falls between two given dates.
 	 * 
-	 * @param startDate The startDate for which transactions are being sought
+	 * @param startDate: The startDate for which transactions are being sought
 	 *                  (inclusive)
-	 * @param endDate   The endDate for which transactions are being sought
+	 * @param endDate:   The endDate for which transactions are being sought
 	 *                  (inclusive)
-	 * @return the iterator to the collection
+	 * @return Iterator<Transaction>: The iterator of the list of Transaction objects for the member within the two dates given.
 	 */
 	public Iterator<Transaction> getTransactionsDateRange(Calendar startDate, Calendar endDate) {
 		return new FilteredIterator(transactions.iterator(),
@@ -112,25 +103,32 @@ public class Member implements Serializable {
 	}
 
 	/**
-	 * Returns the list of all transactions for this member.
+	 * Returns an Iterator object of the member's transaction list.
 	 * 
-	 * @return the iterator to the list of Transaction objects
+	 * @return Iterator<Transaction>: The iterator of the list of Transaction objects for the member.
 	 */
 	public Iterator<Transaction> getTransactions() {
 		return transactions.iterator();
 	}
 
-	// Return exact object copy of transactions list
+	/**
+	 * Returns the transaction list object of the member.
+	 * 
+	 * @return List<Transaction>: the List object of Transaction objects for a member.
+	 */
 	public List<Transaction> getTransactionsList() {
 		return transactions;
 	}
 
+	/**
+	 * Adds a transaction object into the member's transaction list.
+	 * 
+	 * @return true: iff the transaction was successfully added to the list. Currently always true.
+	 */
 	public boolean insertTransaction(Transaction transaction) {
 		transactions.add(transaction);
 		return true;
 	}
-
-///// 			SETTER AND GETTER, HASHCODE,EQUALS AND TOSTRING SECTION	
 
 	/**
 	 * Getter for firstName
