@@ -75,14 +75,10 @@ public class Transaction implements Serializable {
 		return checkOutProductList;
 	}
 
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
-
 	public Calendar getCalenderDate() {
 		return date;
 	}
-
+	
 	/**
 	 * Returns the date as a String
 	 * 
@@ -92,6 +88,10 @@ public class Transaction implements Serializable {
 		return date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
 	}
 
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+	
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
