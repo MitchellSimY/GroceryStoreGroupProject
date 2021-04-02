@@ -51,7 +51,7 @@ public class GroceryStore implements Serializable {
 		public Product search(String productId) {
 			for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 				Product product = (Product) iterator.next();
-				if (product.getProductId().equals(productId)) {
+				if (product.getProductId().equalsIgnoreCase(productId)) {
 					return product;
 				}
 			}
@@ -68,7 +68,7 @@ public class GroceryStore implements Serializable {
 		public Product searchProductName(String name) {
 			for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 				Product product = (Product) iterator.next();
-				if (product.getProductName().equals(name)) {
+				if (product.getProductName().equalsIgnoreCase(name)) {
 					return product;
 				}
 			}
@@ -164,7 +164,7 @@ public class GroceryStore implements Serializable {
 		public Member searchName(String name) {
 			for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 				Member member = iterator.next();
-				if (member.getName().equals(name)) {
+				if (member.getName().equalsIgnoreCase(name)) {
 					return member;
 				}
 			}
