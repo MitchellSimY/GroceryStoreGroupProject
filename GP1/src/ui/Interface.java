@@ -604,8 +604,8 @@ public class Interface {
 	 */
 	public void retrieveProductInfo() {
 
-		Request.instance().setProductName(
-				ignoredCase(getName("Please enter name of product you want to retrieve information about ")));
+		Request.instance()
+				.setProductName(getName("Please enter name of product you want to retrieve information about "));
 
 		Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
 		if (!iterator.hasNext()) {
