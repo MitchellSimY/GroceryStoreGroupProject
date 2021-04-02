@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
+
 import business.collections.CheckOutProductList;
 
 public class Transaction implements Serializable {
@@ -118,6 +119,33 @@ public class Transaction implements Serializable {
 				+ "\t" + df.format(productPurchasedCost) + "\n";
 	}
 
+	//Trung
+		/**
+		 * return all string have same length and set the string in the middle
+		 * 
+		 * @param a string
+		 * @return a string with space in front and back to make string set in the
+		 *         middle
+		 * 
+		 */
+		private String equalsLength(String string) {
+			int standar = 25 - string.length();
+			if (standar > 0 && standar % 2 == 0) {
+				for (int i = 0; i <= (standar / 2) - 1; ++i) {
+					string = " " + string + " ";
+				}
+			}
+			if (standar > 0 && standar % 2 != 0) {
+				for (int i = 0; i <= standar / 2; ++i) {
+					if (i == standar / 2) {
+						string = string + " ";
+					} else
+						string = " " + string + " ";
+				}
+			}
+			return string;
+		}
+	
 	/**
 	 * String form of the transaction
 	 * 
@@ -130,10 +158,11 @@ public class Transaction implements Serializable {
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-			productListString += product.getProductName() + "\t\t" + product.getCheckoutQty() + "\t"
-					+ df.format(product.getCurrentPrice()) + "\t" + df.format(productPurchasedCost) + "\n";
+			productListString += equalsLength(product.getProductName())  + "|" + equalsLength("" + product.getCheckoutQty())
+			+ "|" + equalsLength(df.format(product.getCurrentPrice())) + "|" + equalsLength(df.format(productPurchasedCost)) + "\n";
 		}
-		return "Checkout Transaction date: " + getDate() + "\nProduct\t\tQty\tPerCost\tTotal\n" + productListString
+		return "Checkout Transaction date: " + getDate() + "\n" + equalsLength("Product Name") + "|" + equalsLength("Qty Purchased") + "|"
+				+ equalsLength("Cost Per") + "|" + equalsLength("Product Cost") + "\n" + productListString
 				+ "\nTotal Cost: " + df.format(totalCost);
 	}
 }
