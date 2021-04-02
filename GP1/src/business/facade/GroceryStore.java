@@ -463,7 +463,7 @@ public class GroceryStore implements Serializable {
 		List<Product> tempList = new LinkedList<Product>();
 		for (Iterator<Product> iterator = productList.iterator(); iterator.hasNext();) {
 			Product product = iterator.next();
-			if (product.getProductName().equals(name)) {
+			if (product.getProductName().equalsIgnoreCase(name)) {
 				tempList.add(product);
 			}
 		}
