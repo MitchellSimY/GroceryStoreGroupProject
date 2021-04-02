@@ -440,11 +440,11 @@ public class GroceryStore implements Serializable {
 	 * @param is user input which is a string of member's name
 	 * @return all iterator of all members has matching name
 	 */
-	public Iterator<Result> retrievedMemberInfor(String name) {
+	public Iterator<Result> retrieveMemberInfo(String name) {
 		List<Member> memberList = new LinkedList<Member>();
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			Member member = iterator.next();
-			if (member.getName().equals(name)) {
+			if (member.getName().toUpperCase().startsWith(name.toUpperCase())) {
 				memberList.add(member);
 			}
 		}

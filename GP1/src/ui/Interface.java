@@ -639,19 +639,18 @@ public class Interface {
 	 */
 	public void retrieveMemberInfo() {
 
-		Request.instance().setMemberName(
-				ignoredCase(getName("Please enter name of member you want to retrieve information about")));
-		Result result = groceryStore.searchName(Request.instance());
-		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
+		Request.instance().setMemberName(getName("Please enter name of member you want to retrieve information about"));
+
+		Iterator<Result> iterator = groceryStore.retrieveMemberInfo(Request.instance().getMemberName());
+		if (!iterator.hasNext()) {
 			System.out.println("No member found with given name " + Request.instance().getMemberName());
 		} else {
-			Iterator<Result> iterator = groceryStore.retrievedMemberInfor(Request.instance().getMemberName());
 			System.out.println("Listing all  address, fee paid and member id whose name begin with "
 					+ Request.instance().getMemberName());
 			System.out.println(equalsLength("Member Name") + "|" + equalsLength("Member Address") + "|"
 					+ equalsLength("Member Paid Fee") + "|" + equalsLength("Member ID"));
 			while (iterator.hasNext()) {
-				result = iterator.next();
+				Result result = iterator.next();
 				System.out.println(equalsLength(result.getMemberName()) + "|"
 						+ equalsLength(String.valueOf(result.getMemberAddress())) + "|"
 						+ equalsLength(String.valueOf(result.getMemberFeePaid())) + "|"
