@@ -329,11 +329,11 @@ public class GroceryStore implements Serializable {
 	 * Remove Member. This method is utilized for people that no longer want to be a
 	 * member with the grocery store.
 	 * 
-	 * @param instance - An object that has the requested memberId
+	 * @param request - An object that has the requested memberId
 	 * @return result - this is the result for whether the operation failed or not.
 	 */
-	public Result removeMember(Request instance) {
-		Member memberToBeRemoved = members.search(instance.getMemberId());
+	public Result removeMember(Request request) {
+		Member memberToBeRemoved = members.search(request.getMemberId());
 		Result result = new Result();
 
 		if (memberToBeRemoved == null) {
