@@ -73,19 +73,19 @@ public class AutomatedTester {
 
 		}
 	}
-	
+
 	/**
-	 * testRemoveMember method
-	 * Method utlized to test and see if we can successfully remove a member from
-	 * the member list.
+	 * testRemoveMember method Method utlized to test and see if we can successfully
+	 * remove a member from the member list.
 	 * 
-	 * @return Nothing. Advises for a possible exception if the user cannot be removed.
+	 * @return Nothing. Advises for a possible exception if the user cannot be
+	 *         removed.
 	 */
 	public void testRemoveMember() {
 		Request.instance().setMemberId("6");
 		Result result = GroceryStore.instance().removeMember(Request.instance());
-		
-		assert result.getResultCode() == Result.OPERATION_COMPLETED : "Operation Failed: User could not be removed";	
+
+		assert result.getResultCode() == Result.OPERATION_COMPLETED : "Operation Failed: User could not be removed";
 	}
 
 	/**
@@ -109,13 +109,13 @@ public class AutomatedTester {
 
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
 	public void testChangePrice() {
 		Result result = GroceryStore.instance().changePrice("id1", 12.34);
-		assert result.getResultCode() == Result.OPERATION_COMPLETED: "Price could not be changed";
+		assert result.getResultCode() == Result.OPERATION_COMPLETED : "Price could not be changed";
 	}
 
 	/**
@@ -126,29 +126,46 @@ public class AutomatedTester {
 	 */
 	public void testSearchMembership() {
 		Request.instance().setMemberId("1");
-		assert GroceryStore.instance().searchMembership(Request.instance()).getMemberId().equals("1")
-				: "No Member Found";
+		assert GroceryStore.instance().searchMembership(Request.instance()).getMemberId()
+				.equals("1") : "No Member Found";
 //		Request.instance().setMemberId("M10");
 //		System.out.println(GroceryStore.instance().searchMembership(Request.instance()));
 //      assert GroceryStore.instance().searchMembership(Request.instance()).getResultCode() == 9;
 	}
 
 	/**
-	 * testCheckOut method.
-	 * Method is used to perform a test checkout. 
-	 *	
-	 *	@return none. Will print out a statement if it fails
+	 * testCheckOut method. Method is used to perform a test checkout.
+	 * 
+	 * @return none. Will print out a statement if it fails
 	 */
 	public void testCheckOut() {
 		Request.instance().setMemberId("1");
 		Request.instance().setProductId("id1");
 		Request.instance().setCheckoutQty(5);
 		Result result = GroceryStore.instance().checkOut(Request.instance());
-		
+
 		assert result.getResultCode() == Result.OPERATION_COMPLETED : "Operation failed. Could not checkout user.";
-		
+
 	}
 
+	/**
+	 * test the processShipment method. Of the 20 products added above, It process
+	 * the order 1 through 10.
+	 * 
+	 * 
+	 * 
+	 * @return none. Will print out a statement if it fails
+	 */
+	public void processShipment() {
+
+		for (int i = 1; i <= 10; i++) {
+			Request.instance().setOrderID(i);
+			Result result = GroceryStore.instance().processShipment(Request.instance());
+
+			assert result.getResultCode() == Result.ORDER_PROCESSED : "Operation failed. Could not process shipment.";
+
+		}
+	}
 
 	/**
 	 * testAllMethods This method is for calling all the test methods
@@ -160,6 +177,7 @@ public class AutomatedTester {
 		testRemoveMember();
 		testChangePrice();
 		testCheckOut();
+		processShipment();
 	}
 
 	public GroceryStore getGroceryStore() {
