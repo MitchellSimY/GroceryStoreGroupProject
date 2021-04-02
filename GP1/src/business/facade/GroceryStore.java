@@ -229,7 +229,7 @@ public class GroceryStore implements Serializable {
 		 */
 		public Order search(int orderId) {
 			Product tempProduct = new Product(null, null, 0, 0, 0);
-			Order tempOrder = new Order(tempProduct, orderId);
+			Order tempOrder = new Order(orderId);
 			for (Iterator<Order> iterator = orders.iterator(); iterator.hasNext();) {
 				Order orderCursor = (Order) iterator.next();
 				if (orderCursor.equals(tempOrder)) {

@@ -35,14 +35,8 @@ public class Order implements Serializable {
 	}
 	
 	//Used to create temp Order for comparison
-	public Order(Product productToOrder, int orderID) {
+	public Order(int orderID) {
 		this.orderID = orderID;
-		quantityOrdered = productToOrder.getReorderLevel() * 2;
-		reorderProduct = productToOrder;
-		dateOrderPlaced = new GregorianCalendar();
-		dateOrderArrival = dateOrderPlaced;
-		dateOrderArrival.add(Calendar.WEEK_OF_YEAR, 2); // Shipment will always arrive 2 weeks after initial order date.
-		orderStatus = false;
 	}
 
 	public int getOrderID() {
