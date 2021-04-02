@@ -477,7 +477,7 @@ public class GroceryStore implements Serializable {
 	 * @return Result object. (OPERATION_COMPLETED if the member is in the member
 	 *         list collection and NO_SUCH_MEMBER if no member found).
 	 */
-	public Result searchName(Request request) {
+	public Result searchMemberName(Request request) {
 		Result result = new Result();
 		Member member = members.searchName(request.getMemberName());
 		if (member == null) {
