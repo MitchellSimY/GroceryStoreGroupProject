@@ -47,30 +47,18 @@ public class Request extends DataTransfer {
 		this.date = date;
 	}
 
-	/**
-	 * @return the startDate
-	 */
 	public Calendar getStartDate() {
 		return startDate;
 	}
 
-	/**
-	 * @param startDate the startDate to set
-	 */
 	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
 
-	/**
-	 * @return the endDate
-	 */
 	public Calendar getEndDate() {
 		return endDate;
 	}
 
-	/**
-	 * @param endDate the endDate to set
-	 */
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}

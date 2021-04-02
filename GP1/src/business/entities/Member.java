@@ -126,101 +126,46 @@ public class Member implements Serializable {
 		return true;
 	}
 
-	/**
-	 * Getter for firstName
-	 * 
-	 * @return String firstName
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Setter for name
-	 * 
-	 * @param newName member's new name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * Getter for phoneNumber
-	 * 
-	 * @return String phoneNumber
-	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	/**
-	 * Setter for phoneNumber
-	 * 
-	 * @param a String for new phoneNumber
-	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	/**
-	 * Getter for address
-	 * 
-	 * @return String address
-	 */
 	public String getAddress() {
 		return address;
 	}
 
-	/**
-	 * Setter for address
-	 * 
-	 * @param new String for new address
-	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	/**
-	 * Getter for memberId
-	 * 
-	 * @return The String memberId
-	 */
 	public String getMemberId() {
 		return memberId;
 	}
 
-	/**
-	 * Setter for memberID
-	 * 
-	 * @param a String for new memberID
-	 */
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
-	/**
-	 * Getter for feePaid
-	 * 
-	 * @return integer feePaid
-	 */
 	public double getFeePaid() {
 		return feePaid;
 	}
 
-	/**
-	 * Setter for feePaid
-	 * 
-	 * @param a integer for new feePaid
-	 */
 	public void setFeePaid(double feePaid) {
 		this.feePaid = feePaid;
 	}
 
-	/**
-	 * Getter for joinedDate
-	 * 
-	 * @return the Calendar object joinedDate
-	 */
 	public Calendar getJoinedDate() {
 		return joinedDate;
 	}

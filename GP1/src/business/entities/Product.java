@@ -42,38 +42,18 @@ public class Product implements Serializable {
 		}
 	}
 
-	/*
-	 * Getter for productName
-	 * 
-	 * @return the string productName
-	 */
 	public String getProductName() {
 		return productName;
 	}
 
-	/**
-	 * Setter for productName
-	 * 
-	 * @param a String for new prodcutName
-	 */
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 
-	/*
-	 * Getter for productId
-	 * 
-	 * @return the string productId
-	 */
 	public String getProductId() {
 		return productId;
 	}
 
-	/**
-	 * Setter for productId
-	 * 
-	 * @param a String for new prodcutID
-	 */
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
@@ -86,56 +66,26 @@ public class Product implements Serializable {
 		this.checkoutQty = checkoutQty;
 	}
 
-	/*
-	 * Getter for stockInHand
-	 * 
-	 * @return the string stockInHand
-	 */
 	public int getStockInHand() {
 		return stockInHand;
 	}
 
-	/**
-	 * Setter for stockInHand
-	 * 
-	 * @param a String for new stockInHand
-	 */
 	public void setStockInHand(int stockInHand) {
 		this.stockInHand = stockInHand;
 	}
 
-	/*
-	 * Getter for reorderLevel
-	 * 
-	 * @return the string reorderLevel
-	 */
 	public int getReorderLevel() {
 		return reorderLevel;
 	}
 
-	/**
-	 * Setter for reorderLevel
-	 * 
-	 * @param a String for new reoderLevel
-	 */
 	public void setReorderLevel(int reorderLevel) {
 		this.reorderLevel = reorderLevel;
 	}
 
-	/*
-	 * Getter for surrentPrice()
-	 * 
-	 * @return the string currentPrice()
-	 */
 	public double getCurrentPrice() {
 		return currentPrice;
 	}
 
-	/**
-	 * Setter for currentPrice
-	 * 
-	 * @param a String for new currentPrice
-	 */
 	public void setCurrentPrice(double currentPrice) {
 		this.currentPrice = currentPrice;
 	}

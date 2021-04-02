@@ -46,7 +46,14 @@ public class Transaction implements Serializable {
 						&& endDate.get(Calendar.DAY_OF_YEAR) == this.date.get(Calendar.DAY_OF_YEAR)));
 
 	}
-
+	
+	/**
+	 * computeTotalCost method
+	 * This method is utilized for calculating the total cost.
+	 * 
+	 * @param none
+	 * @return none. Will instead set the total cost.
+	 */
 	public void computeTotalCost() {
 		double totalCostCalc = 0;
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
@@ -109,7 +116,7 @@ public class Transaction implements Serializable {
 		return false;
 	}
 
-	//Trung
+
 	/**
 	 * return all string have same length and set the string in the middle
 	 * 

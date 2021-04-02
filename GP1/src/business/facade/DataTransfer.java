@@ -164,7 +164,6 @@ public abstract class DataTransfer {
 	}
 
 	public String getDateJoinedByString() {
-
 		int month = dateJoined.get(Calendar.MONTH) + 1;
 		return "" + month + "/" + dateJoined.get(Calendar.DAY_OF_MONTH) + "/" + dateJoined.get(Calendar.YEAR);
 	}

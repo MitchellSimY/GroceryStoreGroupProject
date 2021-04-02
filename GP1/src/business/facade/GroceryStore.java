@@ -126,8 +126,10 @@ public class GroceryStore implements Serializable {
 
 	/**
 	 * The collection class for Member objects
+	 * Member Subclass
 	 * 
-	 * ====== Start Member List Class ========
+	 * @author group
+	 * 
 	 */
 	private class MemberList implements Iterable<Member>, Serializable {
 		private static final long serialVersionUID = 1L;
@@ -191,28 +193,21 @@ public class GroceryStore implements Serializable {
 			return true;
 		}
 
-		/**
-		 *
-		 */
 		@Override
 		public Iterator<Member> iterator() {
 			return members.iterator();
 		}
 
-		/**
-		 * String form of the collection
-		 * 
-		 */
 		@Override
 		public String toString() {
 			return members.toString();
 		}
 
 	}
-	// ====== End of Member List Class ========
 
 	/**
 	 * The collection class for Order objects
+	 * OrderList subclass
 	 * 
 	 * @author group
 	 */
@@ -254,12 +249,6 @@ public class GroceryStore implements Serializable {
 			}
 		}
 
-		/**
-		 * Original insertOrder code if (orderList == null) { orders.add(order); return
-		 * true; } else if (search(order.getOrderID()) == null){ orders.add(order);
-		 * return true; } System.out.println("An Order with " + order.getOrderID() + "
-		 * id already exists. Order could not be added."); return false;
-		 */
 		/**
 		 * Inserts an order into the OrderList.
 		 * 
@@ -614,22 +603,15 @@ public class GroceryStore implements Serializable {
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
 		} else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); // Creates/Edit
-																														// and
-																														// get
-																														// current
-																														// transaction
-																														// index
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); 
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
-				// System.out.println(newOrder.toString()); //TODO: delete after debug
 				orderList.insertOrder(newOrder);
 				result.setReorderPlaced(true);
 				result.setOrderFields(newOrder);
 			}
 			result.setResultCode(Result.OPERATION_COMPLETED);
 		}
-		// System.out.println(product.getCheckoutQty());//TODO: DELETE AFTER DEBUG
 		result.setProduct(product);
 		result.setProductFields(product);
 		result.setCheckoutQty(request.getCheckoutQty());
@@ -637,6 +619,14 @@ public class GroceryStore implements Serializable {
 		return result;
 	}
 
+	/**
+	 * processShipment method
+	 * The processShipment method will aid in processing the incoming shipment.
+	 * This will then in turn add onto the current stockInHand of said items coming in.
+	 * 
+	 * @param request
+	 * @return result - the result will have a result code.
+	 */
 	public Result processShipment(Request request) {
 		Result result = new Result();
 		Order orderToBeProcessed = orderList.search(request.getOrderID());
@@ -684,9 +674,7 @@ public class GroceryStore implements Serializable {
 	 * @return a GroceryStore object
 	 */
 	public static GroceryStore retrieveTest() {
-
 		try {
-
 			new AutomatedTester();
 			groceryStore = AutomatedTester.main(null);
 			return groceryStore;
@@ -738,10 +726,6 @@ public class GroceryStore implements Serializable {
 		}
 	}
 
-	/**
-	 * String form of the groceryStore
-	 * 
-	 */
 	@Override
 	public String toString() {
 		return productList + "\n" + members;

@@ -135,7 +135,6 @@ public class Interface {
 		return true;
 	}
 
-//Trung
 	/**
 	 * return all string have same length and set the string in the middle
 	 * 
@@ -288,11 +287,8 @@ public class Interface {
 	private boolean dateIsValidMMDDYYYY(String item) {
 		boolean result = false;
 		if (item.contains("/")) {
-
 			if (item.split("/").length == 3) {
-
 				String[] split = item.split("/");
-
 				if ((split[0].length() < 3) && (split[1].length() < 3) && (split[2].length() == 4)) {
 					int month = Integer.parseInt(split[0]);
 					int day = Integer.parseInt(split[1]);
@@ -559,7 +555,6 @@ public class Interface {
 
 	}
 
-//	TODO: Trung
 	/**
 	 * The method take the user input which is a id of a product then searching in
 	 * the product list of GroceryStore object to find out if there a products with
@@ -580,7 +575,6 @@ public class Interface {
 		}
 	}
 
-//	TODO: Trung
 	/**
 	 * The method take the input string which is a name of a product then searching
 	 * in the product list of GroceryStore object to find out all the products have
@@ -614,8 +608,8 @@ public class Interface {
 		}
 	}
 
-	// TODO: Trung
 	/**
+	 * RetrieveMemberInfo method
 	 * The method take the input string which is a name of a member then searching
 	 * in the member list of GroceryStore object to find out all the members have
 	 * matching name and return in safe SafeIterator of matching member then print
@@ -647,6 +641,7 @@ public class Interface {
 	}
 
 	/**
+	 * PrintTransactions method
 	 * Method to be called for displaying transactions within a given date range.
 	 * Prompts the user for the start and end date and uses the appropriate
 	 * GroceryStore method for displaying transactions.
@@ -719,7 +714,6 @@ public class Interface {
 		}
 	}
 
-//	TODO: Trung
 	/**
 	 * List all products will list all the products that have added on the
 	 * productList.
