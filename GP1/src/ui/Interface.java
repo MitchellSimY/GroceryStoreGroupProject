@@ -15,7 +15,7 @@ import business.facade.GroceryStore;
 import business.facade.Request;
 import business.facade.Result;
 
-//Test commit comment This is kou's code
+//
 /**
  * 
  * This class implements the user interface for the Library project. The
@@ -533,7 +533,11 @@ public class Interface {
 		} while (yesOrNo("Check out more products?"));
 	}
 
-	//TODO: GENERATE JAVADOC COMMENTS
+	/**
+	 * Method to be called for checking processing a shipment. Prompts the user for
+	 * the Order ID and uses the appropriate GroceryStore method. Displays the
+	 * appropriate message and loops for more orders if needed.
+	 */
 	public void processShipment() {
 		do {
 			Request.instance().setOrderID(getNumber("Enter Order ID:"));
@@ -571,7 +575,8 @@ public class Interface {
 			double newPrice = getDouble("Please enter the new price: " + Request.instance().getProductId());
 			result.setCurrentPrice(newPrice);
 			groceryStore.changePrice(Request.instance().getProductId(), newPrice);
-			System.out.println("Product name " + result.getProductName() + " has new price is " + result.getCurrentPrice());
+			System.out.println(
+					"Product name " + result.getProductName() + " has new price is " + result.getCurrentPrice());
 		}
 	}
 
@@ -584,7 +589,8 @@ public class Interface {
 	 */
 	public void retrieveProductInfo() {
 
-		Request.instance().setProductName(getName("Please enter name of product you want to retrieve information about "));
+		Request.instance()
+				.setProductName(getName("Please enter name of product you want to retrieve information about "));
 
 		Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
 		if (!iterator.hasNext()) {
@@ -609,12 +615,11 @@ public class Interface {
 	}
 
 	/**
-	 * RetrieveMemberInfo method
-	 * The method take the input string which is a name of a member then searching
-	 * in the member list of GroceryStore object to find out all the members have
-	 * matching name and return in safe SafeIterator of matching member then print
-	 * out all information of each member like memberID , address,phone number and
-	 * paid fee
+	 * RetrieveMemberInfo method The method take the input string which is a name of
+	 * a member then searching in the member list of GroceryStore object to find out
+	 * all the members have matching name and return in safe SafeIterator of
+	 * matching member then print out all information of each member like memberID ,
+	 * address,phone number and paid fee
 	 */
 	public void retrieveMemberInfo() {
 
@@ -641,10 +646,9 @@ public class Interface {
 	}
 
 	/**
-	 * PrintTransactions method
-	 * Method to be called for displaying transactions within a given date range.
-	 * Prompts the user for the start and end date and uses the appropriate
-	 * GroceryStore method for displaying transactions.
+	 * PrintTransactions method Method to be called for displaying transactions
+	 * within a given date range. Prompts the user for the start and end date and
+	 * uses the appropriate GroceryStore method for displaying transactions.
 	 * 
 	 * No parameters and no return.
 	 */
@@ -655,8 +659,10 @@ public class Interface {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
-		Request.instance().setStartDate(getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
-		Request.instance().setEndDate(getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
+		Request.instance().setStartDate(
+				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
+		Request.instance().setEndDate(
+				getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
 		if (!((Request.instance().getStartDate().before(Request.instance().getEndDate()))
 				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate())))) {
 			System.out.println("Start date must be before or equal to end date.");
@@ -674,7 +680,12 @@ public class Interface {
 		}
 	}
 
-//	TODO: Kou
+	/**
+	 * 
+	 * List all outstanding OrderID, Product name, Date order was placed, and
+	 * quantity ordered.
+	 * 
+	 */
 	public void listOutstandingOrders() {
 		Iterator<Result> iterator = groceryStore.getOrders();
 
@@ -683,8 +694,7 @@ public class Interface {
 
 		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			if (result.isOrderStatus() == false) {// TODO: COME BACK AND CHECK IF WHEN SET TO TRUE, ORDERS SHOULD NOT BE
-													// PRINTING; IMPLEMENT AFTER USE CASE 5
+			if (result.isOrderStatus() == false) {
 				System.out.println(equalsLength("" + result.getOrderID()) + "|"
 						+ equalsLength(result.getReorderProduct().getProductName()) + "|"
 						+ equalsLength(result.getDateOrderPlacedString()) + "|"
@@ -694,9 +704,9 @@ public class Interface {
 	}
 
 	/**
-	 * List all members will list all the members that have registered.
+	 * List all the members that have registered.
 	 * 
-	 * @return All members
+	 *
 	 */
 	public void listAllMembers() {
 		Iterator<Result> iterator = groceryStore.getMembers();
@@ -718,7 +728,7 @@ public class Interface {
 	 * List all products will list all the products that have added on the
 	 * productList.
 	 * 
-	 * @return All members
+	 * 
 	 */
 	public void listAllProducts() {
 		Iterator<Result> iterator = groceryStore.getProducts();

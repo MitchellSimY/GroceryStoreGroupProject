@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -125,8 +124,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * The collection class for Member objects
-	 * Member Subclass
+	 * The collection class for Member objects Member Subclass
 	 * 
 	 * @author group
 	 * 
@@ -156,12 +154,8 @@ public class GroceryStore implements Serializable {
 		 * 
 		 * Checks whether a member with a given name exists.
 		 * 
-		 * @param name
+		 * @param name string of member name
 		 * @return Member iff member exists
-		 */
-		/**
-		 * @param name
-		 * @return
 		 */
 		public Member searchName(String name) {
 			for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
@@ -206,8 +200,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * The collection class for Order objects
-	 * OrderList subclass
+	 * The collection class for Order objects OrderList subclass
 	 * 
 	 * @author group
 	 */
@@ -315,7 +308,7 @@ public class GroceryStore implements Serializable {
 	 * Address Phone, Membership Fee, and date.
 	 * 
 	 * @param request - This has all the user input for the member's information
-	 * @return result - The return is to determine whether the addition of the
+	 * @return Result - The return is to determine whether the addition of the
 	 *         member was successful. If not, it returns an error code.
 	 */
 	public Result addMember(Request request) {
@@ -394,7 +387,7 @@ public class GroceryStore implements Serializable {
 	 * Get members method Showing all members that have since registered. This was
 	 * called by interface > listAllMembers
 	 * 
-	 * @return all members
+	 * @return Iterator: of type Result.
 	 */
 	public Iterator<Result> getMembers() {
 		return new SafeIterator<Member>(members.iterator(), SafeIterator.MEMBER);
@@ -404,7 +397,7 @@ public class GroceryStore implements Serializable {
 	 * getProduct method Showing all products that have since added. This was called
 	 * by interface > listAllProducts
 	 * 
-	 * @return all iterator of productList
+	 * @return Iterator: of type Result.
 	 */
 	public Iterator<Result> getProducts() {
 		return new SafeIterator<Product>(productList.iterator(), SafeIterator.PRODUCT);
@@ -414,19 +407,19 @@ public class GroceryStore implements Serializable {
 	 * getProduct method Showing all products that have since added. This was called
 	 * by interface > listAllProducts
 	 * 
-	 * @return all iterator of productList
+	 * @return Iterator: of type Result.
 	 */
 	public Iterator<Result> getOrders() {
 		return new SafeIterator<Order>(orderList.iterator(), SafeIterator.ORDER);
 	}
 
 	/**
-	 * retrievedMemberInfor searching the members list by iterator to find every
+	 * retrieveMemberInfo searching the members list by iterator to find every
 	 * member has matching name with the user input then add all found result in to
-	 * a list and return an iterator of that result list
+	 * a list and return an iterator of that result.
 	 * 
-	 * @param is user input which is a string of member's name
-	 * @return all iterator of all members has matching name
+	 * @param name Is user input which is a string of member's name
+	 * @return Iterator: of type Result. All members with a matching name.
 	 */
 	public Iterator<Result> retrieveMemberInfo(String name) {
 		List<Member> memberList = new LinkedList<Member>();
@@ -444,8 +437,8 @@ public class GroceryStore implements Serializable {
 	 * product that with that matches parameter name, then adds all found results in
 	 * to a temp list and returns it as an iterator.
 	 * 
-	 * @param name of the product(user input)
-	 * @return iterator of all products with matching name.
+	 * @param name The name of the product(user input)
+	 * @return Iterator: of type Result.
 	 */
 	public Iterator<Result> retrieveProductInfo(String name) {
 		List<Product> tempList = new LinkedList<Product>();
@@ -461,8 +454,8 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Searches for a given member
 	 * 
-	 * @param memberId id of the member
-	 * @return true if the member is in the member list collection
+	 * @param request A Request object storing the memberId id of the member
+	 * @return Result A Result Object of the operation.
 	 */
 	public Result searchMembership(Request request) {
 		Result result = new Result();
@@ -522,10 +515,7 @@ public class GroceryStore implements Serializable {
 	 * @return Result - OPERATION_COMPLETED if the product is in the product list
 	 *         collection and NO_SUCH_MEMBER if no product found
 	 */
-	/**
-	 * @param request
-	 * @return
-	 */
+
 	public Result searchProductName(Request request) {
 		Result result = new Result();
 		Product product = productList.searchProductName(request.getProductName());
@@ -541,8 +531,8 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Searches for a given order
 	 * 
-	 * @param request of type Request with data of the orderID
-	 * @return true if the order is in the orderlist collection
+	 * @param request type Request Object with data of the orderID
+	 * @return Result: A Result Object of the operation.
 	 */
 	public Result searchOrder(Request request) {
 		Result result = new Result();
@@ -580,10 +570,9 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Organizes the checking out of a product
 	 * 
-	 * @param Request   - has the product id of the item getting checked out and
-	 *                  member id of the member checking out.
-	 * @param quantity- how much of the item is getting checked out.
-	 * @return Result - The result of the operation.
+	 * @param request - Request Object .
+	 * 
+	 * @return Result - The Result Object of the operation.
 	 */
 
 	public Result checkOut(Request request) {
@@ -603,7 +592,7 @@ public class GroceryStore implements Serializable {
 		if (!(product.checkOut(request.getCheckoutQty()))) {
 			result.setResultCode(Result.INSUFFICIENT_STOCK);
 		} else {
-			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty())); 
+			result.setCheckOutTransactionIndex(member.checkOut(product, request.getDate(), request.getCheckoutQty()));
 			if (product.getStockInHand() <= product.getReorderLevel()) {
 				Order newOrder = new Order(product, request.getDate());
 				orderList.insertOrder(newOrder);
@@ -620,12 +609,12 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * processShipment method
-	 * The processShipment method will aid in processing the incoming shipment.
-	 * This will then in turn add onto the current stockInHand of said items coming in.
+	 * processShipment method The processShipment method will aid in processing the
+	 * incoming shipment. This will then in turn add onto the current stockInHand of
+	 * said items coming in.
 	 * 
-	 * @param request
-	 * @return result - the result will have a result code.
+	 * @param request A Request Object
+	 * @return Result A Result Object
 	 */
 	public Result processShipment(Request request) {
 		Result result = new Result();
@@ -654,11 +643,11 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Returns an iterator to the transactions for a specific member on a certain
-	 * date
+	 * Returns an iterator of type Transaction for a specific member in a certain
+	 * date range
 	 * 
-	 * @param Request - used for member id. start date and end date.
-	 * @return iterator to the collection
+	 * @param request A Request object.
+	 * @return Iterator of type Transaction
 	 */
 	public Iterator<Transaction> getTransactions(Request request) {
 		Member member = members.search(request.getMemberId());
@@ -685,7 +674,7 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Retrieves a de-serialized version of the groceryStore from disk
+	 * Retrieves a deserialized version of the groceryStore from disk
 	 * 
 	 * @return a GroceryStore object
 	 */
