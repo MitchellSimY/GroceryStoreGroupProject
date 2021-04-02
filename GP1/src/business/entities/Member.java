@@ -73,15 +73,13 @@ public class Member implements Serializable {
 				Transaction currentTransaction = (Transaction) iterator.next();
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-					System.out.println(transactions.get(transactionIndex).toString());
-					return transactionIndex;
+					return transactionIndex; 
 				}
 				transactionIndex++;
 			}
 		} else {
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
-			System.out.println(transactions.get(transactionIndex).toString());
 		}
 		return transactionIndex;
 	}

@@ -1,5 +1,12 @@
 package business.entities;
 
+import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import business.collections.CheckOutProductList;
+
 /**
  * Transaction Class
  * 
@@ -10,17 +17,8 @@ package business.entities;
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  */
 
-import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-
-
-import business.collections.CheckOutProductList;
 
 public class Transaction implements Serializable {
-	// Variables for Transaction
 	private static final long serialVersionUID = 1L;
 	private CheckOutProductList checkOutProductList = new CheckOutProductList();
 	private double totalCost;
@@ -28,7 +26,7 @@ public class Transaction implements Serializable {
 
 	public Transaction() {
 		totalCost = 0;
-		date = new GregorianCalendar(); // TODO : ADD ONE MONTH TO CALENDER.MONTH INDEX GOES FROM 0-11
+		date = new GregorianCalendar();
 	}
 
 	/**
@@ -111,41 +109,40 @@ public class Transaction implements Serializable {
 		return false;
 	}
 
-	// TODO: fix this
+	//Trung
+	/**
+	 * return all string have same length and set the string in the middle
+	 * 
+	 * @param a string
+	 * @return a string with space in front and back to make string set in the
+	 *         middle
+	 * 
+	 */
+	private String equalsLength(String string) {
+		int standar = 25 - string.length();
+		if (standar > 0 && standar % 2 == 0) {
+			for (int i = 0; i <= (standar / 2) - 1; ++i) {
+				string = " " + string + " ";
+			}
+		}
+		if (standar > 0 && standar % 2 != 0) {
+			for (int i = 0; i <= standar / 2; ++i) {
+				if (i == standar / 2) {
+					string = string + " ";
+				} else
+					string = " " + string + " ";
+			}
+		}
+		return string;
+	}
+
 	public String currentProductCheckoutToString(Product product) {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
 		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-		return product.getProductName() + "\t" + product.getCheckoutQty() + "\t" + df.format(product.getCurrentPrice())
-				+ "\t" + df.format(productPurchasedCost) + "\n";
-	}
-
-	//Trung
-		/**
-		 * return all string have same length and set the string in the middle
-		 * 
-		 * @param a string
-		 * @return a string with space in front and back to make string set in the
-		 *         middle
-		 * 
-		 */
-		private String equalsLength(String string) {
-			int standar = 25 - string.length();
-			if (standar > 0 && standar % 2 == 0) {
-				for (int i = 0; i <= (standar / 2) - 1; ++i) {
-					string = " " + string + " ";
-				}
-			}
-			if (standar > 0 && standar % 2 != 0) {
-				for (int i = 0; i <= standar / 2; ++i) {
-					if (i == standar / 2) {
-						string = string + " ";
-					} else
-						string = " " + string + " ";
-				}
-			}
-			return string;
-		}
-	
+		return equalsLength(product.getProductName())  + "|" + equalsLength("" + product.getCheckoutQty())
+		+ "|" + equalsLength(df.format(product.getCurrentPrice())) + "|" + equalsLength(df.format(productPurchasedCost)) + "\n";
+	}	
+		
 	/**
 	 * String form of the transaction
 	 * 
@@ -156,10 +153,8 @@ public class Transaction implements Serializable {
 		String productListString = "";
 		computeTotalCost();
 		for (Iterator<Product> iterator = checkOutProductList.iterator(); iterator.hasNext();) {
-			Product product = (Product) iterator.next();
-			double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
-			productListString += equalsLength(product.getProductName())  + "|" + equalsLength("" + product.getCheckoutQty())
-			+ "|" + equalsLength(df.format(product.getCurrentPrice())) + "|" + equalsLength(df.format(productPurchasedCost)) + "\n";
+			Product productCursor = (Product) iterator.next();
+			productListString += currentProductCheckoutToString(productCursor);
 		}
 		return "Checkout Transaction date: " + getDate() + "\n" + equalsLength("Product Name") + "|" + equalsLength("Qty Purchased") + "|"
 				+ equalsLength("Cost Per") + "|" + equalsLength("Product Cost") + "\n" + productListString

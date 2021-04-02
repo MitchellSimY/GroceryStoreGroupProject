@@ -410,22 +410,22 @@ public class Interface {
 	 * @return None. Will prompt for user input.
 	 */
 	public void help() {
-		System.out.println("Please select an option");
-		System.out.println(EXIT + " to exit the interface");
-		System.out.println(ENROLL_MEMBER + " to enroll a member");
-		System.out.println(REMOVE_MEMBER + " to remove a member");
-		System.out.println(ADD_PRODUCT + " to add a new product");
-		System.out.println(CHECKOUT_MEMBER_ITEMS + " to checkout a member's items");
-		System.out.println(PROCESS_SHIPMENT + " to process a shipment");
-		System.out.println(CHANGE_PRICE + " to change the price of an item");
-		System.out.println(RETRIEVE_PRODUCT_INFO + " to retrieve product information");
-		System.out.println(RETRIEVE_MEMBER_INFO + " to retrieve member information");
-		System.out.println(PRINT_TRANSACTIONS + " to print transactions");
-		System.out.println(LIST_OUTSTANDING_ORDERS + " to print all outstanding (not yet fulfilled) orders");
-		System.out.println(LIST_ALL_MEMBERS + " to print information of all members");
-		System.out.println(LIST_ALL_PRODUCTS + " to print information of all products");
-		System.out.println(SAVE + " to  save data");
-		System.out.println(HELP + " for help");
+		System.out.println("Please select an option.");
+		System.out.println(EXIT + " to exit the interface.");
+		System.out.println(ENROLL_MEMBER + " to enroll a member.");
+		System.out.println(REMOVE_MEMBER + " to remove a member.");
+		System.out.println(ADD_PRODUCT + " to add a new product.");
+		System.out.println(CHECKOUT_MEMBER_ITEMS + " to checkout a member's items.");
+		System.out.println(PROCESS_SHIPMENT + " to process a shipment.");
+		System.out.println(CHANGE_PRICE + " to change the price of an item.");
+		System.out.println(RETRIEVE_PRODUCT_INFO + " to retrieve product information.");
+		System.out.println(RETRIEVE_MEMBER_INFO + " to retrieve member information.");
+		System.out.println(PRINT_TRANSACTIONS + " to print transactions.");
+		System.out.println(LIST_OUTSTANDING_ORDERS + " to print all outstanding (not yet fulfilled) orders.");
+		System.out.println(LIST_ALL_MEMBERS + " to print information of all members.");
+		System.out.println(LIST_ALL_PRODUCTS + " to print information of all products.");
+		System.out.println(SAVE + " to  save data.");
+		System.out.println(HELP + " for help.");
 	}
 
 	/**
@@ -435,19 +435,16 @@ public class Interface {
 	 */
 	public void addMember() {
 
-		// Putting everything in a request instance.
 		Request.instance().setMemberName(ignoredCase(getName("Please enter the Member's name: ")));
 		Request.instance().setMemberAddress(getName("Please enter the Member's address: "));
 		Request.instance().setMemberPhone(getName("Please enter the Member's phone number: "));
 		Request.instance().setMemberFeePaid(getDouble("Please enter how much the Member paid: "));
-		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy"));
+		Request.instance().setDate(getDate("Please enter the date joined as mm/dd/yy:"));
 
-		// Grabbing generated results.
 		Result result = groceryStore.addMember(Request.instance());
 
-		// If statements that'll notify what has happened.
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("Could not add member");
+			System.out.println("Could not add member.");
 		} else {
 			System.out.println(result.getMemberName() + "'s ID is " + result.getMemberId());
 		}
@@ -460,16 +457,15 @@ public class Interface {
 	 * @return Advises if the user has since been removed or not.
 	 */
 	public void removeMember() {
-		// Creating a request
 		Request.instance().setMemberId(getUserInput("Enter the ID of the member you'd like to remove: "));
 		Result result = groceryStore.removeMember(Request.instance());
 
 		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
-			System.out.println("Member has since been removed");
+			System.out.println("Member has since been removed.");
 		} else if (result.getResultCode() == Result.NO_SUCH_MEMBER) {
-			System.out.println("MemberID entered not found");
+			System.out.println("MemberID entered not found.");
 		} else {
-			System.out.println("Member could not be removed");
+			System.out.println("Member could not be removed.");
 		}
 
 	}
@@ -480,14 +476,12 @@ public class Interface {
 	 * @return none. Creates product object.
 	 */
 	public void addProduct() {
-		// Putting everything in a Request instance.
 		Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
 		Request.instance().setProductId(getUserInput("Enter Product ID: "));
 		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
-		Request.instance().setDate(new GregorianCalendar()); // TODO: DELETE COMMENT used to create order for when new
-																// product is created
+		Request.instance().setDate(new GregorianCalendar());
 
 		// Creating a result object to advise any messages
 		Result result = groceryStore.addProduct(Request.instance());
@@ -514,20 +508,20 @@ public class Interface {
 	 * No parameters and no return.
 	 */
 	public void checkOutMember() {
-		Request.instance().setMemberId(getUserInput("Enter member id"));
+		Request.instance().setMemberId(getUserInput("Enter member id:"));
 		Result result = groceryStore.searchMembership(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
 		do {
-			Request.instance().setProductId(getUserInput("Enter product id"));
+			Request.instance().setProductId(getUserInput("Enter product id:"));
 			Request.instance().setCheckoutQty(getNumber("Enter the number of units being sold: "));
 			Request.instance().setDate(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
-				System.out.println(result.getTransactions().get(transactionIndex)
+				System.out.println("Purchased: " + result.getTransactions().get(transactionIndex)
 						.currentProductCheckoutToString(result.getProduct()));
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for qty = "
@@ -543,16 +537,10 @@ public class Interface {
 		} while (yesOrNo("Check out more products?"));
 	}
 
-//	TODO: Kou
+	//TODO: GENERATE JAVADOC COMMENTS
 	public void processShipment() {
-//		Request.instance().setOrderID(getNumber("Enter Order ID"));
-//		Result result = groceryStore.searchOrder(Request.instance());
-//		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-//			System.out.println("No order with ID " + Request.instance().getOrderID());
-//			return;
-//		}
 		do {
-			Request.instance().setOrderID(getNumber("Enter Order ID"));
+			Request.instance().setOrderID(getNumber("Enter Order ID:"));
 			Result result = groceryStore.processShipment(Request.instance());
 			if (result.getResultCode() == Result.ORDER_PROCESSED) {
 				if (result.isOrderStatus()) {
@@ -580,17 +568,15 @@ public class Interface {
 	 * term
 	 */
 	public void changePrice() {
-		Request.instance().setProductId(getUserInput("Please enter id of product you want to change the price"));
+		Request.instance().setProductId(getUserInput("Enter ID of product you want price changed:"));
 		Result result = groceryStore.searchProduct(Request.instance());
 		if (result.getResultCode() != Result.OPERATION_COMPLETED) {
-			System.out.println("No Product found with given name " + Request.instance().getProductName());
+			System.out.println("No Product found with given ID " + Request.instance().getProductId());
 		} else {
-			double newPrice = getDouble(
-					"Please enter the new price for the product has id " + Request.instance().getProductId());
+			double newPrice = getDouble("Please enter the new price: " + Request.instance().getProductId());
 			result.setCurrentPrice(newPrice);
 			groceryStore.changePrice(Request.instance().getProductId(), newPrice);
-			System.out.println(
-					"Product name " + result.getProductName() + " has new price is " + result.getCurrentPrice());
+			System.out.println("Product name " + result.getProductName() + " has new price is " + result.getCurrentPrice());
 		}
 	}
 
@@ -604,8 +590,7 @@ public class Interface {
 	 */
 	public void retrieveProductInfo() {
 
-		Request.instance()
-				.setProductName(getName("Please enter name of product you want to retrieve information about "));
+		Request.instance().setProductName(getName("Please enter name of product you want to retrieve information about "));
 
 		Iterator<Result> iterator = groceryStore.retrieveProductInfo(Request.instance().getProductName());
 		if (!iterator.hasNext()) {
@@ -675,10 +660,8 @@ public class Interface {
 			System.out.println("No member with id " + Request.instance().getMemberId());
 			return;
 		}
-		Request.instance().setStartDate(
-				getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
-		Request.instance().setEndDate(
-				getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
+		Request.instance().setStartDate(getDateFullYear("Please enter the start date (inclusive) for which you want records as mm/dd/yyyy"));
+		Request.instance().setEndDate(getDateFullYear("Please enter the end date (inclusive) for which you want records as mm/dd/yyyy"));
 		if (!((Request.instance().getStartDate().before(Request.instance().getEndDate()))
 				|| (Request.instance().getStartDate().equals(Request.instance().getEndDate())))) {
 			System.out.println("Start date must be before or equal to end date.");
@@ -686,7 +669,6 @@ public class Interface {
 			Iterator<Transaction> result1 = groceryStore.getTransactions(Request.instance());
 			if (!result1.hasNext()) {
 				System.out.println("\nNo transactions found in that date range.\n");
-
 			} else {
 				while (result1.hasNext()) {
 					Transaction transaction = (Transaction) result1.next();
