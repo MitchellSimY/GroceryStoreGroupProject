@@ -145,7 +145,7 @@ public class Interface {
 	 * 
 	 */
 	private String equalsLength(String string) {
-		int standar = 20 - string.length();
+		int standar = 25 - string.length();
 		if (standar > 0 && standar % 2 == 0) {
 			for (int i = 0; i <= (standar / 2) - 1; ++i) {
 				string = " " + string + " ";
@@ -557,7 +557,7 @@ public class Interface {
 			if (result.getResultCode() == Result.ORDER_PROCESSED) {
 				if (result.isOrderStatus()) {
 					System.out.println("OrderID: " + result.getOrderID() + " processed.\nProduct ID: "
-							+ result.getProductId() + "\tProduct Name: " + result.getProductName() + "\tUpdated Qty: " 
+							+ result.getProductId() + "\tProduct Name: " + result.getProductName() + "\tUpdated Qty: "
 							+ result.getStockInhand());
 				}
 			} else if (result.getResultCode() == Result.PRODUCT_NOT_FOUND) {
@@ -589,8 +589,8 @@ public class Interface {
 					"Please enter the new price for the product has id " + Request.instance().getProductId());
 			result.setCurrentPrice(newPrice);
 			groceryStore.changePrice(Request.instance().getProductId(), newPrice);
-			System.out.println("Product name " + result.getProductName() + " has new price is "
-					+ result.getCurrentPrice());
+			System.out.println(
+					"Product name " + result.getProductName() + " has new price is " + result.getCurrentPrice());
 		}
 	}
 
