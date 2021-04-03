@@ -39,11 +39,11 @@ public class Member implements Serializable {
 	/**
 	 * Creates a single member object.
 	 * 
-	 * @param name: of type String. Name of the member
-	 * @param address:		address of the member
-	 * @param phoneNumber:	phone number of the member
-	 * @param feePaid:		how much fee have they paid
-	 * @param joinedData:	date joined
+	 * @param name: of type String. Name of the member.
+	 * @param address: of type String. Address of the member.
+	 * @param phoneNumber: of type String. Phone number of the member.
+	 * @param feePaid: of type Double. How much fees have they paid.
+	 * @param joinedData: of type Calendar.	Date joined.
 	 */
 	public Member(String name, String phoneNumber, String address, double feePaid, Calendar joinedDate) {
 		this.name = name;
@@ -121,6 +121,7 @@ public class Member implements Serializable {
 	/**
 	 * Adds a transaction object into the member's transaction list.
 	 * 
+	 * @param transaction: of type Transaction. The transaction object to be inserted into the member's transaction list.
 	 * @return true: iff the transaction was successfully added to the list. Currently always true.
 	 */
 	public boolean insertTransaction(Transaction transaction) {

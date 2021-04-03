@@ -12,12 +12,20 @@ import java.io.Serializable;
 
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	// Product variables
 	private String productName, productId;
 	private int stockInHand, reorderLevel, checkoutQty;
 	private double currentPrice;
 
-	// Constructor
+	/**
+	 * Creates a single product object.
+	 * 
+	 * @param productName: of type String. Name of the Product.
+	 * @param productId: of type String. The Product's unique ID.
+	 * @param stockInHand: of type Int. The quantity currently available for purchase.
+	 * @param reorderLevel:	of type Int. The quantity that a product should be reordered when reached.
+	 * @param currentPrice: of type Double. The price of the Product.
+	 * 
+	 */
 	public Product(String productName, String productId, int stockInHand, int reorderLevel, double currentPrice) {
 		this.productName = productName;
 		this.productId = productId;
@@ -27,10 +35,12 @@ public class Product implements Serializable {
 	}
 
 	/**
-	 * Updates current stock based on how much the member is buying.
+	 * Updates current stock based on how much the member is buying. Checks if the quantity of the product is available first. 
+	 * If it is, then return true and update the Product's quantity. If not, then return false.
 	 * 
-	 * @param member the borrower
-	 * @return true iff the book could be issued. True currently
+	 * @param quantity: of type Int. The amount the member is attempting to purchase.
+	 * @return true: iff the Product's quantity is greater than or equal to the quantity the customer is attempting to purchase.
+	 * @return false: iff the Product's quantity is less than the quantity the customer is attempting to purchase.
 	 */
 	public boolean checkOut(int quantity) {
 		if ((getStockInHand() - quantity) < 0) {
@@ -102,7 +112,6 @@ public class Product implements Serializable {
 	public String toString() {
 		return "Product Name " + productName + " Product ID " + productId + " Stock in Hand " + stockInHand
 				+ " Reoder Level " + reorderLevel + " Current Price" + currentPrice;
-
 	}
 
 	@Override
