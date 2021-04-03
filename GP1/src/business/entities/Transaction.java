@@ -11,8 +11,7 @@ import business.collections.CheckOutProductList;
  * Transaction Class
  * 
  * This class is made to create Transaction objects.
- * Each transaction object will have a series of variables that'll 
- * determine the correct transactions. (ie when a member purchased)
+ * Each Transaction object holds a list of Products, the totalcost of the products in the list and the date the Transaction was created.
  * 
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
  */
@@ -32,11 +31,9 @@ public class Transaction implements Serializable {
 	/**
 	 * Checks whether this transaction is in a given date range.
 	 * 
-	 * @param startDate The startDate for which transactions are being sought
-	 *                  (inclusive)
-	 * @param endDate   The endDate for which transactions are being sought
-	 *                  (inclusive)
-	 * @return true iff the dates match
+	 * @param startDate: of type Calendar. The startDate for which transactions are being sought (inclusive)
+	 * @param endDate: of type Calendar. The endDate for which transactions are being sought (inclusive)
+	 * @return true: iff the date the Transaction object has is within the two param's date.
 	 */
 	public boolean inDateRange(Calendar startDate, Calendar endDate) {
 
@@ -48,11 +45,8 @@ public class Transaction implements Serializable {
 	}
 	
 	/**
-	 * computeTotalCost method
-	 * This method is utilized for calculating the total cost.
-	 * 
-	 * @param none
-	 * @return none. Will instead set the total cost.
+	 * This method is utilized for calculating the total cost of all the products in the Transaction object's product list.
+	 * It sets the totalCost field for the Transaction object.
 	 */
 	public void computeTotalCost() {
 		double totalCostCalc = 0;
@@ -75,14 +69,19 @@ public class Transaction implements Serializable {
 		return checkOutProductList;
 	}
 
+	/**
+	 * Returns the date as a Calendar object.
+	 * 
+	 * @return date: of type Calendar. The date of the Transaction.
+	 */
 	public Calendar getCalenderDate() {
 		return date;
 	}
 	
 	/**
-	 * Returns the date as a String
+	 * Returns the date as a String formatted MM/DD/YYYY.
 	 * 
-	 * @return date with month, date, and year
+	 * @return date: of type String. The date of the Transaction with month, date, and year.
 	 */
 	public String getDate() {
 		return date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DATE) + "/" + date.get(Calendar.YEAR);
@@ -118,12 +117,10 @@ public class Transaction implements Serializable {
 
 
 	/**
-	 * return all string have same length and set the string in the middle
+	 * Return all string have same length and set the string in the middle
 	 * 
-	 * @param a string
-	 * @return a string with space in front and back to make string set in the
-	 *         middle
-	 * 
+	 * @param string: of type String. The string to be formatted.
+	 * @return string: of type String. A string with space in front and back to make string set in the middle
 	 */
 	private String equalsLength(String string) {
 		int standar = 25 - string.length();
@@ -142,7 +139,13 @@ public class Transaction implements Serializable {
 		}
 		return string;
 	}
-
+	
+	/**
+	 * Return the current product being checked out as a string with its name, price, checkOutQty, and total cost
+	 * 
+	 * @param product: of type Product. The Product that is currently being checked out.
+	 * @return String: of type String. A string with the Product's name, price, checkOutQty, and total cost.
+	 */
 	public String currentProductCheckoutToString(Product product) {
 		DecimalFormat df = new DecimalFormat("$###,##0.00");
 		double productPurchasedCost = product.getCurrentPrice() * product.getCheckoutQty();
@@ -151,8 +154,8 @@ public class Transaction implements Serializable {
 	}	
 		
 	/**
-	 * String form of the transaction
-	 * 
+	 * String format of the transaction. Prints out all the products purchased in the product list of the Transaction object.
+	 * @return String: The transaction's product list. The product's name, cost per, quantity purchased, and total cost.
 	 */
 	@Override
 	public String toString() {

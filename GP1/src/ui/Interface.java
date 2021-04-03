@@ -137,12 +137,10 @@ public class Interface {
 	}
 
 	/**
-	 * return all string have same length and set the string in the middle
+	 * Return all string have same length and set the string in the middle
 	 * 
-	 * @param a string
-	 * @return a string with space in front and back to make string set in the
-	 *         middle
-	 * 
+	 * @param string: of type String. The string to be formatted.
+	 * @return string: of type String. A string with space in front and back to make string set in the middle
 	 */
 	private String equalsLength(String string) {
 		int standar = 25 - string.length();
