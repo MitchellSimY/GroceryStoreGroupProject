@@ -43,8 +43,8 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether a product with a given product id exists.
 		 * 
-		 * @param productId the id of the product
-		 * @return true iff the product exists
+		 * @param productId of type String. The product id.
+		 * @return Product iff the product exists else it return null.
 		 * 
 		 */
 		public Product search(String productId) {
@@ -60,8 +60,9 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether a product with a given product name exists.
 		 * 
-		 * @param product name of the product
-		 * @return That product iff the product exists
+		 * @param name of String type. Name of the product.
+		 * 
+		 * @return Product: That product iff the product exists
 		 * 
 		 */
 		public Product searchProductName(String name) {
@@ -77,7 +78,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Removes a product from the catalog
 		 * 
-		 * @param productId product id
+		 * @param productId String type. product id you wish to remove.
 		 * @return true iff product could be removed
 		 */
 		public boolean removeProduct(String productId) {
@@ -92,7 +93,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Inserts a product into the collection
 		 * 
-		 * @param product the product to be inserted
+		 * @param product Product type. the product to be inserted.
 		 * @return true iff the product could be inserted. Currently always true
 		 */
 		public boolean insertProduct(Product product) {
@@ -103,7 +104,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Returns an iterator to all products
 		 * 
-		 * @return iterator to the collection
+		 * @return Iterator: iterator to the collection
 		 */
 		public Iterator<Product> iterator() {
 			return products.iterator();
@@ -136,8 +137,8 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether a member with a given member id exists.
 		 * 
-		 * @param memberId the id of the member
-		 * @return Member iff member exists
+		 * @param memberId string type. the id of the member
+		 * @return Member Member type. iff member exists
 		 * 
 		 */
 		public Member search(String memberId) {
@@ -170,7 +171,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Inserts a member into the collection
 		 * 
-		 * @param member the member to be inserted
+		 * @param member Member type. the member to be inserted
 		 * @return true iff the member could be inserted. Currently always true
 		 */
 		public boolean insertMember(Member member) {
@@ -181,6 +182,8 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Remove member method Is called outside of the said class and removes the
 		 * member from the list.
+		 * 
+		 * @return true iff member is removed. currently always true.
 		 */
 		public boolean removeMember(Member member) {
 			members.remove(member);
@@ -211,8 +214,9 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether an order with a given order id exists.
 		 * 
-		 * @param orderID: the ID of the order we wish to find.
-		 * @return Order: returns the Order object in the orderList if it exists.
+		 * @param orderId int type. the ID of the order we wish to find.
+		 * @return Order: Order type. returns the Order object in the orderList if it
+		 *         exists.
 		 * 
 		 */
 		public Order search(int orderId) {
@@ -230,7 +234,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Removes an order from the orderList given a specific orderID
 		 * 
-		 * @param orderID: the ID of the order we wish to find.
+		 * @param orderId int type. the ID of the order we wish to find.
 		 * @return true iff product could be removed
 		 */
 		public boolean removeOrder(int orderId) {
@@ -245,7 +249,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Inserts an order into the OrderList.
 		 * 
-		 * @param order: the Order object to be inserted.
+		 * @param order the Order object to be inserted.
 		 * @return true: iff an Order with the orderID doesn't already exists within
 		 *         orders and the Order object is inserted successfully. Currently set
 		 *         to always true.
@@ -307,7 +311,8 @@ public class GroceryStore implements Serializable {
 	 * parameters for the new member. In order the member parameters are, Name,
 	 * Address Phone, Membership Fee, and date.
 	 * 
-	 * @param request - This has all the user input for the member's information
+	 * @param request - Request type. This has all the user input for the member's
+	 *                information
 	 * @return Result - The return is to determine whether the addition of the
 	 *         member was successful. If not, it returns an error code.
 	 */
@@ -329,7 +334,7 @@ public class GroceryStore implements Serializable {
 	 * Remove Member. This method is utilized for people that no longer want to be a
 	 * member with the grocery store.
 	 * 
-	 * @param request - An object that has the requested memberId
+	 * @param request - Request type. An object that has the requested memberId
 	 * @return result - this is the result for whether the operation failed or not.
 	 */
 	public Result removeMember(Request request) {
@@ -350,9 +355,10 @@ public class GroceryStore implements Serializable {
 	 * Add product method. This method will allow for the addition of new products.
 	 * Called from addProduct method in Interface.
 	 * 
-	 * @param request - This is the product object. Contains all the product
-	 *                information.
-	 * @return Result - Which advises the user whether the function was successful.
+	 * @param request - Request type. This is the product object. Contains all the
+	 *                product information.
+	 * @return Result - Result type. Which advises the user whether the function was
+	 *         successful.
 	 */
 	public Result addProduct(Request request) {
 		Result result = new Result();
@@ -406,7 +412,7 @@ public class GroceryStore implements Serializable {
 	 * member has matching name with the user input then add all found result in to
 	 * a list and return an iterator of that result.
 	 * 
-	 * @param name Is user input which is a string of member's name
+	 * @param name String Type. Is user input which is a string of member's name
 	 * @return Iterator: of type Result. All members with a matching name.
 	 */
 	public Iterator<Result> retrieveMemberInfo(String name) {
@@ -425,7 +431,7 @@ public class GroceryStore implements Serializable {
 	 * product that with that matches parameter name, then adds all found results in
 	 * to a temp list and returns it as an iterator.
 	 * 
-	 * @param name The name of the product(user input)
+	 * @param name String type. The name of the product(user input)
 	 * @return Iterator: of type Result.
 	 */
 	public Iterator<Result> retrieveProductInfo(String name) {
@@ -442,7 +448,8 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Searches for a given member
 	 * 
-	 * @param request A Request object storing the memberId id of the member
+	 * @param request Request type. A Request object storing the memberId id of the
+	 *                member
 	 * @return Result A Result Object of the operation.
 	 */
 	public Result searchMembership(Request request) {
@@ -461,7 +468,7 @@ public class GroceryStore implements Serializable {
 	 * Searches for a given member by member name. Create a new result object and
 	 * assign name.
 	 * 
-	 * @param request object that has the name to use for searching.
+	 * @param request Request object that has the name to use for searching.
 	 * @return Result object. (OPERATION_COMPLETED if the member is in the member
 	 *         list collection and NO_SUCH_MEMBER if no member found).
 	 */
@@ -481,7 +488,7 @@ public class GroceryStore implements Serializable {
 	 * 
 	 * Search for a product by i.d.
 	 * 
-	 * @param request - has the product i.d. to use for searching.
+	 * @param request - Request object. has the product i.d. to use for searching.
 	 * @return Result object with product files set.
 	 */
 	public Result searchProduct(Request request) {
@@ -500,7 +507,7 @@ public class GroceryStore implements Serializable {
 	 * Similar method as above but doesn't change any product info. Search for a
 	 * product by i.d.
 	 * 
-	 * @param request - has the product i.d. to use for searching.
+	 * @param request - Request type. has the product i.d. to use for searching.
 	 * @return Result object with product files set.
 	 */
 	public Result searchProductID(Request request) {
@@ -517,9 +524,10 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Searches for a given product by product name which assigned in result object
 	 * 
-	 * @param request - object that has name to use as condition for searching
-	 * @return Result - OPERATION_COMPLETED if the product is in the product list
-	 *         collection and NO_SUCH_MEMBER if no product found
+	 * @param request - Request object that has name to use as condition for
+	 *                searching
+	 * @return Result - Result object. OPERATION_COMPLETED if the product is in the
+	 *         product list collection and NO_SUCH_MEMBER if no product found
 	 */
 
 	public Result searchProductName(Request request) {
@@ -557,8 +565,10 @@ public class GroceryStore implements Serializable {
 	 * change the price of a product.
 	 * 
 	 * 
-	 * @param productId - The product to change.
-	 * @param price     - the new price.
+	 * @param productId - Sting type. The product to change.
+	 * @param price     - double type. the new price.
+	 * 
+	 * @return Result: Result Object. What the outcome of the operation was.
 	 */
 	public Result changePrice(String productId, double price) {
 		Result result = new Result();
@@ -619,8 +629,8 @@ public class GroceryStore implements Serializable {
 	 * incoming shipment. This will then in turn add onto the current stockInHand of
 	 * said items coming in.
 	 * 
-	 * @param request A Request Object
-	 * @return Result A Result Object
+	 * @param request A Request Object. Containing the shipment info.
+	 * @return Result A Result Object. What the result of the operation was.
 	 */
 	public Result processShipment(Request request) {
 		Result result = new Result();
@@ -652,8 +662,9 @@ public class GroceryStore implements Serializable {
 	 * Returns an iterator of type Transaction for a specific member in a certain
 	 * date range
 	 * 
-	 * @param request A Request object.
-	 * @return Iterator of type Transaction
+	 * @param request A Request object. Containing details about transaction.
+	 * @return Iterator of type Transaction. Containing information about
+	 *         transaction.
 	 */
 	public Iterator<Transaction> getTransactions(Request request) {
 		Member member = members.search(request.getMemberId());
