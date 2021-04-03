@@ -397,10 +397,8 @@ public class Interface {
 	}
 
 	/**
-	 * Help method. Method strictly for advising the user which menu selection they
-	 * can select from.
+	 * Help method. Method strictly for advising the user which menu selection they can select from.
 	 * 
-	 * @return None. Will prompt for user input.
 	 */
 	public void help() {
 		System.out.println("Please select an option.");
@@ -422,9 +420,9 @@ public class Interface {
 	}
 
 	/**
-	 * Completed Add member method. Utilized for adding a new member.
+	 * Completed Add member method. Utilized for adding a new member. Unless the member was successfully added, it prompts the member 
+	 * was not added.
 	 * 
-	 * @return none. Creates a member
 	 */
 	public void addMember() {
 
@@ -649,11 +647,9 @@ public class Interface {
 	}
 
 	/**
-	 * PrintTransactions method Method to be called for displaying transactions
-	 * within a given date range. Prompts the user for the start and end date and
-	 * uses the appropriate GroceryStore method for displaying transactions.
+	 * PrintTransactions method Method to be called for displaying transactions within a given date range. 
+	 * Prompts the user for the start and end date and uses the appropriate GroceryStore method for displaying transactions.
 	 * 
-	 * No parameters and no return.
 	 */
 	public void printTransactions() {
 		Request.instance().setMemberId(getUserInput("Enter member id"));
@@ -685,8 +681,8 @@ public class Interface {
 
 	/**
 	 * 
-	 * List all outstanding OrderID, Product name, Date order was placed, and
-	 * quantity ordered.
+	 * List all outstanding OrderID, Product name, Date order was placed, and quantity ordered. Orders are considered outstanding if their
+	 * orderStatus is false.
 	 * 
 	 */
 	public void listOutstandingOrders() {

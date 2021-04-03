@@ -41,10 +41,11 @@ public class GroceryStore implements Serializable {
 		private List<Product> products = new LinkedList<Product>();
 
 		/**
-		 * Checks whether a product with a given product id exists.
+		 * Checks whether a product with a given product id exists in products list.
 		 * 
-		 * @param productId the id of the product
-		 * @return true iff the product exists
+		 * @param productId: of type String. The ID of the product to be searched.
+		 * @return product: returns the product whose productID matches the input if it exists.
+		 * @return null: returns null if the product doesn't exist.
 		 * 
 		 */
 		public Product search(String productId) {
@@ -60,9 +61,9 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether a product with a given product name exists.
 		 * 
-		 * @param product name of the product
-		 * @return That product iff the product exists
-		 * 
+		 * @param name: of type String. Name of the product to be searched.
+		 * @return product: returns the product whose productID matches the input if it exists.
+		 * @return null: returns null if the product doesn't exist.
 		 */
 		public Product searchProductName(String name) {
 			for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
@@ -75,10 +76,11 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Removes a product from the catalog
+		 * Removes a product from the products list.
 		 * 
-		 * @param productId product id
-		 * @return true iff product could be removed
+		 * @param productId: of type String. ProductId of the product to be removed.
+		 * @return true: iff the product exists in the list and was removed.
+		 * @return false: iff the product doesn't exist in the list.
 		 */
 		public boolean removeProduct(String productId) {
 			Product product = search(productId);
@@ -90,10 +92,10 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Inserts a product into the collection
+		 * Inserts a product into the collection.
 		 * 
-		 * @param product the product to be inserted
-		 * @return true iff the product could be inserted. Currently always true
+		 * @param product: of type Product. The product to be inserted.
+		 * @return true iff the product could be inserted. Currently always true.
 		 */
 		public boolean insertProduct(Product product) {
 			products.add(product);
@@ -101,26 +103,26 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Returns an iterator to all products
+		 * Returns an Iterator object of the product list.
 		 * 
-		 * @return iterator to the collection
+		 * @return Iterator<Product>: of type Iterator. An iterator of the list of products.
 		 */
 		public Iterator<Product> iterator() {
 			return products.iterator();
 		}
 
+		/**
+		 * Returns the product list object itself.
+		 * 
+		 * @return List<Product>: of type List. Returns the product list.
+		 */
 		public List<Product> getProductList() {
 			return products;
 		}
 
-		/**
-		 * String form of the collection
-		 * 
-		 */
 		public String toString() {
 			return products.toString();
 		}
-
 	}
 
 	/**
@@ -134,10 +136,11 @@ public class GroceryStore implements Serializable {
 		private List<Member> members = new LinkedList<Member>();
 
 		/**
-		 * Checks whether a member with a given member id exists.
+		 * Checks whether a Member with a given Member id exists in members list.
 		 * 
-		 * @param memberId the id of the member
-		 * @return Member iff member exists
+		 * @param memberId: of type String. The ID of the Member to be searched.
+		 * @return member: returns the Member whose memberID matches the input if it exists.
+		 * @return null: returns null if the Member doesn't exist.
 		 * 
 		 */
 		public Member search(String memberId) {
@@ -151,11 +154,11 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
+		 * Checks whether a member with a given member name exists.
 		 * 
-		 * Checks whether a member with a given name exists.
-		 * 
-		 * @param name string of member name
-		 * @return Member iff member exists
+		 * @param name: of type String. Name of the member to be searched.
+		 * @return member: returns the member whose memberID matches the input if it exists.
+		 * @return null: returns null if the member doesn't exist.
 		 */
 		public Member searchName(String name) {
 			for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
@@ -168,10 +171,10 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Inserts a member into the collection
+		 * Inserts a member into the collection.
 		 * 
-		 * @param member the member to be inserted
-		 * @return true iff the member could be inserted. Currently always true
+		 * @param member: of type Member. The member to be inserted.
+		 * @return true iff the member could be inserted. Currently always true.
 		 */
 		public boolean insertMember(Member member) {
 			members.add(member);
@@ -179,14 +182,22 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Remove member method Is called outside of the said class and removes the
-		 * member from the list.
+		 * Removes a member from the members list.
+		 * 
+		 * @param member: of type Member. memberId of the member to be removed.
+		 * @return true: iff the member exists in the list and was removed.
+		 * @return false: iff the member doesn't exist in the list.
 		 */
 		public boolean removeMember(Member member) {
 			members.remove(member);
 			return true;
 		}
 
+		/**
+		 * Returns an Iterator object of the member list.
+		 * 
+		 * @return Iterator<Member>: of type Iterator. An iterator of the list of members.
+		 */
 		@Override
 		public Iterator<Member> iterator() {
 			return members.iterator();
@@ -211,7 +222,7 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Checks whether an order with a given order id exists.
 		 * 
-		 * @param orderID: the ID of the order we wish to find.
+		 * @param orderID: of type Int. The ID of the order we wish to find.
 		 * @return Order: returns the Order object in the orderList if it exists.
 		 * 
 		 */
@@ -228,10 +239,11 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Removes an order from the orderList given a specific orderID
+		 * Removes an Order from the orders list.
 		 * 
-		 * @param orderID: the ID of the order we wish to find.
-		 * @return true iff product could be removed
+		 * @param orderId: of type String. OrdeId of the Order to be removed.
+		 * @return true: iff the Order exists in the list and was removed.
+		 * @return false: iff the Order doesn't exist in the list.
 		 */
 		public boolean removeOrder(int orderId) {
 			Order orderToBeRemove = search(orderId);
@@ -245,10 +257,9 @@ public class GroceryStore implements Serializable {
 		/**
 		 * Inserts an order into the OrderList.
 		 * 
-		 * @param order: the Order object to be inserted.
-		 * @return true: iff an Order with the orderID doesn't already exists within
-		 *         orders and the Order object is inserted successfully. Currently set
-		 *         to always true.
+		 * @param order: of type Order. The Order object to be inserted.
+		 * @return true: iff an Order with the orderID doesn't already exists within orders and the Order object is inserted successfully. 
+		 * Currently set to always true.
 		 */
 		public boolean insertOrder(Order order) {
 			orders.add(order);
@@ -256,22 +267,23 @@ public class GroceryStore implements Serializable {
 		}
 
 		/**
-		 * Returns an iterator to all Orders.
+		 * Returns an Iterator object of the Order list.
 		 * 
-		 * @return iterator to the collection
+		 * @return Iterator<Order>: of type Iterator. An iterator of the list of Order.
 		 */
 		public Iterator<Order> iterator() {
 			return orders.iterator();
 		}
 
+		/**
+		 * Returns the Order list object itself.
+		 * 
+		 * @return List<Order>: of type List. Returns the Order list.
+		 */
 		public List<Order> getOrderList() {
 			return orders;
 		}
 
-		/**
-		 * String form of the collection
-		 * 
-		 */
 		public String toString() {
 			return orders.toString();
 		}
@@ -287,7 +299,7 @@ public class GroceryStore implements Serializable {
 	/**
 	 * Supports the singleton pattern
 	 * 
-	 * @return the singleton object
+	 * @return groceryStore: The singleton object
 	 */
 	public static GroceryStore instance() {
 		if (groceryStore == null) {
@@ -295,11 +307,6 @@ public class GroceryStore implements Serializable {
 		} else {
 			return groceryStore;
 		}
-	}
-
-	public ProductList getProductList() {
-		return productList;
-
 	}
 
 	/**
@@ -562,7 +569,7 @@ public class GroceryStore implements Serializable {
 	 */
 	public Result changePrice(String productId, double price) {
 		Result result = new Result();
-		for (Product productToUpdate : getProductList().getProductList()) {
+		for (Product productToUpdate : productList.getProductList()) {
 			if (productToUpdate.getProductId().equals(productId)) {
 				productToUpdate.setCurrentPrice(price);
 				result.setResultCode(Result.OPERATION_COMPLETED);
@@ -574,11 +581,11 @@ public class GroceryStore implements Serializable {
 	}
 
 	/**
-	 * Organizes the checking out of a product
+	 * Checks out a product for a member.
 	 * 
-	 * @param request - Request Object .
+	 * @param request: Request Object.
 	 * 
-	 * @return Result - The Result Object of the operation.
+	 * @return Result: The Result Object of the operation.
 	 */
 
 	public Result checkOut(Request request) {
