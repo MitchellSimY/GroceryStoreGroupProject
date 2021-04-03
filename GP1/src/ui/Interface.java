@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -520,10 +521,11 @@ public class Interface {
 			Request.instance().setDate(new GregorianCalendar());
 			result = groceryStore.checkOut(Request.instance());
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+				DecimalFormat df = new DecimalFormat("$###,##0.00");
 				int transactionIndex = result.getCheckOutTransactionIndex();
 				System.out.println("Purchased: " + result.getTransactions().get(transactionIndex)
 						.currentProductCheckoutToString(result.getProduct()) + "\n" 
-						+ "Total Price: " + result.getTransactions().get(transactionIndex).getTotalCost());
+						+ "Total Price: " + df.format(result.getTransactions().get(transactionIndex).getTotalCost()));
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for qty = "
 							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());

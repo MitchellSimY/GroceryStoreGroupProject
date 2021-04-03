@@ -73,6 +73,7 @@ public class Member implements Serializable {
 				Transaction currentTransaction = (Transaction) iterator.next();
 				if (currentTransaction.equals(tempTransaction)) {
 					transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
+					transactions.get(transactionIndex).computeTotalCost();
 					return transactionIndex; 
 				}
 				transactionIndex++;
@@ -80,6 +81,7 @@ public class Member implements Serializable {
 		} else {
 			transactions.add(new Transaction());
 			transactions.get(transactionIndex).getCheckOutProductList().insertProduct(product, checkOutQty);
+			transactions.get(transactionIndex).computeTotalCost();
 		}
 		return transactionIndex;
 	}
