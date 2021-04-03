@@ -8,10 +8,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Order Class This class is utilized for creating orders.
+ * Order Class is utilized for creating orders. It takes a Product object and orders double the amount of the product's reorderValue. 
+ * The orderStatus is always set to false when created until it is processed.
+ * The expected date of arrival for the order is always set to 2 weeks ahead of the date the order was placed.
  * 
  * @author Mitchell Young, Jack Haben, Trung Pham, Kou Yang
- *
  */
 
 public class Order implements Serializable {
@@ -22,7 +23,11 @@ public class Order implements Serializable {
 	private boolean orderStatus;
 	private static int orderCounter = 0;
 
-	//Used to create actual Order object
+	/**
+	 * Creates an Order object that reflects reordering a product to increase its stock.
+	 * @param productToOrder: of type Product. The product that is being reordered.
+	 * @param date: of type Calendar. The date the order is placed.
+	 */
 	public Order(Product productToOrder, Calendar date) {
 		orderCounter++;
 		orderID = orderCounter;
@@ -34,7 +39,10 @@ public class Order implements Serializable {
 		orderStatus = false;
 	}
 	
-	//Used to create temp Order for comparison
+	/**
+	 * Creates a temporary Order object used to compare with the orders in a list
+	 * @param orderID: of type Int. Determines which orderID to look for.
+	 */
 	public Order(int orderID) {
 		this.orderID = orderID;
 	}
@@ -63,11 +71,19 @@ public class Order implements Serializable {
 		return dateOrderArrival;
 	}
 
+	/**
+	 * Obtains a formatted string of the date the Order got placed.
+	 * @return String: returns the date in the format MM/DD/YYYY
+	 */
 	public String getDateOrderPlaced() {
 		return dateOrderPlaced.get(Calendar.MONTH) + 1 + "/" + dateOrderPlaced.get(Calendar.DATE) + "/"
 				+ dateOrderPlaced.get(Calendar.YEAR);
 	}
 
+	/**
+	 * Obtains a formatted string of the date the Order is expected to arrive.
+	 * @return String: returns the date in the format MM/DD/YYYY
+	 */
 	public String getDateOrderArrival() {
 		return dateOrderArrival.get(Calendar.MONTH) + 1 + "/" + dateOrderArrival.get(Calendar.DATE) + "/"
 				+ dateOrderArrival.get(Calendar.YEAR);
@@ -109,10 +125,12 @@ public class Order implements Serializable {
 				+ getDateOrderPlaced() + "\tQty Ordered: " + "\t" + quantityOrdered;
 	}
 
+	//Used to serialize the static field orderCounter.
 	public static void save(ObjectOutputStream output) throws IOException {
 		output.writeObject(orderCounter);
 	}
 
+	//Used to retrieve serialized static field orderCounter.
 	public static void retrieve(ObjectInputStream input) throws IOException, ClassNotFoundException {
 		orderCounter = (int) input.readObject();
 	}
