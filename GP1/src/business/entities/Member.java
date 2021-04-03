@@ -196,12 +196,6 @@ public class Member implements Serializable {
 				+ " MemberId " + memberId + " Date of Join" + joinedDate.toString();
 	}
 
-	/**
-	 * Checks whether the member is equal to the one supplied
-	 * 
-	 * @param object the member who should be compared
-	 * @return true iff the member ids match
-	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

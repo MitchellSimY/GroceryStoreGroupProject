@@ -97,6 +97,12 @@ public class Order implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 
+	/**
+	 * Checks if an object of type Order is equal to another Order. 
+	 * @param object: of type Object. The object to be compared to the order.
+	 * @return true: iff the Order's ID is the same as the object's orderID.
+	 * @return false: iff the object is not an Order object or if the object's orderID is not equal to the Order's orderID.
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
