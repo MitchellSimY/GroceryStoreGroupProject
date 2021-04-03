@@ -522,7 +522,8 @@ public class Interface {
 			if (result.getResultCode() == Result.OPERATION_COMPLETED) {
 				int transactionIndex = result.getCheckOutTransactionIndex();
 				System.out.println("Purchased: " + result.getTransactions().get(transactionIndex)
-						.currentProductCheckoutToString(result.getProduct()));
+						.currentProductCheckoutToString(result.getProduct()) + "\n" 
+						+ "Total Price: " + result.getTransactions().get(transactionIndex).getTotalCost());
 				if (result.isReorderPlaced()) {
 					System.out.println("Reorder placed for " + result.getProductName() + " for qty = "
 							+ result.getReorderLevel() * 2 + " with orderID " + result.getOrderID());
