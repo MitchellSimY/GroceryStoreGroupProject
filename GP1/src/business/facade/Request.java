@@ -30,6 +30,7 @@ public class Request extends DataTransfer {
 	/**
 	 * Returns the only instance of the class.
 	 * 
+	 * @param none.
 	 * @return the only instance
 	 */
 	public static Request instance() {

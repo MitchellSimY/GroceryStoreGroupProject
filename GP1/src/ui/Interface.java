@@ -237,7 +237,6 @@ public class Interface {
 						// break;
 					}
 				} while (dateValid);
-				// System.out.println("Please input a date as mm/dd/yy");
 
 				DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
 				date.setTime(dateFormat.parse(item));
@@ -256,7 +255,6 @@ public class Interface {
 	 */
 	/**
 	 * @param prompt
-	 * @return
 	 */
 	public Calendar getDateFullYear(String prompt) {
 		do {
