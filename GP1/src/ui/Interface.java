@@ -266,7 +266,7 @@ public class Interface {
 				do {
 					item = getUserInput(prompt);
 					if (dateIsValidMMDDYYYY(item)) {
-						dateValid = false;
+						dateValid = false; 
 					}
 				} while (dateValid);
 				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
