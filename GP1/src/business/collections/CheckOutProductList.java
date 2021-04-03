@@ -12,10 +12,11 @@ public class CheckOutProductList implements Iterable<Product>, Serializable{
 		private List<Product> products = new LinkedList<Product>();
 
 		/**
-		 * Checks whether a product with a given product id exists.
+		 * Checks whether a product with a given product id exists in products list.
 		 * 
-		 * @param productId the id of the product
-		 * @return true iff the product exists
+		 * @param productId: of type String. The ID of the product to be searched.
+		 * @return product: returns the product whose productID matches the input if it exists.
+		 * @return null: returns null if the product doesn't exist.
 		 * 
 		 */
 		public Product search(String productId) {
@@ -31,9 +32,9 @@ public class CheckOutProductList implements Iterable<Product>, Serializable{
 		/**
 		 * Checks whether a product with a given product name exists.
 		 * 
-		 * @param product name of the product
-		 * @return That product iff the product exists
-		 * 
+		 * @param name: of type String. Name of the product to be searched.
+		 * @return product: returns the product whose productID matches the input if it exists.
+		 * @return null: returns null if the product doesn't exist.
 		 */
 		public Product searchProductName(String name) {
 			for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
@@ -46,10 +47,11 @@ public class CheckOutProductList implements Iterable<Product>, Serializable{
 		}
 
 		/**
-		 * Removes a product from the catalog
+		 * Removes a product from the products list.
 		 * 
-		 * @param productId product id
-		 * @return true iff product could be removed
+		 * @param productId: of type String. ProductId of the product to be removed.
+		 * @return true: iff the product exists in the list and was removed.
+		 * @return false: iff the product doesn't exist in the list.
 		 */
 		public boolean removeProduct(String productId) {
 			Product product = search(productId);
@@ -75,22 +77,23 @@ public class CheckOutProductList implements Iterable<Product>, Serializable{
 		}
 
 		/**
-		 * Returns an iterator to all products
+		 * Returns an Iterator object of the product list.
 		 * 
-		 * @return iterator to the collection
+		 * @return Iterator<Product>: of type Iterator. An iterator of the list of products.
 		 */
 		public Iterator<Product> iterator() {
 			return products.iterator();
 		}
 
+		/**
+		 * Returns the product list object itself.
+		 * 
+		 * @return List<Product>: of type List. Returns the product list.
+		 */
 		public List<Product> getProductList() {
 			return products;
 		}
 
-		/**
-		 * String form of the collection
-		 * 
-		 */
 		public String toString() {
 			return products.toString();
 		}
