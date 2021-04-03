@@ -43,8 +43,8 @@ public class SafeIterator<T> implements Iterator<Result> {
 		 * The copy method is used to copy the object to Result. Object is Product or
 		 * Member at present.
 		 * 
-		 * @param result the Result object
-		 * @param object the Product or Member object
+		 * @param result: of type Result. The Result object.
+		 * @param object: of type Object. Either a Product, Member, or Order object.
 		 */
 		public abstract void copy(Result result, Object object);
 
@@ -80,7 +80,7 @@ public class SafeIterator<T> implements Iterator<Result> {
 	 * the first parameter, SafeItearator.MEMBER should be the second parameter.
 	 * 
 	 * @param iterator Iterator<Product> or Iterator<Member>
-	 * @param type     SafeItearator.PRODUCT or SafeItearator.MEMBER
+	 * @param type     SafeItearator.PRODUCT or SafeItearator.MEMBER or SafeItearator.ORDER
 	 */
 	public SafeIterator(Iterator<T> iterator, Type type) {
 		this.iterator = iterator;
