@@ -473,22 +473,26 @@ public class Interface {
 	 */
 	public void addProduct() {
 		Request.instance().setProductName(ignoredCase(getName("Enter Product name: ")));
+		// Creating a result object to advise any messages
+		Result result = groceryStore.searchProductName(Request.instance());
+		if (result.getResultCode() == Result.OPERATION_COMPLETED) {
+			System.out.println("Product Name already exists");
+			return;
+		}
 		Request.instance().setProductId(getUserInput("Enter Product ID: "));
+		result = groceryStore.searchProductID(Request.instance());
+		if (result.getResultCode() == Result.PRODUCTID_EXISTS) {
+			System.out.println("Product ID already exists");
+			return;
+		}
 		Request.instance().setCurrentPrice(getDouble("Please enter current price: "));
 		Request.instance().setStockInhand(getNumber("Please enter current stock in hand: "));
 		Request.instance().setReorderLevel(getNumber("Please enter Re-Order level: "));
 		Request.instance().setDate(new GregorianCalendar());
-
-		// Creating a result object to advise any messages
-		Result result = groceryStore.addProduct(Request.instance());
-
+		result = groceryStore.addProduct(Request.instance());
 		// If statements that'll advise the user what had happened
 		if (result.getResultCode() == Result.OPERATION_FAILED) {
 			System.out.println("Product could not be added.");
-		} else if (result.getResultCode() == Result.PRODUCTID_EXISTS) {
-			System.out.println("Product ID already exists");
-		} else if (result.getResultCode() == Result.PRODUCT_NAME_EXISTS) {
-			System.out.println("Product Name already exists");
 		} else {
 			System.out.println(result.getProductName() + " has since been added." + "\nAn Order for "
 					+ result.getProductName() + " has been made with qty " + result.getQuantityOrdered() + ".");

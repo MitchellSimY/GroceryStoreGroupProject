@@ -358,17 +358,6 @@ public class GroceryStore implements Serializable {
 		Result result = new Result();
 		Product product = new Product(request.getProductName(), request.getProductId(), request.getStockInhand(),
 				request.getReorderLevel(), request.getCurrentPrice());
-		/**
-		 * If satements checking to see if the product already exists via the ID or the
-		 * name.
-		 */
-		if (productList.search(request.getProductId()) != null) {
-			result.setResultCode(Result.PRODUCTID_EXISTS);
-			return result;
-		} else if (productList.searchProductName(request.getProductName()) != null) {
-			result.setResultCode(Result.PRODUCT_NAME_EXISTS);
-			return result;
-		}
 
 		if (productList.insertProduct(product)) {
 			Order newOrder = new Order(product, request.getDate());
@@ -378,7 +367,6 @@ public class GroceryStore implements Serializable {
 			result.setOrderFields(newOrder);
 			return result;
 		}
-
 		result.setResultCode(Result.OPERATION_FAILED);
 		return result;
 	}
@@ -504,6 +492,24 @@ public class GroceryStore implements Serializable {
 		} else {
 			result.setResultCode(Result.OPERATION_COMPLETED);
 			result.setProductFields(product);
+		}
+		return result;
+	}
+
+	/**
+	 * Similar method as above but doesn't change any product info. Search for a
+	 * product by i.d.
+	 * 
+	 * @param request - has the product i.d. to use for searching.
+	 * @return Result object with product files set.
+	 */
+	public Result searchProductID(Request request) {
+		Result result = new Result();
+		Product product = productList.search(request.getProductId());
+		if (product == null) {
+			result.setResultCode(Result.PRODUCT_NOT_FOUND);
+		} else {
+			result.setResultCode(Result.PRODUCTID_EXISTS);
 		}
 		return result;
 	}
